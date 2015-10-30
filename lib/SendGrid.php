@@ -3,7 +3,7 @@
 use GuzzleHttp\Exception\ClientException;
 
 class SendGrid {
-    const VERSION = '3.2.0';
+    const VERSION = '1.0.0';
 
     protected
         $namespace = 'SendGrid',
@@ -103,7 +103,6 @@ class SendGrid {
      */
     public function send(SendGrid\Email $email) {
         $form = $email->toWebFormat();
-        //$this->request = new \GuzzleHttp\Psr7\Request('POST', $this->url . $this->endpoint);
         // @TODO Add username/password to the header.
         // Using username password
         if ($this->apiUser !== NULL) {
@@ -129,8 +128,19 @@ class SendGrid {
      * @return SendGrid\Response
      */
     public function postRequest($endpoint, $form) {
+		$requestoptions = [];
+		$requestoptions['form_params'] = $form;
+		// Allow for contection timeout
+		if (isset($this->options['connect_timeout'])) {
+			$requestoptions['connect_timeout'] = $this->options['connect_timeout'];
+		}		
+		
+		// Allow for requst timeout
+		if (isset($this->options['timeout'])) {
+			$requestoptions['timeout'] = $this->options['timeout'];
+		}
         try {
-            $res = $this->client->post($endpoint, ['form_params' => $form]);
+            $res = $this->client->post($endpoint, $requestoptions);
         }
         catch (GuzzleHttp\Exception\ClientException $e) {
             echo 'Sendgrid API has experienced and error completing your request.';
