@@ -28,7 +28,7 @@ Important: This library requires PHP 5.5 or higher.
 
 
 ```php
-$sendgrid = new SendGrid('username', 'password');
+$sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY');
 $email = new SendGrid\Email();
 $email
     ->addTo('foo@bar.com')
@@ -59,7 +59,7 @@ Add SendGrid to your `composer.json` file. If you are not using [Composer](http:
 ```json
 {  
   "require": {
-    "sendgrid/sendgrid": "~3.2"
+    "taz77/sendgrid": "~1.0"
   }
 }
 ```
@@ -93,9 +93,7 @@ There is a [sendgrid-php-example app](https://github.com/sendgrid/sendgrid-php-e
 To begin using this library, initialize the SendGrid object with your SendGrid credentials OR a SendGrid [API Key](https://sendgrid.com/docs/User_Guide/Account/api_keys.html). API Key is the preferred method. API Keys are in beta. To configure API keys, visit https://sendgrid.com/beta/settings/api_key.
 
 ```php
-$sendgrid = new SendGrid('username', 'password');
-// OR
-$sendgrid = new SendGrid('sendgrid api key');
+$sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY');
 ```
 
 Create a new SendGrid Email object and add your message details.
@@ -141,7 +139,7 @@ $options = array(
     'url' => null,
     'raise_exceptions' => false
 );
-$sendgrid = new SendGrid('username', 'password', $options);
+$sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY', $options);
 ```
 
 #### Changing URL
@@ -149,8 +147,7 @@ You may change the URL sendgrid-php uses to send email by supplying various para
 
 ```php
 $sendgrid = new SendGrid(
-    'username', 
-    'password', 
+    'YOUR_SENDGRID_APIKEY', 
     array(
         'protocol' => 'http', 
         'host' => 'sendgrid.org', 
@@ -164,8 +161,7 @@ A full URL may also be provided:
 
 ```php
 $sendgrid = new SendGrid(
-    'username', 
-    'password', 
+    'YOUR_SENDGRID_APIKEY', 
     array( 'url' => 'http://sendgrid.org:80/send')
 );
 ```
@@ -176,8 +172,7 @@ You can optionally ignore verification of SSL certificate when using the Web API
 
 ```php
 $sendgrid = new SendGrid(
-    SENDGRID_USERNAME, 
-    SENDGRID_PASSWORD, 
+    'YOUR_SENDGRID_APIKEY', 
     array("turn_off_ssl_verification" => true)
 );
 ```
@@ -856,7 +851,7 @@ $email->removeHeader('X-Transport');
 Sometimes you might want to send 1,000s of emails in one request. You can do that. It is recommended you break each batch up in 1,000 increments. So if you need to send to 5,000 emails, then you'd break this into a loop of 1,000 emails at a time.
 
 ```php
-$sendgrid = new SendGrid(SENDGRID_USERNAME, SENDGRID_PASSWORD);
+$sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY');
 $email = new SendGrid\Email();
 
 $recipients = array(
