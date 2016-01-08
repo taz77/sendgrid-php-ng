@@ -1,6 +1,7 @@
 language: php
 before_script:
 - phpenv local 5.5
+- /home/travis/.phpenv/versions/5.5/bin/composer self-update
 - composer install --dev --no-interaction
 - phpenv local --unset
 - cd test
