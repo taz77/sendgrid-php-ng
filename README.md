@@ -59,7 +59,7 @@ Add SendGrid to your `composer.json` file. If you are not using [Composer](http:
 ```json
 {  
   "require": {
-    "taz77/sendgrid": "~1.0"
+    "fastglass/sendgrid": "~1.0"
   }
 }
 ```
