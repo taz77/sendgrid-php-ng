@@ -117,6 +117,10 @@ class Email {
         return $this;
     }
 
+    public function getTos() {
+        return $this->to;
+    }
+
     public function getFrom($as_array = FALSE) {
         if ($as_array && ($name = $this->getFromName())) {
             return array("$this->from" => $name);
