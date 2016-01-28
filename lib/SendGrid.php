@@ -6,19 +6,19 @@ class SendGrid {
     const VERSION = '1.0.2';
 
     protected
-        $namespace = 'SendGrid',
-        $headers = array('Content-Type' => 'application/json'),
-        $client,
-        $options;
+      $namespace = 'SendGrid',
+      $headers = ['Content-Type' => 'application/json'],
+      $client,
+      $options;
 
     public
-        $apiUser,
-        $apiKey,
-        $url,
-        $endpoint,
-        $version = self::VERSION;
+      $apiUser,
+      $apiKey,
+      $url,
+      $endpoint,
+      $version = self::VERSION;
 
-    public function __construct($apiUserOrKey, $apiKeyOrOptions = NULL, $options = array()) {
+    public function __construct($apiUserOrKey, $apiKeyOrOptions = NULL, $options = []) {
         // Check if given a username + password or api key.
         if (is_string($apiKeyOrOptions)) {
             // Username and password.
@@ -61,13 +61,12 @@ class SendGrid {
      * @return \GuzzleHttp\Client
      */
     private function prepareHttpClient() {
-        $headers = array();
+        $headers = [];
         // $headers['verify'] = !$this->options['turn_off_ssl_verification'];
         // Using api key
         if ($this->apiUser === NULL) {
             $headers['Authorization'] = 'Bearer' . ' ' . $this->apiKey;
         }
-        // @TODO Handle a username and password.
 
         // Using http proxy
         if (isset($this->options['proxy'])) {
@@ -79,9 +78,9 @@ class SendGrid {
         $stack = \GuzzleHttp\HandlerStack::create();
 
         $client = new \GuzzleHttp\Client([
-            'base_uri' => $this->url,
-            'headers' => $headers,
-            'handler' => $stack
+          'base_uri' => $this->url,
+          'headers' => $headers,
+          'handler' => $stack,
         ]);
         return $client;
     }
@@ -128,19 +127,19 @@ class SendGrid {
      * @return SendGrid\Response
      */
     public function postRequest($endpoint, $form) {
-		$requestoptions = [];
-		$requestoptions['form_params'] = $form;
-		// Allow for contection timeout
-		if (isset($this->options['connect_timeout'])) {
-			$requestoptions['connect_timeout'] = $this->options['connect_timeout'];
-		}		
-		
-		// Allow for requst timeout
-		if (isset($this->options['timeout'])) {
-			$requestoptions['timeout'] = $this->options['timeout'];
-		}
+        $requestoptions = [];
+        $requestoptions['form_params'] = $form;
+        // Allow for contection timeout
+        if (isset($this->options['connect_timeout'])) {
+            $requestoptions['connect_timeout'] = $this->options['connect_timeout'];
+        }
+
+        // Allow for request timeout
+        if (isset($this->options['timeout'])) {
+            $requestoptions['timeout'] = $this->options['timeout'];
+        }
         try {
-            $res = $this->client->post($endpoint, $requestoptions);
+            $res = $this->client->request('POST', $endpoint, $requestoptions);
         }
         catch (GuzzleHttp\Exception\ClientException $e) {
             echo 'Sendgrid API has experienced and error completing your request.';
@@ -153,7 +152,7 @@ class SendGrid {
     }
 
     public static function register_autoloader() {
-        spl_autoload_register(array('SendGrid', 'autoloader'));
+        spl_autoload_register(['SendGrid', 'autoloader']);
     }
 
     public static function autoloader($class) {
