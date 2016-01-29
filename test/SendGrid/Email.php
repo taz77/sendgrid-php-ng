@@ -707,11 +707,11 @@ class SendGridTest_Email extends PHPUnit_Framework_TestCase
     public function testToWebFormatWithAttachmentAndCid()
     {
         $email    = new SendGrid\Email();
-        $email->addAttachment('./gif.gif', null, 'sample-cid');
+        $email->addAttachment('./gif.gif', NULL, 'sample-cid');
         $email->addAttachment('./gif.gif', 'gif2.gif', 'sample-cid-2');
         $json     = $email->toWebFormat();
 
-        $this->assertEquals($json["files[gif.gif]"], "@./gif.gif");
+        $this->assertEquals($json['files']['gif.gif'], dirname(__FILE__) . '/gif.gif');
         $this->assertEquals($json["content[gif.gif]"], "sample-cid");
         $this->assertEquals($json["content[gif2.gif]"], "sample-cid-2");
     }
@@ -719,10 +719,10 @@ class SendGridTest_Email extends PHPUnit_Framework_TestCase
     public function testToWebFormatWithSetAttachmentAndCid()
     {
         $email    = new SendGrid\Email();
-        $email->setAttachment('./gif.gif', null, 'sample-cid');
+        $email->setAttachment('./gif.gif', NULL, 'sample-cid');
         $json     = $email->toWebFormat();
 
-        $this->assertEquals($json["files[gif.gif]"], "@./gif.gif");
+        $this->assertEquals($json['files']['gif.gif'], dirname(__FILE__) . '/gif.gif');
         $this->assertEquals($json["content[gif.gif]"], "sample-cid");
     }
 
