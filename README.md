@@ -6,6 +6,10 @@ This library allows you to quickly and easily send emails through SendGrid using
 
 This module inherits the updates from the official Sendgrid library that were introduced in version 3.x
 
+## Forked Release Notes ##
+
+v1.0.4 - Allows for attachments to email.
+
 ## Notes from Sendgrid official library
 
 WARNING: This module was recently upgraded from [2.2.x](https://github.com/sendgrid/sendgrid-php/tree/v2.2.1) to 3.X. There were API breaking changes for various method names. See [usage](https://github.com/sendgrid/sendgrid-php#usage) for up to date method names.
