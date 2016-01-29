@@ -695,55 +695,14 @@ class SendGridTest_Email extends PHPUnit_Framework_TestCase
         $this->assertEquals($json["x-smtpapi"], '{"to":["p1@mailinator.com"]}');
     }
 
-    /*
-     * Guzzle handles this for use. Keeping in case we drop guzzle
-     *
-     public function testToWebFormatWithAttachment()
-     {
-         $email    = new SendGrid\Email();
-         $email->addAttachment('./gif.gif');
-         $json     = $email->toWebFormat();
-
-         // php 5.5 works differently. @filename has been deprecated for CurlFile in 5.5
-         if (class_exists('CurlFile')) {
-             $content = new \CurlFile('./gif.gif', 'gif', 'gif');
-             $this->assertEquals($json["files[gif.gif]"], $content);
-        } else {
-            $this->assertEquals($json["files[gif.gif]"], "@./gif.gif");
-        }
-    }
-     */
-
     public function testToWebFormatWithAttachment()
     {
         $email    = new SendGrid\Email();
         $email->addAttachment('./gif.gif');
         $json     = $email->toWebFormat();
 
-        $this->assertEquals($json["files[gif.gif]"], "@./gif.gif");
+        $this->assertEquals($json["files[gif.gif]"], dirname(__FILE__) . '/gif.gif');
     }
-
-    /*
-     * Guzzle handles this for use. Keeping in case we drop guzzle
-     *
-     public function testToWebFormatWithAttachmentAndCid()
-     {
-         $email    = new SendGrid\Email();
-         $email->addAttachment('./gif.gif', null, 'sample-cid');
-         $email->addAttachment('./gif.gif', 'gif2.gif', 'sample-cid-2');
-         $json     = $email->toWebFormat();
-
-         // php 5.5 works differently. @filename has been deprecated for CurlFile in 5.5
-         if (class_exists('CurlFile')) {
-             $content = new \CurlFile('./gif.gif', 'gif', 'gif');
-             $this->assertEquals($json["files[gif.gif]"], $content);
-        } else {
-            $this->assertEquals($json["files[gif.gif]"], "@./gif.gif");
-        }
-        $this->assertEquals($json["content[gif.gif]"], "sample-cid");
-        $this->assertEquals($json["content[gif2.gif]"], "sample-cid-2");
-    }
-     */
 
     public function testToWebFormatWithAttachmentAndCid()
     {
@@ -757,27 +716,6 @@ class SendGridTest_Email extends PHPUnit_Framework_TestCase
         $this->assertEquals($json["content[gif2.gif]"], "sample-cid-2");
     }
 
-
-    /*
-     * Guzzle handles this for use. Keeping in case we drop guzzle
-     *
-     public function testToWebFormatWithSetAttachmentAndCid()
-     {
-         $email    = new SendGrid\Email();
-         $email->setAttachment('./gif.gif', null, 'sample-cid');
-         $json     = $email->toWebFormat();
-
-         // php 5.5 works differently. @filename has been deprecated for CurlFile in 5.5
-         if (class_exists('CurlFile')) {
-             $content = new \CurlFile('./gif.gif', 'gif', 'gif');
-             $this->assertEquals($json["files[gif.gif]"], $content);
-        } else {
-            $this->assertEquals($json["files[gif.gif]"], "@./gif.gif");
-        }
-        $this->assertEquals($json["content[gif.gif]"], "sample-cid");
-    }
-     */
-
     public function testToWebFormatWithSetAttachmentAndCid()
     {
         $email    = new SendGrid\Email();
@@ -787,26 +725,6 @@ class SendGridTest_Email extends PHPUnit_Framework_TestCase
         $this->assertEquals($json["files[gif.gif]"], "@./gif.gif");
         $this->assertEquals($json["content[gif.gif]"], "sample-cid");
     }
-
-
-    /*
-     * Guzzle handles this for use. Keeping in case we drop guzzle
-     *
-     public function testToWebFormatWithAttachmentCustomFilename()
-     {
-         $email    = new SendGrid\Email();
-         $email->addAttachment('./gif.gif', 'different.jpg');
-         $json     = $email->toWebFormat();
-
-         // php 5.5 works differently. @filename has been deprecated for CurlFile in 5.5
-         if (class_exists('CurlFile')) {
-             $content = new \CurlFile('./gif.gif', 'gif', 'gif');
-             $this->assertEquals($json["files[different.jpg]"], $content);
-        } else {
-            $this->assertEquals($json["files[different.jpg]"], "@./gif.gif");
-        }
-    }
-     */
 
     public function testToWebFormatWithAttachmentCustomFilename()
     {
