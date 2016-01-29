@@ -395,6 +395,13 @@ class Email {
         return $this;
     }
 
+    /**
+     * Returns the pathinfo() data about a file.
+     * @param $file
+     * @param null $custom_filename
+     * @param null $cid
+     * @return mixed
+     */
     private function getAttachmentInfo($file, $custom_filename = NULL, $cid = NULL) {
         $info = pathinfo($file);
         $info['file'] = $file;
@@ -607,15 +614,7 @@ class Email {
                     $web['content[' . $full_filename . ']'] = $f['cid'];
                 }
 
-                $contents = '@' . $file;
-
-                // Guzzle handles this for us.
-                // http://guzzle3.readthedocs.org/en/latest/http-client/request.html#post-requests
-                // if (class_exists('CurlFile', false)) { // php >= 5.5
-                // $contents = new \CurlFile($file, $extension, $filename);
-                // }
-
-                $web['files[' . $full_filename . ']'] = $contents;
+                $web['files'][$f['basename']] = $f['dirname'] . '/' . $f['basename'];
             };
         }
 
