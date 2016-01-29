@@ -732,7 +732,7 @@ class SendGridTest_Email extends PHPUnit_Framework_TestCase
         $email->addAttachment('./gif.gif', 'different.jpg');
         $json     = $email->toWebFormat();
 
-        $this->assertEquals($json["files[different.jpg]"], "@./gif.gif");
+        $this->assertEquals($json['files']['gif.gif'], dirname(__FILE__) . '/gif.gif');
     }
 
     public function testToWebFormatWithHeaders()
