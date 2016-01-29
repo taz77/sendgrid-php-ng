@@ -3,7 +3,7 @@
 use GuzzleHttp\Exception\ClientException;
 
 class SendGrid {
-  const VERSION = '1.0.2';
+  const VERSION = '1.0.4';
 
   protected
     $namespace = 'SendGrid',
@@ -76,7 +76,6 @@ class SendGrid {
     // Create an empty stack for error processing.
     // Guzzlehttp will choose the most appropriate handler based on the system.
     $stack = \GuzzleHttp\HandlerStack::create();
-
     $client = new \GuzzleHttp\Client([
       'base_uri' => $this->url,
       'headers' => $headers,
@@ -102,8 +101,7 @@ class SendGrid {
    */
   public function send(SendGrid\Email $email) {
     $form = $email->toWebFormat();
-    // @TODO Add username/password to the header.
-    // Using username password
+    // Adding API keys to header.
     if ($this->apiUser !== NULL) {
       $form['api_user'] = $this->apiUser;
       $form['api_key'] = $this->apiKey;
@@ -128,27 +126,24 @@ class SendGrid {
    */
   public function postRequest($endpoint, $form) {
     $requestoptions = [];
-
-    if (array_key_exists('files', $form)){
-      // If the email contains files we must process as multipart
+    if (array_key_exists('files', $form)) {
+      // If the email contains files we must process as multipart.
       $requestoptions['multipart'] = $this->prepareMultipart($form);
     }
     else {
       $requestoptions['form_params'] = $form;
     }
-    // Allow for contection timeout
+
+    // Allow for contection timeout.
     if (isset($this->options['connect_timeout'])) {
       $requestoptions['connect_timeout'] = $this->options['connect_timeout'];
     }
 
-    // Allow for request timeout
+    // Allow for request timeout.
     if (isset($this->options['timeout'])) {
       $requestoptions['timeout'] = $this->options['timeout'];
     }
-    echo '<pre>';
-    print_r($requestoptions);
-    echo '</pre>';
-    //exit;
+
     try {
       $res = $this->client->request('POST', $endpoint, $requestoptions);
     }
@@ -182,17 +177,32 @@ class SendGrid {
   /**
    * Prepare a request to be submitted as multipart.
    * @param $data
+   * @return array $message
    */
   public function prepareMultipart($data) {
     // The contents of the multipart request.
     $message = [];
     foreach ($data as $key => $value) {
-      if ($key == 'files') {
-        foreach ($value as $filekey => $filevalue){
+      // If the value is an array we have to perform a hack to handle array values.
+      if (is_array($value) && $key != 'files') {
+        foreach ($value as $item) {
           $message[] = [
-            'name' => $filekey,
-            'contents' => $filevalue,
+            'name' => $key . '[]',
+            'contents' => $item,
           ];
+        }
+      }
+      // If the item is the files, we build a special array to include
+      // the filenames as the indicies.
+      elseif (is_array($value) && $key == 'files') {
+        foreach ($value as $filekey => $filevalue) {
+          // Guzzle 6.x requires passing a file with an fopen resource
+          $message[] = [
+            'name' => 'files[' . $filekey . ']',
+            'contents' => fopen($filevalue, 'r'),
+            'filename' => $filekey,
+          ];
+
         }
       }
       else {
@@ -202,5 +212,6 @@ class SendGrid {
         ];
       }
     }
+    return $message;
   }
 }
