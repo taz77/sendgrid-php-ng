@@ -33,8 +33,8 @@ class Email {
    * Given a list of key/value pairs, removes the associated keys
    * where a value matches the given string ($item)
    *
-   * @param Array $list - the list of key/value pairs
-   * @param String $item - the value to be removed
+   * @param array $list - the list of key/value pairs
+   * @param string $item - the value to be removed
    */
   private function _removeFromList(&$list, $item, $key_field = NULL) {
     foreach ($list as $key => $val) {
@@ -303,7 +303,7 @@ class Email {
 
   /**
    * Remove a CC email address from the message.
-   * 
+   *
    * @param string $email
    * @return object $this
    */
@@ -313,26 +313,55 @@ class Email {
     return $this;
   }
 
+  /**
+   * Return an array of CC email addresses for the current message.
+   *
+   * @return array $this->cc
+   */
   public function getCcs() {
     return $this->cc;
   }
 
+  /**
+   * Return an array of CC email names for the current message.
+   *
+   * @return array $this->ccName
+   */
   public function getCcNames() {
     return $this->ccName;
   }
 
+  /**
+   * Set the BCC email address for the current messsage.
+   * @param string $email
+   * @return object $this
+   */
   public function setBcc($email) {
     $this->bcc = [$email];
 
     return $this;
   }
 
-  public function setBccs($email_list) {
+  /**
+   * Set the BCC addresses of the current message by passing an array of only
+   * email addresses.
+   *
+   * @param array $email_list
+   * @return $this
+   */
+  public function setBccs(array $email_list) {
     $this->bcc = $email_list;
 
     return $this;
   }
 
+  /**
+   * Add a BCC address to the current message. Optionally set a name with the
+   * address.
+   * @param string $email
+   * @param string $name
+   * @return object $this
+   */
   public function addBcc($email, $name = NULL) {
     if ($this->bcc == NULL) {
       $this->bcc = [];
@@ -359,6 +388,12 @@ class Email {
     return $this;
   }
 
+  /**
+   * Add a BCC name to the current message.
+   *
+   * @param string $name
+   * @return object $this
+   */
   public function addBccName($name) {
     if ($this->bccName == NULL) {
       $this->bccName = [];
@@ -369,40 +404,85 @@ class Email {
     return $this;
   }
 
+  /**
+   * Returns an array of BCC names.
+   *
+   * @return array $this->bccName
+   */
   public function getBccNames() {
     return $this->bccName;
   }
 
+  /**
+   * Remove a BCC address from the current message.
+   *
+   * @param string $email
+   * @return object $this
+   */
   public function removeBcc($email) {
     $this->_removeFromList($this->bcc, $email);
 
     return $this;
   }
 
+  /**
+   * Return the BCC addresses.
+   *
+   * @return array $this->bcc
+   */
   public function getBccs() {
     return $this->bcc;
   }
 
+  /**
+   * Set the subject of the current message.
+   *
+   * @param string $subject
+   * @return object $this
+   */
   public function setSubject($subject) {
     $this->subject = $subject;
 
     return $this;
   }
 
+  /**
+   * Return a string of the subject line of the current message.
+   *
+   * @return string $this->subject
+   */
   public function getSubject() {
     return $this->subject;
   }
 
+  /**
+   * Set the date header of the current message. Must be RFC 2822 ( date("r"); ).
+   *
+   * @param string $date
+   * @return object $this
+   */
   public function setDate($date) {
     $this->date = $date;
 
     return $this;
   }
 
+  /**
+   * Returns the date header on the current messge. Returns RFC 2822 formated
+   * date.
+   *
+   * @return string $this->date
+   */
   public function getDate() {
     return $this->date;
   }
 
+  /**
+   * Set the plain text version of the current message.
+   * 
+   * @param string $text
+   * @return object $this
+   */
   public function setText($text) {
     $this->text = $text;
 
@@ -505,11 +585,13 @@ class Email {
   }
 
   /**
-   * Returns the pathinfo() data about a file.
-   * @param $file
-   * @param null $custom_filename
-   * @param null $cid
-   * @return mixed
+   * Returns the pathinfo() data about a file. Pass this function the full path
+   * to the file in question.
+   *
+   * @param string $file
+   * @param string $custom_filename
+   * @param string $cid
+   * @return array $info
    */
   private function getAttachmentInfo($file, $custom_filename = NULL, $cid = NULL) {
     $info = pathinfo($file);
@@ -658,6 +740,13 @@ class Email {
     return $this->smtpapi;
   }
 
+  /**
+   * Prepares the email message by assembling the information from the Sendgrid
+   * object into a format that can be used for transport by Guzzle. This is the
+   * last step before sending an email
+   *
+   * @return array
+   */
   public function toWebFormat() {
     $web = [
       'to' => $this->to,
@@ -722,7 +811,8 @@ class Email {
         if (array_key_exists('cid', $f)) {
           $web['content[' . $full_filename . ']'] = $f['cid'];
         }
-
+        // This creates an keyed array with the filenames as the key and the
+        // full path as a value.
         $web['files'][$f['basename']] = $f['dirname'] . '/' . $f['basename'];
       };
     }
@@ -731,8 +821,11 @@ class Email {
   }
 
   /**
-   * There needs to be at least 1 to address, or else the mail won't send.
+   * There needs to be at least one to address, or else the mail won't send.
    * This method modifies the data that will be sent via either Rest
+   *
+   * @param mixed $data
+   * @return mixed $data
    */
   public function updateMissingTo($data) {
     if ($this->smtpapi->to && (count($this->smtpapi->to) > 0)) {
