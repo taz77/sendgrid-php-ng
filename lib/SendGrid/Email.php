@@ -479,7 +479,7 @@ class Email {
 
   /**
    * Set the plain text version of the current message.
-   * 
+   *
    * @param string $text
    * @return object $this
    */
@@ -489,26 +489,59 @@ class Email {
     return $this;
   }
 
+  /**
+   * Return the plain text version of the current message.
+   *
+   * @return string $this->text
+   */
   public function getText() {
     return $this->text;
   }
 
+  /**
+   * Set the HTML version of the current message.
+   *
+   * @param string $html
+   * @return object $this
+   */
   public function setHtml($html) {
     $this->html = $html;
 
     return $this;
   }
 
+  /**
+   * Return the HTML version of the current message.
+   *
+   * @return string $this->html
+   */
   public function getHtml() {
     return $this->html;
   }
 
+  /**
+   * Set the X-SMTPAPI header of the send at date that allows you to use the
+   * scheduling function of Sendgrid. Requires UNIX timestamp.
+   *
+   * @param string $timestamp
+   * @return object $this
+   */
   public function setSendAt($timestamp) {
     $this->smtpapi->setSendAt($timestamp);
 
     return $this;
   }
 
+  /**
+   * You can schedule emails to send at certain times per receipient. Use this
+   * by supplying an array of timestamps. Timestamps must be UNIX time.
+   * Time stamps will be associated with the to addresses on a one to one basis.
+   *
+   * @see setTos() function for setting to addresses via an array.
+   *
+   * @param array $timestamps
+   * @return object $this
+   */
   public function setSendEachAt(array $timestamps) {
     $this->smtpapi->setSendEachAt($timestamps);
 
@@ -522,11 +555,11 @@ class Email {
   }
 
   /**
-   * Convenience method to add template
+   * Add templates defined in Sendgrid to a message. Requies the ID number of
+   * the template.
    *
-   * @param string The id of the template
-   *
-   * @return $this
+   * @param string $templateId
+   * @return object $this
    */
   public function setTemplateId($templateId) {
     $this->addFilter('templates', 'enabled', 1);
@@ -535,11 +568,11 @@ class Email {
     return $this;
   }
 
-  /** Convenience method to set asm group id
+  /**
+   * Set the ASM group ID for the current message.
    *
-   * @param string the group id
-   *
-   * @return $this
+   * @param string $groupId
+   * @return object $this
    */
   public function setAsmGroupId($groupId) {
     $this->smtpapi->setASMGroupID($groupId);
@@ -547,6 +580,13 @@ class Email {
     return $this;
   }
 
+  /**
+   * Add  multiple attachments to the current message. Supply an array of
+   * absolute file paths.
+   *
+   * @param array $files
+   * @return object $this
+   */
   public function setAttachments(array $files) {
     $this->attachments = [];
 
@@ -562,22 +602,50 @@ class Email {
     return $this;
   }
 
+  /**
+   * Set an attachment to the current message. Supply a string of an absolute
+   * file path. May provide a custom filename as a string and an ID number.
+   *
+   * @param string $file
+   * @param string $custom_filename
+   * @param string $cid
+   * @return object $this
+   */
   public function setAttachment($file, $custom_filename = NULL, $cid = NULL) {
     $this->attachments = [$this->getAttachmentInfo($file, $custom_filename, $cid)];
 
     return $this;
   }
 
+  /**
+   * Add additional attachments to the current message.
+   *
+   * @param string $file
+   * @param string $custom_filename
+   * @param string $cid
+   * @return object $this
+   */
   public function addAttachment($file, $custom_filename = NULL, $cid = NULL) {
     $this->attachments[] = $this->getAttachmentInfo($file, $custom_filename, $cid);
 
     return $this;
   }
 
+  /**
+   * Retun an array of the attachments on the current message.
+   *
+   * @return array $this->attachments
+   */
   public function getAttachments() {
     return $this->attachments;
   }
 
+  /**
+   * Remove an attachment from the current message.
+   *
+   * @param string $file
+   * @return object $this
+   */
   public function removeAttachment($file) {
     $this->_removeFromList($this->attachments, $file, "file");
 
@@ -606,24 +674,49 @@ class Email {
     return $info;
   }
 
+  /**
+   * Set multiple catagories for the current message. Overwrites existing
+   * catagories.
+   *
+   * @param array $categories
+   * @return object $this
+   */
   public function setCategories($categories) {
     $this->smtpapi->setCategories($categories);
 
     return $this;
   }
 
+  /**
+   * Set a catagory for the current message. Overwrites existing catagories.
+   *
+   * @param string $category
+   * @return object $this
+   */
   public function setCategory($category) {
     $this->smtpapi->setCategory($category);
 
     return $this;
   }
 
+  /**
+   * Add a category to the existing catagories.
+   *
+   * @param string $category
+   * @return object $this
+   */
   public function addCategory($category) {
     $this->smtpapi->addCategory($category);
 
     return $this;
   }
 
+  /**
+   * Remove a category from the message.
+   *
+   * @param string $category
+   * @return object $this
+   */
   public function removeCategory($category) {
     $this->smtpapi->removeCategory($category);
 
@@ -736,6 +829,11 @@ class Email {
     return $this;
   }
 
+  /**
+   * Return the entire Smtpapi header.
+   *
+   * @return \Smtpapi\Header
+   */
   public function getSmtpapi() {
     return $this->smtpapi;
   }
@@ -745,7 +843,7 @@ class Email {
    * object into a format that can be used for transport by Guzzle. This is the
    * last step before sending an email
    *
-   * @return array
+   * @return array $web
    */
   public function toWebFormat() {
     $web = [
