@@ -10,10 +10,10 @@ This API is maintained in support of the [Drupal Sendgrid Integration Module](ht
 
 ## Forked Release Notes ##
 
-v1.0.4 - Allows for attachments to email.
-v1.0.3 - Returned the method getTos() for debugging messages before sending.
-v1.0.2 - Documentation Changes.
-v1.0.1 - Initial Release.
+* v1.0.4 - Allows for attachments to email.
+* v1.0.3 - Returned the method getTos() for debugging messages before sending.
+* v1.0.2 - Documentation Changes.
+* v1.0.1 - Initial Release.
 
 ## Notes from Sendgrid official library
 
