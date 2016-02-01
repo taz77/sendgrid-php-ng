@@ -905,7 +905,3 @@ or if you already have PHPUnit installed globally.
 cd test
 phpunit
 ```
-
-## Releasing
-
-To release a new version of this library, update the version in all locations, tag the version, and then push the tag up. Packagist.org takes care of the rest.
