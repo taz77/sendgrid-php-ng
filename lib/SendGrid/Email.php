@@ -723,43 +723,111 @@ class Email {
     return $this;
   }
 
-  public function setSubstitutions($key_value_pairs) {
+  /**
+   * Set multimple substitutions for the current message. The key of the array
+   * is the needle in the haystack of the substitution (search phrase). This
+   * overrides any existing substitutions. These values are specific to a
+   * user. Can be used for demographics substitutions such as "First Name"
+   *
+   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html
+   *
+   * @param array $key_value_pairs
+   * @return object $this
+   */
+  public function setSubstitutions(array $key_value_pairs) {
     $this->smtpapi->setSubstitutions($key_value_pairs);
 
     return $this;
   }
 
+  /**
+   * Add a substitution to the existng message. Supply the search phrase and an
+   * array of values to use as a substitution. One to many relation. These
+   * are values specific to users such as demographics (First Name, Contact
+   * phone, etc.).
+   *
+   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html
+   *
+   * @param string $from_value
+   * @param array $to_values
+   * @return object $this
+   */
   public function addSubstitution($from_value, array $to_values) {
     $this->smtpapi->addSubstitution($from_value, $to_values);
 
     return $this;
   }
 
+  /**
+   * Set the sections substitutions for the current message. This overrides any
+   * exisitng settings for sections. Sections are substitutions of text in the
+   * message that are not user specific.
+   *
+   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html
+   *
+   * @param array $key_value_pairs
+   * @return $this
+   */
   public function setSections(array $key_value_pairs) {
     $this->smtpapi->setSections($key_value_pairs);
 
     return $this;
   }
 
+  /**
+   * Add a section to the current message. This does not override existing
+   * settings for sections. Sections are text replacements within the message
+   * that are not specific to the user.
+   *
+   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html
+   * @param string $from_value
+   * @param array $to_value
+   * @return object $this
+   */
   public function addSection($from_value, $to_value) {
     $this->smtpapi->addSection($from_value, $to_value);
 
     return $this;
   }
 
+  /**
+   * Set the unique arguments for the message. Unique arguments are used to help
+   * generate reports and sort messages in the Sendgrid UI. This will override
+   * any existing settings for UniqueArgs in the current message. Arguements
+   * have values and can be substituted as well Supply an array of arguements
+   * and values. Keys of the array are the name of the arguments.
+   *
+   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/unique_arguments.html
+   *
+   * @param array $key_value_pairs
+   * @return object $this
+   */
   public function setUniqueArgs(array $key_value_pairs) {
     $this->smtpapi->setUniqueArgs($key_value_pairs);
 
     return $this;
   }
 
-  ## synonym method
+  /**
+   * Synonyum function to set unique arguements.
+   *
+   * @see function setUniqueArgs()
+   *
+   * @param array $key_value_pairs
+   * @return $this
+   */
   public function setUniqueArguments(array $key_value_pairs) {
     $this->smtpapi->setUniqueArgs($key_value_pairs);
 
     return $this;
   }
 
+  /**
+   * Add a unique argument to the current message.
+   * @param string $key
+   * @param string $value
+   * @return object $this
+   */
   public function addUniqueArg($key, $value) {
     $this->smtpapi->addUniqueArg($key, $value);
 
