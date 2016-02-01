@@ -4,11 +4,16 @@
 
 This library allows you to quickly and easily send emails through SendGrid using PHP with the help of Guzzle 6.x. This development was to support the new PSR messaging standard in PHP that is implemented in Guzzle 6.x
 
-This module inherits the updates from the official Sendgrid library that were introduced in version 3.x
+This module inherits the updates from the official Sendgrid library that were introduced in version 3.x of the official API.
+
+This API is maintained in support of the [Drupal Sendgrid Integration Module](https://www.drupal.org/project/sendgrid_integration) that I also maintain. Drupal 8 ships with Guzzle 6.x in the core of the software and Guzzle 6.x supports the standardization of PSR messages. The official Sendgrid PHP API supports only the deprecated Guzzle 3.x as they are maintaining support for PHP 5.3.
 
 ## Forked Release Notes ##
 
 v1.0.4 - Allows for attachments to email.
+v1.0.3 - Returned the method getTos() for debugging messages before sending.
+v1.0.2 - Documentation Changes.
+v1.0.1 - Initial Release.
 
 ## Notes from Sendgrid official library
 
@@ -76,17 +81,16 @@ require 'vendor/autoload.php';
 
 #### Alternative: Install from zip
 
-If you are not using Composer, simply download and install the **[latest packaged release of the library as a zip](https://sendgrid-open-source.s3.amazonaws.com/sendgrid-php/sendgrid-php.zip)**. 
+If you are not using Composer, simply download and install the **[latest packaged release of the library as a zip](https://github.com/taz77/sendgrid-php-ng/archive/master.zip)**. 
 
-[**⬇︎ Download Packaged Library ⬇︎**](https://sendgrid-open-source.s3.amazonaws.com/sendgrid-php/sendgrid-php.zip)
+[**⬇︎ Download Packaged Library ⬇︎**]https://github.com/taz77/sendgrid-php-ng/archive/master.zip)
 
 Then require the library from package:
 
 ```php
-require("path/to/sendgrid-php/sendgrid-php.php");
+require("path/to/sendgrid-php-ng/sendgrid-php.php");
 ```
 
-Previous versions of the library can be found in the [version index](https://sendgrid-open-source.s3.amazonaws.com/index.html).
 
 ## Example App
 
@@ -905,15 +909,3 @@ phpunit
 ## Releasing
 
 To release a new version of this library, update the version in all locations, tag the version, and then push the tag up. Packagist.org takes care of the rest.
-
-#### Testing uploading to Amazon S3
-
-If you want to test uploading the zipped file to Amazon S3 (SendGrid employees only), do the following.
-
-```
-export S3_SIGNATURE="secret_signature"
-export S3_POLICY="secret_policy"
-export S3_BUCKET="sendgrid-open-source"
-export S3_ACCESS_KEY="secret_access_key"
-./scripts/s3upload.sh
-```
