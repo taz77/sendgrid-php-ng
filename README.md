@@ -2,18 +2,13 @@
 
 **This is a forked version of SendGrid-PHP which uses Guzzle 6.x**
 
+[![BuildStatus](https://travis-ci.org/taz77/sendgrid-php-ng.svg?branch=master)](https://travis-ci.org/taz77/sendgrid-php-ng)
+
 This library allows you to quickly and easily send emails through SendGrid using PHP with the help of Guzzle 6.x. This development was to support the new PSR messaging standard in PHP that is implemented in Guzzle 6.x
 
 This module inherits the updates from the official Sendgrid library that were introduced in version 3.x of the official API.
 
 This API is maintained in support of the [Drupal Sendgrid Integration Module](https://www.drupal.org/project/sendgrid_integration) that I also maintain. Drupal 8 ships with Guzzle 6.x in the core of the software and Guzzle 6.x supports the standardization of PSR messages. The official Sendgrid PHP API supports only the deprecated Guzzle 3.x as they are maintaining support for PHP 5.3.
-
-## Forked Release Notes ##
-
-* v1.0.4 - Allows for attachments to email.
-* v1.0.3 - Returned the method getTos() for debugging messages before sending.
-* v1.0.2 - Documentation Changes.
-* v1.0.1 - Initial Release.
 
 ## Notes from Sendgrid official library
 
@@ -32,8 +27,6 @@ The `send()` method now raises a `\SendGrid\Exception` by default if the respons
 ---
 
 Important: This library requires PHP 5.5 or higher.
-
-[![BuildStatus](https://travis-ci.org/taz77/sendgrid-php.svg?branch=master)](https://travis-ci.org/taz77/sendgrid-php.svg?branch=master)
 
 
 ```php
