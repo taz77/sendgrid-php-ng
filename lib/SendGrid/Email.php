@@ -2,6 +2,11 @@
 
 namespace SendGrid;
 
+/**
+ * Class Email
+ * @package SendGrid
+ */
+
 class Email {
   public
     $to,
@@ -22,6 +27,9 @@ class Email {
     $smtpapi,
     $attachments;
 
+  /**
+   * Email constructor.
+   */
   public function __construct() {
     $this->fromName = FALSE;
     $this->replyTo = FALSE;
@@ -29,12 +37,12 @@ class Email {
   }
 
   /**
-   * _removeFromList
-   * Given a list of key/value pairs, removes the associated keys
-   * where a value matches the given string ($item)
+   * Given a list of key/value pairs (passed as a reference, removes the
+   * associated keys where a value matches the given string ($item)
    *
    * @param array $list - the list of key/value pairs
    * @param string $item - the value to be removed
+   * @param string $key_field
    */
   private function _removeFromList(&$list, $item, $key_field = NULL) {
     foreach ($list as $key => $val) {
@@ -834,43 +842,99 @@ class Email {
     return $this;
   }
 
-  ## synonym method
+  /**
+   * Synonym function for adding unique arguments.
+   *
+   * @see function addUniqueArg()
+   *
+   * @param string $key
+   * @param string $value
+   * @return object $this
+   */
   public function addUniqueArgument($key, $value) {
     $this->smtpapi->addUniqueArg($key, $value);
 
     return $this;
   }
 
-  public function setFilters($filter_settings) {
+  /**
+   * Turn on multiple filters (Apps) for a message. Takes an array of apps and
+   * their settings refer to the documentation below for the array
+   * structure and options offered. This overrides any Filters set.
+   *
+   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/apps.html
+   *
+   * @param array $filter_settings
+   * @return object $this
+   */
+  public function setFilters(array $filter_settings) {
     $this->smtpapi->setFilters($filter_settings);
 
     return $this;
   }
 
-  ## synonym method
-  public function setFilterSettings($filter_settings) {
+  /**
+   * Synonym function to set filters/apps.
+   *
+   * @see function setFilters()
+   *
+   * @param array $filter_settings
+   * @return object $this
+   */
+  public function setFilterSettings(array $filter_settings) {
     $this->smtpapi->setFilters($filter_settings);
 
     return $this;
   }
 
+  /**
+   * This is used to add a filter (App) to a message. Must provide the App name
+   * paramater name and paramater value.
+   *
+   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/apps.html
+   *
+   * @param string $filter_name
+   * @param string $parameter_name
+   * @param string $parameter_value
+   * @return object $this
+   */
   public function addFilter($filter_name, $parameter_name, $parameter_value) {
     $this->smtpapi->addFilter($filter_name, $parameter_name, $parameter_value);
 
     return $this;
   }
 
-  ## synonym method
+  /**
+   * Synonym function for adding Apps to a message.
+   *
+   * @see function addFilter().
+   *
+   * @param string $filter_name
+   * @param string $parameter_name
+   * @param string $parameter_value
+   * @return object $this
+   */
   public function addFilterSetting($filter_name, $parameter_name, $parameter_value) {
     $this->smtpapi->addFilter($filter_name, $parameter_name, $parameter_value);
 
     return $this;
   }
 
+  /**
+   * Return the headers for the current message. Returns an array of keys (names)
+   * and values for all of the message headers.
+   *
+   * @return array $this->headers
+   */
   public function getHeaders() {
     return $this->headers;
   }
 
+  /**
+   * If headers are set it returns them as JSON.
+   *
+   * @return null|string
+   */
   public function getHeadersJson() {
     if (count($this->getHeaders()) <= 0) {
       return NULL;
@@ -885,12 +949,25 @@ class Email {
     return $this;
   }
 
+  /**
+   * Add a header item to the current message.
+   *
+   * @param string $key
+   * @param string $value
+   * @return object $this
+   */
   public function addHeader($key, $value) {
     $this->headers[$key] = $value;
 
     return $this;
   }
 
+  /**
+   * Remove a header item from the current message.
+   *
+   * @param string $key
+   * @return object $this
+   */
   public function removeHeader($key) {
     unset($this->headers[$key]);
 
