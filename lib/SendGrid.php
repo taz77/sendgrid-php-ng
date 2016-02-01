@@ -2,6 +2,9 @@
 
 use GuzzleHttp\Exception\ClientException;
 
+/**
+ * Class SendGrid
+ */
 class SendGrid {
   const VERSION = '1.0.4';
 
@@ -18,6 +21,12 @@ class SendGrid {
     $endpoint,
     $version = self::VERSION;
 
+  /**
+   * SendGrid constructor.
+   * @param $apiUserOrKey
+   * @param null $apiKeyOrOptions
+   * @param array $options
+   */
   public function __construct($apiUserOrKey, $apiKeyOrOptions = NULL, $options = []) {
     // Check if given a username + password or api key.
     if (is_string($apiKeyOrOptions)) {
@@ -85,19 +94,22 @@ class SendGrid {
   }
 
   /**
-   * @return array The protected options array
+   * Return the options set in the Sendgrid object. Returns and array of
+   * protected options.
+   *
+   * @return array $this->options
    */
   public function getOptions() {
     return $this->options;
   }
 
   /**
-   * Makes a post request to SendGrid to send an email
+   * Makes a post request to SendGrid to send an email from an email object.
+   * Returns response codes after sending and will throw exceptions on faults.
    *
-   * @param SendGrid\Email $email Email object built
-   *
-   * @throws SendGrid\Exception if the response code is not 200
-   * @return stdClass SendGrid response object
+   * @param \SendGrid\Email $email
+   * @return \SendGrid\Response
+   * @throws \SendGrid\Exception
    */
   public function send(SendGrid\Email $email) {
     $form = $email->toWebFormat();
@@ -117,12 +129,12 @@ class SendGrid {
   }
 
   /**
-   * Makes the actual HTTP request to SendGrid
+   * Makes the actual HTTP request to SendGrid using Guzzle. The form is an
+   * array of ready options for SendGrid email.
    *
-   * @param $endpoint string endpoint to post to
-   * @param $form array web ready version of SendGrid\Email
-   *
-   * @return SendGrid\Response
+   * @param string $endpoint
+   * @param array $form
+   * @return bool|\SendGrid\Response
    */
   public function postRequest($endpoint, $form) {
     $requestoptions = [];
@@ -176,7 +188,8 @@ class SendGrid {
 
   /**
    * Prepare a request to be submitted as multipart.
-   * @param $data
+   *
+   * @param array $data
    * @return array $message
    */
   public function prepareMultipart($data) {
