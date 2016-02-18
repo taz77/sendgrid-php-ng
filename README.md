@@ -10,6 +10,16 @@ This module inherits the updates from the official Sendgrid library that were in
 
 This API is maintained in support of the [Drupal Sendgrid Integration Module](https://www.drupal.org/project/sendgrid_integration) that I also maintain. Drupal 8 ships with Guzzle 6.x in the core of the software and Guzzle 6.x supports the standardization of PSR messages. The official Sendgrid PHP API supports only the deprecated Guzzle 3.x as they are maintaining support for PHP 5.3.
 
+Interfacing with this library is exactly the same as interfacing with the official library. The API calls are the same, just the dependencies and the internal processing of the data has been altered for Guzzle 6.x.
+
+To install this library it is best to use composer. I have published a package through Packagist for this library. Use the following in your composer.json:
+
+``` php
+"require": {
+    "fastglass/sendgrid": ">=1.0.4"
+  }
+```
+
 ## Notes from Sendgrid official library
 
 WARNING: This module was recently upgraded from [2.2.x](https://github.com/sendgrid/sendgrid-php/tree/v2.2.1) to 3.X. There were API breaking changes for various method names. See [usage](https://github.com/sendgrid/sendgrid-php#usage) for up to date method names.
