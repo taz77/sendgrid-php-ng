@@ -20,6 +20,9 @@
   },
   "type": "library",
   "autoload": {
-    "psr-4": {"Sendgrid\\": "lib/"}
+    "psr-4": {
+      "SendGrid\\": "src"
+    }
   }
+
 }
