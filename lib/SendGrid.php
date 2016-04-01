@@ -29,13 +29,7 @@ class SendGrid {
    */
   public function __construct($apiUserOrKey, $apiKeyOrOptions = NULL, $options = []) {
     // Check if given a username + password or api key.
-    if (is_string($apiKeyOrOptions)) {
-      // Username and password.
-      $this->apiUser = $apiUserOrKey;
-      $this->apiKey = $apiKeyOrOptions;
-      $this->options = $options;
-    }
-    elseif (is_array($apiKeyOrOptions) || $apiKeyOrOptions === NULL) {
+    if (is_array($apiKeyOrOptions) || $apiKeyOrOptions === NULL) {
       // API key.
       $this->apiKey = $apiUserOrKey;
       $this->apiUser = NULL;
@@ -47,7 +41,7 @@ class SendGrid {
     }
     else {
       // Won't be thrown?
-      throw new InvalidArgumentException('Need a username + password or api key!');
+      throw new InvalidArgumentException('Need an api key!');
     }
 
     $this->options['turn_off_ssl_verification'] = (isset($this->options['turn_off_ssl_verification']) && $this->options['turn_off_ssl_verification'] == TRUE);
