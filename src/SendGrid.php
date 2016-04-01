@@ -1,6 +1,6 @@
 <?php
 
-namespace SendGrid;
+
 use GuzzleHttp\Exception\ClientException;
 
 

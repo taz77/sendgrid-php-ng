@@ -1,6 +1,6 @@
 <?php
 
-namespace SendGrid\Response;
+namespace SendGrid;
 
 /**
  * Class Response

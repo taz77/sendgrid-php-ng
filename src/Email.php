@@ -1,6 +1,6 @@
 <?php
 
-namespace SendGrid\Email;
+namespace SendGrid;
 
 /**
  * Class Email

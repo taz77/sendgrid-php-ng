@@ -1,6 +1,6 @@
 <?php
 
-namespace SendGrid\Exception;
+namespace SendGrid;
 
 /**
  * Class Exception
