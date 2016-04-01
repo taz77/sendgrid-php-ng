@@ -20,31 +20,31 @@ class SendGridTest_SendGrid extends PHPUnit_Framework_TestCase {
   }
 
   public function testInitWithApiKey() {
-    $sendgrid = new SendGrid('token1234');
+    $sendgrid = new SendGrid('token123456789');
     $this->assertEquals('SendGrid', get_class($sendgrid));
     $this->assertNull($sendgrid->apiUser);
-    $this->assertEquals($sendgrid->apiKey, 'token1234');
+    $this->assertEquals($sendgrid->apiKey, 'token123456789');
   }
 
   public function testInitWithApiKeyOptions() {
-    $sendgrid = new SendGrid('token1234', ['foo' => 'bar']);
+    $sendgrid = new SendGrid('token123456789', ['foo' => 'bar']);
     $this->assertEquals('SendGrid', get_class($sendgrid));
   }
 
   public function testInitWithProxyOption() {
-    $sendgrid = new SendGrid('token1234', ['proxy' => 'myproxy.net:3128']);
+    $sendgrid = new SendGrid('token123456789', ['proxy' => 'myproxy.net:3128']);
     $this->assertEquals('SendGrid', get_class($sendgrid));
     $options = $sendgrid->getOptions();
     $this->assertTrue(isset($options['proxy']));
   }
 
   public function testDefaultURL() {
-    $sendgrid = new SendGrid('token1234');
+    $sendgrid = new SendGrid('token123456789');
     $this->assertEquals('https://api.sendgrid.com', $sendgrid->url);
   }
 
   public function testDefaultEndpoint() {
-    $sendgrid = new SendGrid('token1234');
+    $sendgrid = new SendGrid('token123456789');
     $this->assertEquals('/api/mail.send.json', $sendgrid->endpoint);
 
   }
@@ -56,12 +56,12 @@ class SendGridTest_SendGrid extends PHPUnit_Framework_TestCase {
       'endpoint' => '/send',
       'port' => '80',
     ];
-    $sendgrid = new SendGrid('user', 'pass', $options);
+    $sendgrid = new SendGrid('token123456789', $options);
     $this->assertEquals('http://sendgrid.org:80', $sendgrid->url);
   }
 
   public function testSwitchOffSSLVerification() {
-    $sendgrid = new SendGrid('token1234', ['turn_off_ssl_verification' => TRUE]);
+    $sendgrid = new SendGrid('token123456789', ['turn_off_ssl_verification' => TRUE]);
     $options = $sendgrid->getOptions();
     $this->assertTrue(isset($options['turn_off_ssl_verification']));
   }
@@ -75,7 +75,7 @@ class SendGridTest_SendGrid extends PHPUnit_Framework_TestCase {
       'raw_body' => "{'message': 'error', 'errors': ['Bad username / password']}",
     ];
 
-    $sendgrid = m::mock('SendGrid[postRequest]', ['foo', 'bar']);
+    $sendgrid = m::mock('SendGrid[postRequest]', ['token123456789']);
     $sendgrid->shouldReceive('postRequest')
       ->once()
       ->andReturn($mockResponse);
@@ -96,8 +96,7 @@ class SendGridTest_SendGrid extends PHPUnit_Framework_TestCase {
     ];
 
     $sendgrid = m::mock('SendGrid[postRequest]', [
-      'foo',
-      'bar',
+      'token123456789',
       ['raise_exceptions' => FALSE],
     ]);
     $sendgrid->shouldReceive('postRequest')
@@ -119,7 +118,7 @@ class SendGridTest_SendGrid extends PHPUnit_Framework_TestCase {
       'body' => (object) ['message' => 'success'],
     ];
 
-    $sendgrid = m::mock('SendGrid[postRequest]', ['foo', 'bar']);
+    $sendgrid = m::mock('SendGrid[postRequest]', ['token123456789']);
     $sendgrid->shouldReceive('postRequest')
       ->once()
       ->andReturn($mockResponse);
