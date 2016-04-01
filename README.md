@@ -20,6 +20,10 @@ To install this library it is best to use composer. I have published a package t
   }
 ```
 
+## Example Code
+
+If you would like to look at some example code for using this library, clone [this](https://github.com/Fastglass-LLC/sendgrid-php-example) repository.
+
 ## Notes from Sendgrid official library
 
 WARNING: This module was recently upgraded from [2.2.x](https://github.com/sendgrid/sendgrid-php/tree/v2.2.1) to 3.X. There were API breaking changes for various method names. See [usage](https://github.com/sendgrid/sendgrid-php#usage) for up to date method names.
