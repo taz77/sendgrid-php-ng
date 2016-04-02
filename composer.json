@@ -21,7 +21,7 @@
   "type": "library",
   "autoload": {
     "psr-4": {
-      "SendGrid\\": "src"
+      "fastglass\\SendGrid\\": "src"
     }
   }
 
