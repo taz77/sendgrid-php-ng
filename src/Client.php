@@ -170,11 +170,12 @@ class Client {
     return $response;
   }
 
-  public static function register_autoloader() {
-    spl_autoload_register(['SendGrid', 'autoloader']);
+  public function register_autoloader() {
+    spl_autoload_register([$this, 'autoloader']);
+    //spl_autoload_register(__NAMESPACE__ . '\Client::autoloader');
   }
 
-  public static function autoloader($class) {
+  public function autoloader($class) {
     // Check that the class starts with 'SendGrid'
     if ($class == 'SendGrid' || stripos($class, 'SendGrid\\') === 0) {
       $file = str_replace('\\', '/', $class);
