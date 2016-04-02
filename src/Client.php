@@ -107,9 +107,9 @@ class Client {
    * Makes a post request to SendGrid to send an email from an email object.
    * Returns response codes after sending and will throw exceptions on faults.
    *
-   * @param \SendGrid\Email $email
-   * @return \SendGrid\Response
-   * @throws \SendGrid\Exception
+   * @param \Email $email
+   * @return \Response
+   * @throws \Exception
    */
   public function send(\Email $email) {
     $form = $email->toWebFormat();
@@ -134,7 +134,7 @@ class Client {
    *
    * @param string $endpoint
    * @param array $form
-   * @return bool|\SendGrid\Response
+   * @return bool|\Response
    */
   public function postRequest($endpoint, $form) {
     $requestoptions = [];
