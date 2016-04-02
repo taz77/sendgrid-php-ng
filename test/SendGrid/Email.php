@@ -1,5 +1,7 @@
 <?php
 
+use SendGrid;
+
 class SendGridTest_Email extends PHPUnit_Framework_TestCase {
 
   public function testConstructionEmail() {
