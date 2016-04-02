@@ -106,11 +106,11 @@ class Client {
    * Makes a post request to SendGrid to send an email from an email object.
    * Returns response codes after sending and will throw exceptions on faults.
    *
-   * @param \Email $email
-   * @return \Response
-   * @throws \Exception
+   * @param \SendGrid\Email $email
+   * @return \SendGrid\Response
+   * @throws \SendGrid\Exception
    */
-  public function send(\Email $email) {
+  public function send(\SendGrid\Email $email) {
     $form = $email->toWebFormat();
     // Adding API keys to header.
     if ($this->apiUser !== NULL) {
@@ -121,7 +121,7 @@ class Client {
     $response = $this->postRequest($this->endpoint, $form);
 
     if ($response->code != 200 && $this->options['raise_exceptions']) {
-      throw new \Exception($response->raw_body, $response->code);
+      throw new \SendGrid\Exception($response->raw_body, $response->code);
     }
 
     return $response;
@@ -133,7 +133,7 @@ class Client {
    *
    * @param string $endpoint
    * @param array $form
-   * @return bool|\Response
+   * @return bool|\SendGrid\Response
    */
   public function postRequest($endpoint, $form) {
     $requestoptions = [];
@@ -165,7 +165,7 @@ class Client {
       echo '</pre>';
       return FALSE;
     }
-    $response = new \Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(TRUE), json_decode($res->getBody(TRUE)));
+    $response = new \SendGrid\Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(TRUE), json_decode($res->getBody(TRUE)));
 
     return $response;
   }
