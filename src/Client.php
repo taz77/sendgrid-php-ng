@@ -111,7 +111,7 @@ class Client {
    * @return \SendGrid\Response
    * @throws \SendGrid\Exception
    */
-  public function send(SendGrid\Email $email) {
+  public function send(\Email $email) {
     $form = $email->toWebFormat();
     // Adding API keys to header.
     if ($this->apiUser !== NULL) {
@@ -122,7 +122,7 @@ class Client {
     $response = $this->postRequest($this->endpoint, $form);
 
     if ($response->code != 200 && $this->options['raise_exceptions']) {
-      throw new SendGrid\Exception($response->raw_body, $response->code);
+      throw new \Exception($response->raw_body, $response->code);
     }
 
     return $response;
@@ -166,7 +166,7 @@ class Client {
       echo '</pre>';
       return FALSE;
     }
-    $response = new SendGrid\Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(TRUE), json_decode($res->getBody(TRUE)));
+    $response = new \Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(TRUE), json_decode($res->getBody(TRUE)));
 
     return $response;
   }
