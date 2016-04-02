@@ -1,5 +1,5 @@
 <?php
-
+namespace SendGrid;
 
 use GuzzleHttp\Exception\ClientException;
 
@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\ClientException;
 /**
  * Class SendGrid
  */
-class SendGrid {
+class Client {
   const VERSION = '1.0.4';
 
   protected
