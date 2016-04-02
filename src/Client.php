@@ -2,7 +2,9 @@
 namespace SendGrid;
 
 use GuzzleHttp\Exception\ClientException;
-
+use SendGrid\Email;
+use SendGrid\Exception;
+use SendGrid\Response;
 
 
 /**
