@@ -25,9 +25,11 @@ class Client {
 
   /**
    * SendGrid constructor.
+   *
    * @param $apiUserOrKey
    * @param null $apiKeyOrOptions
    * @param array $options
+   * @throws string
    */
   public function __construct($apiUserOrKey, $apiKeyOrOptions = NULL, $options = []) {
     // Check if given a username + password or api key.
