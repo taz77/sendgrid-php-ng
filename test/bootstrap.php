@@ -3,9 +3,8 @@
 include(dirname(dirname(__FILE__)) . '/src/Client.php');
 require __DIR__ . '/../vendor/autoload.php';
 
-use SendGrid;
 
-SendGrid::register_autoloader();
+\SendGrid\Client::register_autoloader();
 
 function autoload_tests($class)
 {
