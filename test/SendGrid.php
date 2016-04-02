@@ -15,8 +15,8 @@ class SendGridTest_SendGrid extends PHPUnit_Framework_TestCase {
    * Test the version number.
    */
   public function testVersion() {
-    $this->assertEquals(SendGrid::VERSION, '1.0.4');
-    $this->assertEquals(json_decode(file_get_contents('../composer.json'))->version, SendGrid::VERSION);
+    $this->assertEquals(SendGrid\Client::VERSION, '1.0.4');
+    $this->assertEquals(json_decode(file_get_contents('../composer.json'))->version, SendGrid\Client::VERSION);
   }
 
   public function testInitWithApiKey() {
