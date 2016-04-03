@@ -170,8 +170,8 @@ class Client {
     return $response;
   }
 
-  public function register_autoloader() {
-    spl_autoload_register([$this, 'autoloader']);
+  public static function register_autoloader() {
+    spl_autoload_register(['SendGrid/Client', 'autoloader']);
     //spl_autoload_register(__NAMESPACE__ . '\Client::autoloader');
   }
 
