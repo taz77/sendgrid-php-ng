@@ -5,6 +5,13 @@
   "homepage": "https://github.com/taz77/sendgrid-php",
   "license": "MIT",
   "keywords": ["SendGrid", "sendgrid", "email", "send", "grid"],
+  "authors": [
+    {
+      "name": "Brady Owens",
+      "email": "brady@fastglass.net",
+      "homepage": "https://github.com/taz77"
+    }
+  ],
   "require": {
     "php": ">=5.5.0",
     "sendgrid/smtpapi": "~0.5",
