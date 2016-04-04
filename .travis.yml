@@ -3,7 +3,7 @@ before_script:
 - composer self-update
 - composer install --dev --no-interaction
 - phpenv local --unset
-- cd test
+- cd tests
 script:
 - "../vendor/bin/phpunit --coverage-clover clover.xml"
 after_script:
