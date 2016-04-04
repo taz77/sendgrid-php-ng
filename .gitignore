@@ -1,4 +1,4 @@
-test/coverage/*
+tests/coverage/*
 examples/*
 dist/
 composer.lock
