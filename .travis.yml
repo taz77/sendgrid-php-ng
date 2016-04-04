@@ -2,14 +2,13 @@ language: php
 before_script:
 - composer self-update
 - composer install --dev --no-interaction
-- phpenv local --unset
-- cd tests
+#- phpenv local --unset
 script:
-- "../vendor/bin/phpunit --coverage-clover clover.xml"
+- vendor/bin/phpunit --coverage-clover clover.xml
 after_script:
-- cd ..
-- phpenv local 5.5
-- phpenv local --unset
+#- cd ..
+#- phpenv local 5.5
+#- phpenv local --unset
 php:
 - 5.5
 - 5.6
