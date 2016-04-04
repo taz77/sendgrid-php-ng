@@ -2,7 +2,7 @@
 <phpunit colors="true">
   <testsuites>
     <testsuite name = "SendGrid Testing">
-      <directory>./test</directory>
+      <directory>./tests</directory>
     </testsuite>
   </testsuites>
 </phpunit>
