@@ -1,6 +1,5 @@
 <?php
-
-use SendGrid;
+namespace SendGrid\Tests;
 
 class SendGridTest_Exception extends PHPUnit_Framework_TestCase {
 

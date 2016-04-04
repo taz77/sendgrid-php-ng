@@ -23,6 +23,11 @@
     "psr-4": {
       "SendGrid\\": "src"
     }
-  }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SendGrid\\Tests\\": "tests"
+    }
+  },
 
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace SendGrid\Tests;
+
 use \Mockery as m;
 
 class SendGridTest_Client extends PHPUnit_Framework_TestCase {

@@ -1,6 +1,6 @@
 <?php
 
-use SendGrid;
+namespace SendGrid\Tests;
 
 class SendGridTest_Email extends PHPUnit_Framework_TestCase {
 
