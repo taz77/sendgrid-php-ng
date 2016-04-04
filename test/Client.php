@@ -2,7 +2,7 @@
 
 use \Mockery as m;
 
-class SendGridTest_SendGrid extends PHPUnit_Framework_TestCase {
+class SendGridTest_Client extends PHPUnit_Framework_TestCase {
 
   /**
    * Tear down test.
