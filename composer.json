@@ -28,6 +28,5 @@
     "psr-4": {
       "SendGrid\\Tests\\": "tests"
     }
-  },
-
+  }
 }
