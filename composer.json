@@ -4,7 +4,13 @@
   "version": "1.0.4",
   "homepage": "https://github.com/taz77/sendgrid-php",
   "license": "MIT",
-  "keywords": ["SendGrid", "sendgrid", "email", "send", "grid"],
+  "keywords": [
+    "SendGrid",
+    "sendgrid",
+    "email",
+    "send",
+    "grid"
+  ],
   "require": {
     "php": ">=5.5.0",
     "sendgrid/smtpapi": "~0.5",
@@ -21,12 +27,16 @@
   "type": "library",
   "autoload": {
     "psr-4": {
-      "SendGrid\\": "src"
+      "SendGrid\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SendGrid\\Tests\\": "tests"
+      "SendGrid\\Tests\\": "tests/"
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-ci": "vendor/bin/phpunit --coverage-text"
   }
 }
