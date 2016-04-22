@@ -23,19 +23,19 @@ class SendGridTest_Client extends \PHPUnit_Framework_TestCase {
 
   public function testInitWithApiKey() {
     $sendgrid = new \SendGrid\Client('token123456789');
-    $this->assertEquals('SendGrid', get_class($sendgrid));
+    $this->assertEquals('SendGrid\Client', get_class($sendgrid));
     $this->assertNull($sendgrid->apiUser);
     $this->assertEquals($sendgrid->apiKey, 'token123456789');
   }
 
   public function testInitWithApiKeyOptions() {
     $sendgrid = new \SendGrid\Client('token123456789', ['foo' => 'bar']);
-    $this->assertEquals('SendGrid', get_class($sendgrid));
+    $this->assertEquals('SendGrid\Client', get_class($sendgrid));
   }
 
   public function testInitWithProxyOption() {
     $sendgrid = new \SendGrid\Client('token123456789', ['proxy' => 'myproxy.net:3128']);
-    $this->assertEquals('SendGrid', get_class($sendgrid));
+    $this->assertEquals('SendGrid\Client', get_class($sendgrid));
     $options = $sendgrid->getOptions();
     $this->assertTrue(isset($options['proxy']));
   }

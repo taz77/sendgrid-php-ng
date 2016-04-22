@@ -7,10 +7,10 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
   public function testConstruction() {
     $sendgrid = new \SendGrid\Client('token123456789');
 
-    $web = $sendgrid->web;
+    //$web = $sendgrid->web;
 
-    $this->assertEquals(new \SendGrid\Web('token123456789'), $web);
-    $this->assertEquals(get_class($web), '\SendGrid\Web');
+    $this->assertEquals(new \SendGrid\Client('token123456789'), $sendgrid);
+    $this->assertEquals(get_class($sendgrid), 'SendGrid\Client');
   }
 
   public function testSendResponse() {
@@ -22,9 +22,9 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setText('foobar text')
       ->addTo('foo@bar.com');
 
-    $response = $sendgrid->web->send($email);
+    $response = $sendgrid->send($email);
 
-    $this->assertEquals('Bad username / password', $response->errors[0]);
+    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $response->errors[0]);
   }
 
   public function testSendResponseWithAttachment() {
@@ -35,11 +35,11 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setSubject('foobar subject')
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
-      ->addAttachment('./gif.gif');
+      ->addAttachment('./tests/gif.gif');
 
-    $response = $sendgrid->web->send($email);
+    $response = $sendgrid->send($email);
 
-    $this->assertEquals("Bad username / password", $response->errors[0]);
+    $this->assertEquals('Bad username / password', $response->errors[0]);
   }
 
   public function testSendResponseWithAttachmentMissingExtension() {
@@ -50,26 +50,26 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setSubject('foobar subject')
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
-      ->addAttachment('./text');
+      ->addAttachment('./tests/text');
 
-    $response = $sendgrid->web->send($email);
+    $response = $sendgrid->send($email);
 
-    $this->assertEquals("Bad username / password", $response->errors[0]);
+    $this->assertEquals('Bad username / password', $response->errors[0]);
   }
 
   public function testSendResponseWithSslOptionFalse() {
-    $sendgrid = new \SendGrid\Client('token123456789', ["switch_off_ssl_verification" => TRUE]);
+    $sendgrid = new \SendGrid\Client('token123456789', ['switch_off_ssl_verification' => TRUE]);
 
     $email = new \SendGrid\Email();
     $email->setFrom('p1@mailinator.com')
       ->setSubject('foobar subject')
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
-      ->addAttachment('./text');
+      ->addAttachment('./tests/text');
 
-    $response = $sendgrid->web->send($email);
+    $response = $sendgrid->send($email);
 
-    $this->assertEquals("Bad username / password", $response->errors[0]);
+    $this->assertEquals('Bad username / password', $response->errors[0]);
 
   }
 }

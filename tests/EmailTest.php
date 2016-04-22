@@ -6,12 +6,12 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
 
   public function testConstructionEmail() {
     $email = new \SendGrid\Email();
-    $this->assertEquals(get_class($email), '\SendGrid\Email');
+    $this->assertEquals(get_class($email), 'SendGrid\Email');
   }
 
   public function testConstructionEmailIsSendGridEmail() {
     $email = new \SendGrid\Email();
-    $this->assertEquals(get_class($email), '\SendGrid\Email');
+    $this->assertEquals(get_class($email), 'SendGrid\Email');
   }
 
   public function testAddToWithDeprectedEmailClass() {
