@@ -6,9 +6,6 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
 
   public function testConstruction() {
     $sendgrid = new \SendGrid\Client('token123456789');
-
-    //$web = $sendgrid->web;
-
     $this->assertEquals(new \SendGrid\Client('token123456789'), $sendgrid);
     $this->assertEquals(get_class($sendgrid), 'SendGrid\Client');
   }
