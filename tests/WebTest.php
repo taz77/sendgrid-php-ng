@@ -29,7 +29,7 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       $response = $e->getResponse();
       $responseBodyAsString = $response->getBody()->getContents();
     }
-    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
+    $this->assertContains('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
   }
 
   /**
@@ -52,7 +52,7 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       $response = $e->getResponse();
       $responseBodyAsString = $response->getBody()->getContents();
     }
-    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
+    $this->assertContains('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
   }
 
   /**
@@ -76,7 +76,7 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       $response = $e->getResponse();
       $responseBodyAsString = $response->getBody()->getContents();
     }
-    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
+    $this->assertContains('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
   }
 
   /**
@@ -99,7 +99,7 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       $response = $e->getResponse();
       $responseBodyAsString = $response->getBody()->getContents();
     }
-    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
+    $this->assertContains('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
 
   }
 }
