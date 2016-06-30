@@ -19,9 +19,14 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setText('foobar text')
       ->addTo('foo@bar.com');
 
-    $response = $sendgrid->send($email);
+    try {
+      $response = $sendgrid->send($email);
+    } catch (ClientErrorResponseException $exception) {
+      $responseBody = $exception->getResponse()->getBody(true);
+    }
 
-    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $response->errors[0]);
+
+    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked',$responseBody);
   }
 
   public function testSendResponseWithAttachment() {
