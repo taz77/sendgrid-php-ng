@@ -16,7 +16,7 @@ To install this library it is best to use composer. I have published a package t
 
 ``` php
 "require": {
-    "fastglass/sendgrid": ">=1.0.4"
+    "fastglass/sendgrid": ">=1.0.5"
   }
 ```
 
@@ -32,7 +32,7 @@ WARNING: This module was recently upgraded from [2.2.x](https://github.com/sendg
 
 **TLDR: If you upgrade and don't change your code appropriately, things *WILL* break.**
 
-One of the most notable changes is how `addTo()` behaves. We are now using our Web API parameters instead of the X-SMTPAPI header. What this means is that if you call `addTo()` multiple times for an email, **ONE** email will be sent with each email address visible to everyone. To utilize the original behavior of having an individual personalized email sent to each recipient you must now use `addSmtpapiTo()`. **This will break substitutions if there is more than one To address added unless you update to use `addSmtpapiTo()`.** 
+One of the most notable changes is how `addTo()` behaves. We are now using our Web API parameters instead of the X-SMTPAPI header. What this means is that if you call `addTo()` multiple times for an email, **ONE** email will be sent with each email address visible to everyone. To utilize the original behavior of having an individual personalized email sent to each recipient you must now use `addSmtpapiTo()`. **This will break substitutions if there is more than one To address added unless you update to use `addSmtpapiTo()`.**
 
 Smtpapi addressing methods cannot be mixed with non Smtpapi addressing methods. Meaning you cannot currently use Cc and Bcc with `addSmtpapiTo()`.
 
@@ -70,10 +70,10 @@ try {
 
 ## Installation
 
-Add SendGrid to your `composer.json` file. If you are not using [Composer](http://getcomposer.org), you should be. It's an excellent way to manage dependencies in your PHP application. 
+Add SendGrid to your `composer.json` file. If you are not using [Composer](http://getcomposer.org), you should be. It's an excellent way to manage dependencies in your PHP application.
 
 ```json
-{  
+{
   "require": {
     "fastglass/sendgrid": "~1.0"
   }
@@ -88,7 +88,7 @@ require 'vendor/autoload.php';
 
 #### Alternative: Install from zip
 
-If you are not using Composer, simply download and install the **[latest packaged release of the library as a zip](https://github.com/taz77/sendgrid-php-ng/archive/master.zip)**. 
+If you are not using Composer, simply download and install the **[latest packaged release of the library as a zip](https://github.com/taz77/sendgrid-php-ng/archive/master.zip)**.
 
 [**⬇︎ Download Packaged Library ⬇︎**]https://github.com/taz77/sendgrid-php-ng/archive/master.zip)
 
@@ -125,7 +125,7 @@ $email
 ;
 ```
 
-Send it. 
+Send it.
 
 ```php
 $sendgrid->send($email);
@@ -162,12 +162,12 @@ You may change the URL sendgrid-php uses to send email by supplying various para
 
 ```php
 $sendgrid = new SendGrid(
-    'YOUR_SENDGRID_APIKEY', 
+    'YOUR_SENDGRID_APIKEY',
     array(
-        'protocol' => 'http', 
-        'host' => 'sendgrid.org', 
-        'endpoint' => '/send', 
-        'port' => '80' 
+        'protocol' => 'http',
+        'host' => 'sendgrid.org',
+        'endpoint' => '/send',
+        'port' => '80'
     )
 );
 ```
@@ -176,7 +176,7 @@ A full URL may also be provided:
 
 ```php
 $sendgrid = new SendGrid(
-    'YOUR_SENDGRID_APIKEY', 
+    'YOUR_SENDGRID_APIKEY',
     array( 'url' => 'http://sendgrid.org:80/send')
 );
 ```
@@ -187,7 +187,7 @@ You can optionally ignore verification of SSL certificate when using the Web API
 
 ```php
 $sendgrid = new SendGrid(
-    'YOUR_SENDGRID_APIKEY', 
+    'YOUR_SENDGRID_APIKEY',
     array("turn_off_ssl_verification" => true)
 );
 ```
@@ -676,7 +676,7 @@ $email
     ->addSmtpapiTo(array('john@somewhere.com', 'harry@somewhere.com', 'bob@somewhere.com'))
     ->setSubject('%subject%')
     ->setSubstitutions(array(
-        '%name%' => array('John', 'Harry', 'Bob'), 
+        '%name%' => array('John', 'Harry', 'Bob'),
         '%subject%' => array('Subject to John', 'Subject to Harry', 'Subject to Bob')
     ))
     ...
@@ -762,8 +762,8 @@ $email
     ->addFilter("footer", "enable", 1)
     ->addFilter("footer", "text/plain", "Here is a plain text footer")
     ->addFilter(
-        "footer", 
-        "text/html", 
+        "footer",
+        "text/html",
         "<p style='color:red;'>Here is an HTML footer</p>"
     )
 ;
@@ -870,8 +870,8 @@ $sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY');
 $email = new SendGrid\Email();
 
 $recipients = array(
-    "alpha@mailinator.com", 
-    "beta@mailinator.com", 
+    "alpha@mailinator.com",
+    "beta@mailinator.com",
     "zeta@mailinator.com"
 );
 $names = array("Alpha", "Beta", "Zeta");
