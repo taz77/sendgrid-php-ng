@@ -943,6 +943,12 @@ class Email {
     return json_encode($this->getHeaders(), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
   }
 
+  /**
+   * Set headers by passing an array of key/value custom header values.
+   * 
+   * @param array $key_value_pairs
+   * @return $this
+   */
   public function setHeaders($key_value_pairs) {
     $this->headers = $key_value_pairs;
 

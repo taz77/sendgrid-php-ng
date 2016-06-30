@@ -1,26 +1,19 @@
 language: php
 before_script:
-- phpenv local 5.5
-- "/home/travis/.phpenv/versions/5.5/bin/composer self-update"
+- composer self-update
 - composer install --dev --no-interaction
-- phpenv local --unset
-- cd test
+#- phpenv local --unset
 script:
-- "../vendor/bin/phpunit --coverage-clover clover.xml"
+- vendor/bin/phpunit --coverage-clover clover.xml
 after_script:
-- cd ..
-- phpenv local 5.5
-- phpenv local --unset
+#- cd ..
+#- phpenv local 5.5
+#- phpenv local --unset
 php:
 - 5.5
 - 5.6
 - 7.0
-env:
-  global:
-  - secure: eUN0huKA436uIkISu6V3yW01/gZHC6slBvlnprMPEhzclU2szH6qhWEXWS5CcOG6EEDBReqLZdNAwu+FC69KGFO9+6oW2GQQLSsfEViqFi/Ig2N0r4EBO4jLRebgq0GOfetPwQvJH27d8BCiloPy8rXBb5pskxSNw4B4bRyXHz4=
-  - secure: j38xzMNmzYXR/JJdVumPmDoDVxb6FUDF497AuVPHowGh0egFW8XHWCOMeQWqWZI4Gg17pViQNIJ3xC6WBvob70AF8fsNm0+vxF2s7abXDMcbq5flLTS6ydKLgNu+na/RAkOBbTwxJAGIH/fQh8BH8iGKerCwoqf8sDErAge4NMw=
-  - secure: h3HlxBOsNXBDrIJ0yl467ST6Q8R2TmbL7PltlPcRoHy5gAxn5UiDv5W2+6DSXrwQrTjOUunZ+O9ckcaQGQy1JNhGMwgIkJpyWAHDIHhTYGU289uUIDTHQW/soX0qHJSHSx3iMgDOIc7XnfTz6W7Nv1gYKZFedOMsZ5uBMeGyiXE=
-  - secure: SKSl/RHFQNhGT7OUj7E0AbrQnuDhhCRI/4jC76mmzvy8EJBDgUNevAKJGtug+LVilHrlbk9fLC8rayPW6SGv0s3PowTGm8NMOc48aRBLOr7QRo/sMikJCmRuU6HWptr0NKuf2fq6lV94WDm/pDdyOSNyLga9/eaIDs/Sacp78sw=
 notifications:
+  email: false
   slack:
     secure: IZHSaVKTODGfl4nsL6ZQbqOefBV+vz7/AKfceu9B7wVrVKBe7gApp47RAVwSXCJGueUpV62T4BWAx/bsUeI2Q06Mtc3pBxpU9ABeTSvkXjp73ZK2WPtso7cpyiFpfGt8KdalXVQwnF/ukFKKdoX94MG8XhmPiNy4X+ncjpnnXXNzYiJs59jv2EA06qvkTEe90j7yyE2TFBUS2bKtkDTJw2uOxcdCE9YKX1jZpeTP0EDEQDQLMW7BVX8Xet2qCNnwz+PEqfoe+FtSikOWdpwbga4aHIpl/5rAHpwCI/6ZxrZRQUqFlMxEOlFp0VkPVbC7XFqNXWcKNRtMLSBQy6DqHAgghB+6/q/VpuskBq5QVdQv5gzbPBAZCp6HLE8/G343WUdFRgVyeP3IDvA3ElJr4flbw2zhI4GjMlz4nJQmw1yucRsKZ9+5cSK9ZlxQEKbo1YddEv8TdOu1P4uyRg63b4JnUS7U2LCang8/+BQi/a5bjTtnhYgz2JBtrAX0Xo/yX5ziCqKQEUl3lQCW6jf+0JwYPe0zHX7IGrw/RlJDbCi4MkzbIfQqzaM6iHSZRPC5+17qXM/rFsVQ2eFUJD/12ajpFVc783m9wBxwzKd7XT7sjtg86ud0JQcA2hW7mlpHuDY8YQ2p1Ezjn12JuXgqVb89JwCZRTjG5UGB6Oho8Nk=

@@ -1,15 +1,18 @@
 <?php
+namespace SendGrid;
 
+use \Email;
+use \Exception;
+use \Response;
 use GuzzleHttp\Exception\ClientException;
 
 /**
  * Class SendGrid
  */
-class SendGrid {
-  const VERSION = '1.0.4';
+class Client {
+  const VERSION = '1.0.5';
 
   protected
-    $namespace = 'SendGrid',
     $headers = ['Content-Type' => 'application/json'],
     $client,
     $options;
@@ -23,9 +26,11 @@ class SendGrid {
 
   /**
    * SendGrid constructor.
+   *
    * @param $apiUserOrKey
    * @param null $apiKeyOrOptions
    * @param array $options
+   * @throws string
    */
   public function __construct($apiUserOrKey, $apiKeyOrOptions = NULL, $options = []) {
     // Check if given a username + password or api key.
@@ -105,7 +110,7 @@ class SendGrid {
    * @return \SendGrid\Response
    * @throws \SendGrid\Exception
    */
-  public function send(SendGrid\Email $email) {
+  public function send(\SendGrid\Email $email) {
     $form = $email->toWebFormat();
     // Adding API keys to header.
     if ($this->apiUser !== NULL) {
@@ -116,7 +121,7 @@ class SendGrid {
     $response = $this->postRequest($this->endpoint, $form);
 
     if ($response->code != 200 && $this->options['raise_exceptions']) {
-      throw new SendGrid\Exception($response->raw_body, $response->code);
+      throw new \SendGrid\Exception($response->raw_body, $response->code);
     }
 
     return $response;
@@ -160,24 +165,9 @@ class SendGrid {
       echo '</pre>';
       return FALSE;
     }
-    $response = new SendGrid\Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(TRUE), json_decode($res->getBody(TRUE)));
+    $response = new \SendGrid\Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(TRUE), json_decode($res->getBody(TRUE)));
 
     return $response;
-  }
-
-  public static function register_autoloader() {
-    spl_autoload_register(['SendGrid', 'autoloader']);
-  }
-
-  public static function autoloader($class) {
-    // Check that the class starts with 'SendGrid'
-    if ($class == 'SendGrid' || stripos($class, 'SendGrid\\') === 0) {
-      $file = str_replace('\\', '/', $class);
-
-      if (file_exists(dirname(__FILE__) . '/' . $file . '.php')) {
-        require_once(dirname(__FILE__) . '/' . $file . '.php');
-      }
-    }
   }
 
   /**

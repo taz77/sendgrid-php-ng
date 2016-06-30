@@ -1,10 +1,16 @@
 {
   "name": "fastglass/sendgrid",
   "description": "This library allows you to send emails through SendGrid using PHP and Guzzle 6.x.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "homepage": "https://github.com/taz77/sendgrid-php",
   "license": "MIT",
-  "keywords": ["SendGrid", "sendgrid", "email", "send", "grid"],
+  "keywords": [
+    "SendGrid",
+    "sendgrid",
+    "email",
+    "send",
+    "grid"
+  ],
   "authors": [
     {
       "name": "Brady Owens",
@@ -27,6 +33,17 @@
   },
   "type": "library",
   "autoload": {
-    "psr-4": {"Sendgrid\\": "lib/"}
+    "psr-4": {
+      "SendGrid\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SendGrid\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-ci": "vendor/bin/phpunit --coverage-text"
   }
 }
