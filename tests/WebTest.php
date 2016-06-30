@@ -96,6 +96,5 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       $responseBodyAsString = $response->getBody()->getContents();
     }
     $this->assertContains('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
-
   }
 }
