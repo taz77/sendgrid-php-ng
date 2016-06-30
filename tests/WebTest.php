@@ -18,15 +18,12 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setSubject('foobar subject')
       ->setText('foobar text')
       ->addTo('foo@bar.com');
-
     try {
       $response = $sendgrid->send($email);
     }
     catch (\GuzzleHttp\Exception\ClientException $e) {
       $responseBody = $e->getResponse()->getBody(TRUE);
     }
-
-
     $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBody);
   }
 
@@ -39,10 +36,13 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
       ->addAttachment('./tests/gif.gif');
-
-    $response = $sendgrid->send($email);
-
-    $this->assertEquals('Bad username / password', $response->errors[0]);
+    try {
+      $response = $sendgrid->send($email);
+    }
+    catch (\GuzzleHttp\Exception\ClientException $e) {
+      $responseBody = $e->getResponse()->getBody(TRUE);
+    }
+    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBody);
   }
 
   public function testSendResponseWithAttachmentMissingExtension() {
@@ -54,10 +54,13 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
       ->addAttachment('./tests/text');
-
-    $response = $sendgrid->send($email);
-
-    $this->assertEquals('Bad username / password', $response->errors[0]);
+    try {
+      $response = $sendgrid->send($email);
+    }
+    catch (\GuzzleHttp\Exception\ClientException $e) {
+      $responseBody = $e->getResponse()->getBody(TRUE);
+    }
+    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBody);
   }
 
   public function testSendResponseWithSslOptionFalse() {
@@ -69,10 +72,13 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
       ->addAttachment('./tests/text');
-
-    $response = $sendgrid->send($email);
-
-    $this->assertEquals('Bad username / password', $response->errors[0]);
+    try {
+      $response = $sendgrid->send($email);
+    }
+    catch (\GuzzleHttp\Exception\ClientException $e) {
+      $responseBody = $e->getResponse()->getBody(TRUE);
+    }
+    $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBody);
 
   }
 }
