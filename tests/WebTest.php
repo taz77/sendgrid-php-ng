@@ -10,6 +10,9 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(get_class($sendgrid), 'SendGrid\Client');
   }
 
+  /**
+   * Test sending a request with bad credentials.
+   */
   public function testSendResponse() {
     $sendgrid = new \SendGrid\Client('token123456789');
 
@@ -27,6 +30,9 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBody);
   }
 
+  /**
+   * Test sending a request with bad credentials and attachment.
+   */
   public function testSendResponseWithAttachment() {
     $sendgrid = new \SendGrid\Client('token123456789');
 
@@ -45,6 +51,10 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBody);
   }
 
+  /**
+   * Test sending a request with bad credentials and attachment missing
+   * extension.
+   */
   public function testSendResponseWithAttachmentMissingExtension() {
     $sendgrid = new \SendGrid\Client('token123456789');
 
@@ -63,6 +73,9 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('The provided authorization grant is invalid, expired, or revoked', $responseBody);
   }
 
+  /**
+   * Test sending a request with bad credentials and SSL verification off.
+   */
   public function testSendResponseWithSslOptionFalse() {
     $sendgrid = new \SendGrid\Client('token123456789', ['switch_off_ssl_verification' => TRUE]);
 
