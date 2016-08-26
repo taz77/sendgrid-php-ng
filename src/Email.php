@@ -945,7 +945,7 @@ class Email {
 
   /**
    * Set headers by passing an array of key/value custom header values.
-   * 
+   *
    * @param array $key_value_pairs
    * @return $this
    */
@@ -994,13 +994,30 @@ class Email {
    * object into a format that can be used for transport by Guzzle. This is the
    * last step before sending an email
    *
+   * @todo the conversion to v3 api will take place here.
+   *
    * @return array $web
    */
   public function toWebFormat() {
+    $personalizations = [];
+    $to = new \stdClass();
+    $to->email = $this->to;
+    if ($this->getToNames()) {
+      $to->name = $this->getToNames();
+    }
+    $subject = $this->getSubject();
+    $from = new \stdClass();
+    $from->email =  $this->getFrom();
+    if ($this->getFromName()) {
+      $from->name = $this->getFromName();
+    }
+    $content = new \stdClass();
+    $replyto = new \stdClass();
+    if ($this->getReplyTo()) {
+      $replyto->email =  $this->getReplyTo();
+    }
+
     $web = [
-      'to' => $this->to,
-      'from' => $this->getFrom(),
-      'subject' => $this->getSubject(),
       'text' => $this->getText(),
       'html' => $this->getHtml(),
     ];
@@ -1010,9 +1027,7 @@ class Email {
     if (!empty($this->getHeadersJson()) || $this->getHeadersJson() != '{}') {
       $web['headers'] = $this->getHeadersJson();
     }
-    if ($this->getToNames()) {
-      $web['toname'] = $this->getToNames();
-    }
+
     if ($this->getCcs()) {
       $web['cc'] = $this->getCcs();
     }
@@ -1025,12 +1040,8 @@ class Email {
     if ($this->getBccNames()) {
       $web['bccname'] = $this->getBccNames();
     }
-    if ($this->getFromName()) {
-      $web['fromname'] = $this->getFromName();
-    }
-    if ($this->getReplyTo()) {
-      $web['replyto'] = $this->getReplyTo();
-    }
+
+
     if ($this->getDate()) {
       $web['date'] = $this->getDate();
     }
