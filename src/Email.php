@@ -237,6 +237,14 @@ class Email {
   }
 
   /**
+   * Return the reply to name for the address as a string.
+   * @return string
+   */
+  public function getReplyToName() {
+    return $this->replyToName;
+  }
+
+  /**
    * Set the CC address of the message.
    *
    * @param string $email
