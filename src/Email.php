@@ -228,6 +228,19 @@ class Email {
   }
 
   /**
+   * Set the reply to name.
+   *
+   * @param string $name
+   *
+   * @return object $this
+   */
+  public function setReplyToName($name) {
+    $this->replyToName = $name;
+
+    return $this;
+  }
+
+  /**
    * Return the reply to address as a string.
    *
    * @return string $this->replyTo
