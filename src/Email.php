@@ -1021,11 +1021,12 @@ class Email {
    */
   public function toWebFormat() {
     $personalizations = [];
-    $to = new \stdClass();
-    $to->email = $this->to;
+    $toaddress = new \stdClass();
+    $toaddress->email = $this->to;
     if ($this->getToNames()) {
-      $to->name = $this->getToNames();
+      $toaddress->name = $this->getToNames();
     }
+    $to[] = $toaddress;
     $subject = $this->getSubject();
     $from = new \stdClass();
     $from->email =  $this->getFrom();
