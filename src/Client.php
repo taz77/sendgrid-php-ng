@@ -53,11 +53,17 @@ class Client {
     if (!isset($this->options['raise_exceptions'])) {
       $this->options['raise_exceptions'] = TRUE;
     }
+
+    // Default to https protocol.
     $protocol = isset($this->options['protocol']) ? $this->options['protocol'] : 'https';
+    // Default to api.sendgrid.com as the host.
     $host = isset($this->options['host']) ? $this->options['host'] : 'api.sendgrid.com';
+    // Default to no port number.
     $port = isset($this->options['port']) ? $this->options['port'] : '';
 
+    // Construct the URL for the Sendgrid Service.
     $this->url = isset($this->options['url']) ? $this->options['url'] : $protocol . '://' . $host . ($port ? ':' . $port : '');
+    // Construct the endpoint URL.
     $this->endpoint = isset($this->options['endpoint']) ? $this->options['endpoint'] : '/v3/mail/send';
 
     $this->client = $this->prepareHttpClient();
