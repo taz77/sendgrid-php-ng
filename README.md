@@ -6,11 +6,9 @@
 
 This library allows you to quickly and easily send emails through SendGrid using PHP with the help of Guzzle 6.x. This development was to support the new PSR messaging standard in PHP that is implemented in Guzzle 6.x
 
-This module inherits the updates from the official Sendgrid library that were introduced in version 3.x of the official API.
+SendGrid has chosen to write their own PHP HTTP client. This module uses Guzzle instead. From the point that SendGrid choose to provide their own HTTP client library, this module has permanantly forked away from the official code and is mantained independently from the official libraries. This module uses Guzzle for the transport layer and so the code is differnt. Contributions to help maintain this libary is welcome!
 
 This API is maintained in support of the [Drupal Sendgrid Integration Module](https://www.drupal.org/project/sendgrid_integration) that I also maintain. Drupal 8 ships with Guzzle 6.x in the core of the software and Guzzle 6.x supports the standardization of PSR messages. The official Sendgrid PHP API supports only the deprecated Guzzle 3.x as they are maintaining support for PHP 5.3.
-
-Interfacing with this library is exactly the same as interfacing with the official library with the exception of the API Key requirement. This Sendgrid library will not function with a username/password. API keys are Sendgrid's recommended way to use the API for all future code. The API calls are the same, just the dependencies and the internal processing of the data has been altered for Guzzle 6.x.
 
 To install this library it is best to use composer. I have published a package through Packagist for this library. Use the following in your composer.json:
 
