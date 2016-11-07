@@ -67,6 +67,7 @@ class Email {
    *
    * @param string $email
    * @param string $name
+   *
    * @return object $this
    */
   public function addTo($email, $name = NULL) {
@@ -101,6 +102,7 @@ class Email {
    *
    * @param string $email
    * @param string $name
+   *
    * @return object $this
    */
   public function addSmtpapiTo($email, $name = NULL) {
@@ -113,6 +115,7 @@ class Email {
    * Add receipients as an array of addresses.
    *
    * @param array $emails
+   *
    * @return object $this
    */
   public function setTos(array $emails) {
@@ -125,6 +128,7 @@ class Email {
    * Add receipient email addresses to the X-SMTPAPI headers as an array.
    *
    * @param array $emails
+   *
    * @return object $this
    */
   public function setSmtpapiTos(array $emails) {
@@ -137,6 +141,7 @@ class Email {
    * Add names of receipients.
    *
    * @param string $name
+   *
    * @return object $this
    */
   public function addToName($name) {
@@ -159,7 +164,9 @@ class Email {
 
   /**
    * Sets the email address to use as the from address.
+   *
    * @param string $email
+   *
    * @return object $this
    */
   public function setFrom($email) {
@@ -183,6 +190,7 @@ class Email {
    * returned containining only the email address.
    *
    * @param bool $as_array
+   *
    * @return mixed $this->from
    */
   public function getFrom($as_array = FALSE) {
@@ -198,6 +206,7 @@ class Email {
    * Sets the From name to be used.
    *
    * @param string $name
+   *
    * @return object $this
    */
   public function setFromName($name) {
@@ -219,6 +228,7 @@ class Email {
    * Set the reply to address.
    *
    * @param string $email
+   *
    * @return object $this
    */
   public function setReplyTo($email) {
@@ -261,6 +271,7 @@ class Email {
    * Set the CC address of the message.
    *
    * @param string $email
+   *
    * @return object $this
    */
   public function setCc($email) {
@@ -273,6 +284,7 @@ class Email {
    * Set the CC address(s) of the message as an array.
    *
    * @param array $email_list
+   *
    * @return object $this
    */
   public function setCcs(array $email_list) {
@@ -286,6 +298,7 @@ class Email {
    *
    * @param string $email
    * @param string $name
+   *
    * @return object $this
    */
   public function addCc($email, $name = NULL) {
@@ -318,6 +331,7 @@ class Email {
    * Add a CC name to the message.
    *
    * @param string $name
+   *
    * @return object $this
    */
   public function addCcName($name) {
@@ -334,6 +348,7 @@ class Email {
    * Remove a CC email address from the message.
    *
    * @param string $email
+   *
    * @return object $this
    */
   public function removeCc($email) {
@@ -362,7 +377,9 @@ class Email {
 
   /**
    * Set the BCC email address for the current messsage.
+   *
    * @param string $email
+   *
    * @return object $this
    */
   public function setBcc($email) {
@@ -376,6 +393,7 @@ class Email {
    * email addresses.
    *
    * @param array $email_list
+   *
    * @return $this
    */
   public function setBccs(array $email_list) {
@@ -387,8 +405,10 @@ class Email {
   /**
    * Add a BCC address to the current message. Optionally set a name with the
    * address.
+   *
    * @param string $email
    * @param string $name
+   *
    * @return object $this
    */
   public function addBcc($email, $name = NULL) {
@@ -421,6 +441,7 @@ class Email {
    * Add a BCC name to the current message.
    *
    * @param string $name
+   *
    * @return object $this
    */
   public function addBccName($name) {
@@ -446,6 +467,7 @@ class Email {
    * Remove a BCC address from the current message.
    *
    * @param string $email
+   *
    * @return object $this
    */
   public function removeBcc($email) {
@@ -467,6 +489,7 @@ class Email {
    * Set the subject of the current message.
    *
    * @param string $subject
+   *
    * @return object $this
    */
   public function setSubject($subject) {
@@ -485,9 +508,11 @@ class Email {
   }
 
   /**
-   * Set the date header of the current message. Must be RFC 2822 ( date("r"); ).
+   * Set the date header of the current message. Must be RFC 2822 ( date("r");
+   * ).
    *
    * @param string $date
+   *
    * @return object $this
    */
   public function setDate($date) {
@@ -510,6 +535,7 @@ class Email {
    * Set the plain text version of the current message.
    *
    * @param string $text
+   *
    * @return object $this
    */
   public function setText($text) {
@@ -531,6 +557,7 @@ class Email {
    * Set the HTML version of the current message.
    *
    * @param string $html
+   *
    * @return object $this
    */
   public function setHtml($html) {
@@ -553,6 +580,7 @@ class Email {
    * scheduling function of Sendgrid. Requires UNIX timestamp.
    *
    * @param string $timestamp
+   *
    * @return object $this
    */
   public function setSendAt($timestamp) {
@@ -569,6 +597,7 @@ class Email {
    * @see setTos() function for setting to addresses via an array.
    *
    * @param array $timestamps
+   *
    * @return object $this
    */
   public function setSendEachAt(array $timestamps) {
@@ -588,6 +617,7 @@ class Email {
    * the template.
    *
    * @param string $templateId
+   *
    * @return object $this
    */
   public function setTemplateId($templateId) {
@@ -601,6 +631,7 @@ class Email {
    * Set the ASM group ID for the current message.
    *
    * @param string $groupId
+   *
    * @return object $this
    */
   public function setAsmGroupId($groupId) {
@@ -614,6 +645,7 @@ class Email {
    * absolute file paths.
    *
    * @param array $files
+   *
    * @return object $this
    */
   public function setAttachments(array $files) {
@@ -638,6 +670,7 @@ class Email {
    * @param string $file
    * @param string $custom_filename
    * @param string $cid
+   *
    * @return object $this
    */
   public function setAttachment($file, $custom_filename = NULL, $cid = NULL) {
@@ -652,6 +685,7 @@ class Email {
    * @param string $file
    * @param string $custom_filename
    * @param string $cid
+   *
    * @return object $this
    */
   public function addAttachment($file, $custom_filename = NULL, $cid = NULL) {
@@ -673,6 +707,7 @@ class Email {
    * Remove an attachment from the current message.
    *
    * @param string $file
+   *
    * @return object $this
    */
   public function removeAttachment($file) {
@@ -688,6 +723,7 @@ class Email {
    * @param string $file
    * @param string $custom_filename
    * @param string $cid
+   *
    * @return array $info
    */
   private function getAttachmentInfo($file, $custom_filename = NULL, $cid = NULL) {
@@ -708,6 +744,7 @@ class Email {
    * catagories.
    *
    * @param array $categories
+   *
    * @return object $this
    */
   public function setCategories($categories) {
@@ -720,6 +757,7 @@ class Email {
    * Set a catagory for the current message. Overwrites existing catagories.
    *
    * @param string $category
+   *
    * @return object $this
    */
   public function setCategory($category) {
@@ -732,6 +770,7 @@ class Email {
    * Add a category to the existing catagories.
    *
    * @param string $category
+   *
    * @return object $this
    */
   public function addCategory($category) {
@@ -744,6 +783,7 @@ class Email {
    * Remove a category from the message.
    *
    * @param string $category
+   *
    * @return object $this
    */
   public function removeCategory($category) {
@@ -761,6 +801,7 @@ class Email {
    * @see https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html
    *
    * @param array $key_value_pairs
+   *
    * @return object $this
    */
   public function setSubstitutions(array $key_value_pairs) {
@@ -779,6 +820,7 @@ class Email {
    *
    * @param string $from_value
    * @param array $to_values
+   *
    * @return object $this
    */
   public function addSubstitution($from_value, array $to_values) {
@@ -795,6 +837,7 @@ class Email {
    * @see https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html
    *
    * @param array $key_value_pairs
+   *
    * @return $this
    */
   public function setSections(array $key_value_pairs) {
@@ -809,8 +852,10 @@ class Email {
    * that are not specific to the user.
    *
    * @see https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html
+   *
    * @param string $from_value
    * @param array $to_value
+   *
    * @return object $this
    */
   public function addSection($from_value, $to_value) {
@@ -829,6 +874,7 @@ class Email {
    * @see https://sendgrid.com/docs/API_Reference/SMTP_API/unique_arguments.html
    *
    * @param array $key_value_pairs
+   *
    * @return object $this
    */
   public function setUniqueArgs(array $key_value_pairs) {
@@ -843,6 +889,7 @@ class Email {
    * @see function setUniqueArgs()
    *
    * @param array $key_value_pairs
+   *
    * @return $this
    */
   public function setUniqueArguments(array $key_value_pairs) {
@@ -853,8 +900,10 @@ class Email {
 
   /**
    * Add a unique argument to the current message.
+   *
    * @param string $key
    * @param string $value
+   *
    * @return object $this
    */
   public function addUniqueArg($key, $value) {
@@ -870,6 +919,7 @@ class Email {
    *
    * @param string $key
    * @param string $value
+   *
    * @return object $this
    */
   public function addUniqueArgument($key, $value) {
@@ -886,6 +936,7 @@ class Email {
    * @see https://sendgrid.com/docs/API_Reference/SMTP_API/apps.html
    *
    * @param array $filter_settings
+   *
    * @return object $this
    */
   public function setFilters(array $filter_settings) {
@@ -900,6 +951,7 @@ class Email {
    * @see function setFilters()
    *
    * @param array $filter_settings
+   *
    * @return object $this
    */
   public function setFilterSettings(array $filter_settings) {
@@ -917,6 +969,7 @@ class Email {
    * @param string $filter_name
    * @param string $parameter_name
    * @param string $parameter_value
+   *
    * @return object $this
    */
   public function addFilter($filter_name, $parameter_name, $parameter_value) {
@@ -933,6 +986,7 @@ class Email {
    * @param string $filter_name
    * @param string $parameter_name
    * @param string $parameter_value
+   *
    * @return object $this
    */
   public function addFilterSetting($filter_name, $parameter_name, $parameter_value) {
@@ -942,8 +996,8 @@ class Email {
   }
 
   /**
-   * Return the headers for the current message. Returns an array of keys (names)
-   * and values for all of the message headers.
+   * Return the headers for the current message. Returns an array of keys
+   * (names) and values for all of the message headers.
    *
    * @return array $this->headers
    */
@@ -968,6 +1022,7 @@ class Email {
    * Set headers by passing an array of key/value custom header values.
    *
    * @param array $key_value_pairs
+   *
    * @return $this
    */
   public function setHeaders($key_value_pairs) {
@@ -981,6 +1036,7 @@ class Email {
    *
    * @param string $key
    * @param string $value
+   *
    * @return object $this
    */
   public function addHeader($key, $value) {
@@ -993,6 +1049,7 @@ class Email {
    * Remove a header item from the current message.
    *
    * @param string $key
+   *
    * @return object $this
    */
   public function removeHeader($key) {
@@ -1020,47 +1077,74 @@ class Email {
    * @return array $web
    */
   public function toWebFormat() {
+    // Begine the array of objects for personalizations.
     $personalizations = [];
+
+    // Addressing section of email.
     $toaddress = new \stdClass();
     $toaddress->email = $this->to;
     if ($this->getToNames()) {
       $toaddress->name = $this->getToNames();
     }
+    // Array of TO objects.
     $to[] = $toaddress;
-    $subject = $this->getSubject();
+    // Carbon copy addresses
+    $ccaddress = new \stdClass();
+    if ($this->getCcs()) {
+      //$web['cc'] = $this->getCcs();
+      $ccaddress->email = $this->getCcs();
+    }
+    if ($this->getCcNames()) {
+      //$web['ccname'] = $this->getCcNames();
+      $ccaddress->name = $this->getCcNames();
+    }
+    $cc[] = $ccaddress;
+    // Blind copy addresses.
+    $bccaddress = new \stdClass();
+    if ($this->getBccs()) {
+      //$web['bcc'] = $this->getBccs();
+      $bccaddress->email = $this->getBccs();;
+    }
+    if ($this->getBccNames()) {
+      //$web['bccname'] = $this->getBccNames();
+      $bccaddress->name = $this->getBccNames();
+    }
+    $bcc[] = $bccaddress;
+
+    $personalizations[] = $to;
+    $personalizations[] = $cc;
+    $personalizations[] = $bcc;
+    $personalizations['subject'] = $this->getSubject();
     $from = new \stdClass();
-    $from->email =  $this->getFrom();
+    $from->email = $this->getFrom();
     if ($this->getFromName()) {
       $from->name = $this->getFromName();
     }
-    $content = new \stdClass();
+
     $replyto = new \stdClass();
     if ($this->getReplyTo()) {
-      $replyto->email =  $this->getReplyTo();
+      $replyto->email = $this->getReplyTo();
     }
 
-    $web = [
-      'text' => $this->getText(),
-      'html' => $this->getHtml(),
-    ];
-    if (!empty($this->smtpapi->jsonString()) || $this->smtpapi->jsonString() != '{}') {
-      $web['x-smtpapi'] = $this->smtpapi->jsonString();
+    // Email content.
+    $content = [];
+    $contentemail = new \stdClass();
+    if ($this->getText()) {
+      $contentemail->type = 'text/plain';
+      $contentemail->value = $this->getText();
+      $content[] = $contentemail;
     }
-    if (!empty($this->getHeadersJson()) || $this->getHeadersJson() != '{}') {
-      $web['headers'] = $this->getHeadersJson();
+    if ($this->getHtml()) {
+      $contentemail->type = 'text/html';
+      $contentemail->value = $this->getHtml();
+      $content[] = $contentemail;
     }
 
-    if ($this->getCcs()) {
-      $web['cc'] = $this->getCcs();
-    }
-    if ($this->getCcNames()) {
-      $web['ccname'] = $this->getCcNames();
-    }
-    if ($this->getBccs()) {
-      $web['bcc'] = $this->getBccs();
-    }
-    if ($this->getBccNames()) {
-      $web['bccname'] = $this->getBccNames();
+    if (!empty($this->getHeaders())) {
+      $headers = new \stdClass();
+      foreach ($this->getHeaders() as $item => $value) {
+        $headers->$item = $headers->$value;
+      }
     }
 
 
@@ -1107,6 +1191,7 @@ class Email {
    * This method modifies the data that will be sent via either Rest
    *
    * @param mixed $data
+   *
    * @return mixed $data
    */
   public function updateMissingTo($data) {
