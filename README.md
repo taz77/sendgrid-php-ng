@@ -1,14 +1,14 @@
 # SendGrid-PHP
 
-**This is a forked version of SendGrid-PHP which uses Guzzle 6.x**
+**This is a version of SendGrid-PHP which uses Guzzle 6.x**
 
 [![BuildStatus](https://travis-ci.org/taz77/sendgrid-php-ng.svg?branch=master)](https://travis-ci.org/taz77/sendgrid-php-ng)
 
-This library allows you to quickly and easily send emails through SendGrid using PHP with the help of Guzzle 6.x. This development was to support the new PSR messaging standard in PHP that is implemented in Guzzle 6.x
+This library allows you to quickly and easily send emails through SendGrid using PHP with the help of Guzzle 6.x. Guzzle is a very popular HTTP client for PHP used in many other PHP packages.
 
 SendGrid has chosen to write their own PHP HTTP client. This module uses Guzzle instead. From the point that SendGrid choose to provide their own HTTP client library, this module has permanantly forked away from the official code and is mantained independently from the official libraries. This module uses Guzzle for the transport layer and so the code is differnt. Contributions to help maintain this libary is welcome!
 
-This API is maintained in support of the [Drupal Sendgrid Integration Module](https://www.drupal.org/project/sendgrid_integration) that I also maintain. Drupal 8 ships with Guzzle 6.x in the core of the software and Guzzle 6.x supports the standardization of PSR messages. The official Sendgrid PHP API supports only the deprecated Guzzle 3.x as they are maintaining support for PHP 5.3.
+Mainly, this API is maintained in support of the [Drupal Sendgrid Integration Module](https://www.drupal.org/project/sendgrid_integration) that I also maintain. Drupal 8 ships with Guzzle 6.x in the core of the software and Guzzle 6.x supports the standardization of PSR messages. The official Sendgrid PHP API supports only the deprecated Guzzle 3.x as they are maintaining support for PHP 5.3.
 
 To install this library it is best to use composer. I have published a package through Packagist for this library. Use the following in your composer.json:
 
@@ -22,9 +22,9 @@ To install this library it is best to use composer. I have published a package t
 
 If you would like to look at some example code for using this library, clone [this](https://github.com/Fastglass-LLC/sendgrid-php-example) repository.
 
-## Notes from Sendgrid official library
+## Upgade to V3 API
 
-WARNING: This module was recently upgraded from [2.2.x](https://github.com/sendgrid/sendgrid-php/tree/v2.2.1) to 3.X. There were API breaking changes for various method names. See [usage](https://github.com/sendgrid/sendgrid-php#usage) for up to date method names.
+Work is underway (in a development branch) to upgrade this module to the V3 API. Please help if you can!
 
 ## PLEASE READ THIS
 
