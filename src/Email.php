@@ -1077,8 +1077,9 @@ class Email {
    * @return array $web
    */
   public function toWebFormat() {
-    // Begine the array of objects for personalizations.
+    // Begin the array of objects for personalizations. V3 Upgrade.
     $personalizations = [];
+    $personalization_object = new \stdClass();
 
     // Addressing section of email.
     $toaddress = new \stdClass();
@@ -1111,10 +1112,15 @@ class Email {
     }
     $bcc[] = $bccaddress;
 
-    $personalizations[] = $to;
-    $personalizations[] = $cc;
-    $personalizations[] = $bcc;
-    $personalizations['subject'] = $this->getSubject();
+    // Build to object to pass to the personalization array.
+    $personalization_object->to = $to;
+    $personalization_object->cc = $cc;
+    $personalization_object->bcc = $bcc;
+    $personalization_object->subject = $this->getSubject();
+
+    // Pull object into the personalizations array.
+    $personalizations[] = $personalization_object;
+
     $from = new \stdClass();
     $from->email = $this->getFrom();
     if ($this->getFromName()) {
