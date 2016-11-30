@@ -64,7 +64,6 @@ class SendGridTest_Client extends \PHPUnit_Framework_TestCase {
   public function testDefaultEndpoint() {
     $sendgrid = new s\Client('token123456789');
     $this->assertEquals('/api/mail.send.json', $sendgrid->endpoint);
-
   }
 
   /**
