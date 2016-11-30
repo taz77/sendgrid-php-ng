@@ -1121,12 +1121,14 @@ class Email {
     // Pull object into the personalizations array.
     $personalizations[] = $personalization_object;
 
+    // API V3 updates to new data structure.
     $from = new \stdClass();
     $from->email = $this->getFrom();
     if ($this->getFromName()) {
       $from->name = $this->getFromName();
     }
 
+    // API V3 updates to new data structure.
     $replyto = new \stdClass();
     if ($this->getReplyTo()) {
       $replyto->email = $this->getReplyTo();
