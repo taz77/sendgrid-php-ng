@@ -1076,6 +1076,7 @@ class Email {
    *
    * @return array $web
    *
+   * @throws Exception
    *
    */
   public function toWebFormat() {
@@ -1084,6 +1085,9 @@ class Email {
 
     // To addressing section of email.
     $toaddress = [];
+    if (empty($this->to)){
+      throw new Exception('There must be a to email address.');
+    }
     $toaddress['email'] = $this->to;
     $toaddress['name'] = !empty($this->getToNames()) ? $this->getToNames() : '';
 
@@ -1136,7 +1140,7 @@ class Email {
       $replyto->email = $this->getReplyTo();
     }
 
-    // Email content.
+    // Email content. An array of objects in the V3 API.
     $content = [];
     $contentemail = new \stdClass();
     if ($this->getText()) {
@@ -1148,6 +1152,11 @@ class Email {
       $contentemail->type = 'text/html';
       $contentemail->value = $this->getHtml();
       $content[] = $contentemail;
+    }
+
+    // Content cannot be empty. Throw an exception.
+    if (empty($content)) {
+      throw new Exception('Your email has no content. This cannot be sent to SendGrid.');
     }
 
     if (!empty($this->getHeaders())) {
