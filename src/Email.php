@@ -1075,51 +1075,53 @@ class Email {
    * @todo the conversion to v3 api will take place here.
    *
    * @return array $web
+   *
+   *
    */
   public function toWebFormat() {
     // Begin the array of objects for personalizations. V3 Upgrade.
-    $personalizations = [];
-    $personalization_object = new \stdClass();
+    $personalization = new Personalization();
 
-    // Addressing section of email.
-    $toaddress = new \stdClass();
-    $toaddress->email = $this->to;
-    if ($this->getToNames()) {
-      $toaddress->name = $this->getToNames();
-    }
-    // Array of TO objects.
-    $to[] = $toaddress;
+    // To addressing section of email.
+    $toaddress = [];
+    $toaddress['email'] = $this->to;
+    $toaddress['name'] = !empty($this->getToNames()) ? $this->getToNames() : '';
+
+    $email = new EmailAddress($toaddress['name'], $toaddress['email']);
+    $personalization->addTo($email);
+
     // Carbon copy addresses
-    $ccaddress = new \stdClass();
     if ($this->getCcs()) {
-      //$web['cc'] = $this->getCcs();
-      $ccaddress->email = $this->getCcs();
+      $ccaddress = [];
+      $ccaddress['email'] = $this->getCcs();
     }
     if ($this->getCcNames()) {
-      //$web['ccname'] = $this->getCcNames();
-      $ccaddress->name = $this->getCcNames();
+      $ccaddress['name'] = $this->getCcNames();
     }
-    $cc[] = $ccaddress;
+    else {
+      $ccaddress['name'] = '';
+    }
+    if (!empty($ccaddress)) {
+      $ccemail = new EmailAddress($ccaddress['email'], $ccaddress['name']);
+      $personalization->addCC($ccemail);
+    }
+
     // Blind copy addresses.
-    $bccaddress = new \stdClass();
     if ($this->getBccs()) {
-      //$web['bcc'] = $this->getBccs();
-      $bccaddress->email = $this->getBccs();;
+      $bccaddress = [];
+      $bccaddress['email'] = $this->getBccs();;
     }
     if ($this->getBccNames()) {
-      //$web['bccname'] = $this->getBccNames();
-      $bccaddress->name = $this->getBccNames();
+      $bccaddress['name'] = $this->getBccNames();
     }
-    $bcc[] = $bccaddress;
+    if (!empty($bccaddress)){
+      $personalization->addBcc($bccaddress);
+    }
 
-    // Build to object to pass to the personalization array.
-    $personalization_object->to = $to;
-    $personalization_object->cc = $cc;
-    $personalization_object->bcc = $bcc;
-    $personalization_object->subject = $this->getSubject();
+    $personalization->setSubject($this->getSubject());
 
     // Pull object into the personalizations array.
-    $personalizations[] = $personalization_object;
+    $personalizations = $personalization->jsonSerialize();
 
     // API V3 updates to new data structure.
     $from = new \stdClass();
