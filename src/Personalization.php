@@ -21,10 +21,20 @@ class Personalization implements \JsonSerializable {
     $custom_args,
     $send_at;
 
-  public function addTo($email) {
+  /**
+   * Add email adddresses to the message.
+   *
+   * @param array $email
+   */
+  public function addTo(array $email) {
     $this->tos[] = $email;
   }
 
+  /**
+   * Get to addresses.
+   *
+   * @return array
+   */
   public function getTos() {
     return $this->tos;
   }
