@@ -22,7 +22,7 @@ class Personalization implements \JsonSerializable {
     $send_at;
 
   /**
-   * Add email adddresses to the message.
+   * Add email addresses to the message.
    *
    * @param array $email
    */
