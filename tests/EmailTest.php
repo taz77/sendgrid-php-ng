@@ -710,6 +710,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->setAttachment('./gif.gif', NULL, 'sample-cid');
     $f = pathinfo('./gif.gif');
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
 
     $this->assertEquals($json['files']['gif.gif'], $f['dirname'] . '/' . $f['basename']);
@@ -728,6 +729,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
   public function testToWebFormatWithHeaders() {
     $email = new \SendGrid\Email();
     $email->addHeader('X-Sent-Using', 'SendGrid-API');
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
 
     $headers = json_decode($json['headers'], TRUE);
@@ -737,6 +739,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
   public function testToWebFormatWithFilters() {
     $email = new \SendGrid\Email();
     $email->addFilter('footer', 'text/plain', 'Here is a plain text footer');
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
 
     $xsmtpapi = json_decode($json['x-smtpapi'], TRUE);
