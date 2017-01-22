@@ -1105,7 +1105,7 @@ class Email {
     else {
       $ccaddress['name'] = '';
     }
-    if (!empty($ccaddress)) {
+    if (!empty($ccaddress['email'])) {
       $ccemail = new EmailAddress($ccaddress['email'], $ccaddress['name']);
       $personalization->addCC($ccemail);
     }
