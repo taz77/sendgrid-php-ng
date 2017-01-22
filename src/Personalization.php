@@ -24,9 +24,9 @@ class Personalization implements \JsonSerializable {
   /**
    * Add email addresses to the message.
    *
-   * @param array $email
+   * @param object $email
    */
-  public function addTo(array $email) {
+  public function addTo($email) {
     $this->tos[] = $email;
   }
 
@@ -42,7 +42,7 @@ class Personalization implements \JsonSerializable {
   /**
    * Add cc address.
    *
-   * @param string $email
+   * @param object $email
    */
   public function addCc($email) {
     $this->ccs[] = $email;
@@ -60,7 +60,7 @@ class Personalization implements \JsonSerializable {
   /**
    * Add a bcc address.
    *
-   * @param string $email
+   * @param object $email
    */
   public function addBcc($email) {
     $this->bccs[] = $email;
