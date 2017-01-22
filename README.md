@@ -100,7 +100,7 @@ require("path/to/sendgrid-php-ng/sendgrid-php.php");
 
 ## Example App
 
-There is a [sendgrid-php-example app](https://github.com/sendgrid/sendgrid-php-example) to help jumpstart your development.
+There is a [sendgrid-php-example app](https://github.com/taz77/sendgrid-php-ng-example) to help jumpstart your development.
 
 ## Usage
 
