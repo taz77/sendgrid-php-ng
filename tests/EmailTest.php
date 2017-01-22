@@ -599,6 +599,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     date_default_timezone_set('America/Los_Angeles');
     $date = date('r');
     $email->setDate($date);
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
 
     $this->assertEquals($json['date'], $date);
@@ -607,6 +608,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
   public function testToWebFormatWithSetSendAt() {
     $email = new \SendGrid\Email();
     $email->setSendAt(1409348513);
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
     $xsmtpapi = json_decode($json['x-smtpapi']);
 
@@ -616,6 +618,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
   public function testToWebFormatWithSetSendEachAt() {
     $email = new \SendGrid\Email();
     $email->setSendEachAt([1409348513, 1409348514]);
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
     $xsmtpapi = json_decode($json['x-smtpapi']);
 
@@ -626,6 +629,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->addSendEachAt(1409348513);
     $email->addSendEachAt(1409348514);
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
     $xsmtpapi = json_decode($json['x-smtpapi']);
 
@@ -656,6 +660,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->addCc('foo@bar.com', 'Frank Foo');
     $email->setFrom('from@site.com');
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
 
     $this->assertEquals($json['ccname'], ['Frank Foo']);
@@ -684,6 +689,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->addAttachment('./gif.gif');
     $f = pathinfo('./gif.gif');
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
     $this->assertEquals($json['files']['gif.gif'], $f['dirname'] . '/' . $f['basename']);
   }
