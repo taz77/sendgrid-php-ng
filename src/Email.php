@@ -1115,7 +1115,7 @@ class Email {
       $bccaddress = [];
       $bccaddress['email'] = $this->getBccs();;
     }
-    if ($this->getBccNames()) {
+    if ($this->getBccNames() && !$bccaddress['email']) {
       $bccaddress['name'] = $this->getBccNames();
     }
     if (!empty($bccaddress)){
@@ -1125,7 +1125,7 @@ class Email {
     $personalization->setSubject($this->getSubject());
 
     // Pull object into the personalizations array.
-    $personalizations = $personalization->jsonSerialize();
+    $web['personalizations'] = $personalization->jsonSerialize();
 
     // API V3 updates to new data structure.
     $from = new \stdClass();
@@ -1174,8 +1174,6 @@ class Email {
       $web['to'] = "";
     }
 
-    $web = $this->updateMissingTo($web);
-
     if ($this->getAttachments()) {
       foreach ($this->getAttachments() as $f) {
         $file = $f['file'];
@@ -1203,21 +1201,5 @@ class Email {
     }
 
     return $web;
-  }
-
-  /**
-   * There needs to be at least one to address, or else the mail won't send.
-   * This method modifies the data that will be sent via either Rest
-   *
-   * @param mixed $data
-   *
-   * @return mixed $data
-   */
-  public function updateMissingTo($data) {
-    if ($this->smtpapi->to && (count($this->smtpapi->to) > 0)) {
-      $data['to'] = $this->getFrom();
-    }
-
-    return $data;
   }
 }
