@@ -1092,7 +1092,7 @@ class Email {
     $toaddress['name'] = !empty($this->getToNames()) ? $this->getToNames() : '';
 
     $email = new EmailAddress($toaddress['name'], $toaddress['email']);
-    $personalization->addTo($email->jsonSerialize());
+    $personalization->addTo($email);
 
     // Carbon copy addresses
     if ($this->getCcs()) {
