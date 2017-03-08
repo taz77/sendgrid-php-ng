@@ -5,6 +5,13 @@ namespace SendGrid\Tests;
 use \Mockery as m;
 use \SendGrid as s;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Exception\RequestException;
+
 class SendGridTest_Client extends \PHPUnit_Framework_TestCase {
 
   /**
@@ -28,7 +35,6 @@ class SendGridTest_Client extends \PHPUnit_Framework_TestCase {
   public function testInitWithApiKey() {
     $sendgrid = new s\Client('token123456789');
     $this->assertEquals('SendGrid\Client', get_class($sendgrid));
-    $this->assertNull($sendgrid->apiUser);
     $this->assertEquals($sendgrid->apiKey, 'token123456789');
   }
 
@@ -44,10 +50,30 @@ class SendGridTest_Client extends \PHPUnit_Framework_TestCase {
    * Test initializing client with API key with a proxy specified.
    */
   public function testInitWithProxyOption() {
-    $sendgrid = new s\Client('token123456789', ['proxy' => 'myproxy.net:3128']);
+    // Create a mock response to exercise the client against.
+    $mock = new MockHandler([
+      new Response(200, ['X-Foo' => 'Bar']),
+    ]);
+    $handler = HandlerStack::create($mock);
+
+    $sendgrid = new s\Client('token123456789', [
+      'proxy' => ['http' => 'http://myproxy.net:3128'],
+      'handler' => $handler,
+      ]);
     $this->assertEquals('SendGrid\Client', get_class($sendgrid));
-    $options = $sendgrid->getOptions();
-    $this->assertTrue(isset($options['proxy']));
+
+    // Send the request to the mock interface and see if the proxy was set.
+    $email = new \SendGrid\Email();
+
+    $email->addTo('p1@mailinator.com');
+    $this->assertEquals(['p1@mailinator.com'], $email->to);
+
+    $email->addTo('p2@mailinator.com');
+    $email->setText('This is a mocked email message.');
+
+    $sendgrid->send($email);
+    $headeroptions = $sendgrid->getOptions();
+    $this->assertEquals('http://myproxy.net:3128', $headeroptions['proxy']['http']);
   }
 
   /**
@@ -64,20 +90,6 @@ class SendGridTest_Client extends \PHPUnit_Framework_TestCase {
   public function testDefaultEndpoint() {
     $sendgrid = new s\Client('token123456789');
     $this->assertEquals('/v3/mail/send', $sendgrid->endpoint);
-  }
-
-  /**
-   * Test creating a client with a custom URL.
-   */
-  public function testCustomURL() {
-    $options = [
-      'protocol' => 'http',
-      'host' => 'sendgrid.org',
-      'endpoint' => '/send',
-      'port' => '80',
-    ];
-    $sendgrid = new s\Client('token123456789', $options);
-    $this->assertEquals('http://sendgrid.org:80', $sendgrid->url);
   }
 
   /**
