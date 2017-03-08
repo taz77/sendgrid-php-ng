@@ -2,6 +2,8 @@
 
 namespace SendGrid\Tests;
 
+use SendGrid\EmailAddress;
+
 class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
 
   public function testConstructionEmail() {
@@ -647,10 +649,8 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->setFrom('from@site.com');
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-
-    print_r($json['personalizations']);
-
-    $this->assertEquals($json['personalizations'], ['Frank Foo']);
+    $result = $json['personalizations']['to'][0]->name[0];
+    $this->assertEquals($result, 'Frank Foo');
   }
 
   public function testToWebFormatWithSmtpapiTo() {
