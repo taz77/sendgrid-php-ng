@@ -25,7 +25,8 @@ class Email {
     $content,
     $headers,
     $smtpapi,
-    $attachments;
+    $attachments,
+    $sendat;
 
   /**
    * Email constructor.
@@ -579,18 +580,27 @@ class Email {
    * Set the X-SMTPAPI header of the send at date that allows you to use the
    * scheduling function of Sendgrid. Requires UNIX timestamp.
    *
-   * @param string $timestamp
+   * @param integer $timestamp
    *
    * @return object $this
    */
-  public function setSendAt($timestamp) {
+  public function setSendAt(int $timestamp) {
     $this->smtpapi->setSendAt($timestamp);
 
     return $this;
   }
 
   /**
-   * You can schedule emails to send at certain times per receipient. Use this
+   * Return the send at time.
+   *
+   * @return mixed
+   */
+  public function getSendAt() {
+    return $this->sendapi->send_at;
+  }
+
+  /**
+   * You can schedule emails to send at certain times per recipient. Use this
    * by supplying an array of timestamps. Timestamps must be UNIX time.
    * Time stamps will be associated with the to addresses on a one to one basis.
    *
@@ -1120,6 +1130,9 @@ class Email {
     }
     if (!empty($bccaddress)){
       $personalization->addBcc($bccaddress);
+    }
+    if (!empty($this->smtpapi->send_at)) {
+      $personalization->setSendAt($this->smtpapi->send_at);
     }
 
     $personalization->setSubject($this->getSubject());
