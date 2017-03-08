@@ -600,6 +600,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $date = date('r');
     $email->setDate($date);
     $email->addTo('no@one.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
 
     $this->assertEquals($json['date'], $date);
@@ -609,46 +610,54 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->setSendAt(1409348513);
     $email->addTo('no@one.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-    $xsmtpapi = json_decode($json['x-smtpapi']);
+    $send_at = json_decode($json['personalizations']['send_at']);
 
-    $this->assertEquals(1409348513, $xsmtpapi->send_at);
+    $this->assertEquals(1409348513, $send_at);
   }
+  /* This is not supported in V3
 
-  public function testToWebFormatWithSetSendEachAt() {
-    $email = new \SendGrid\Email();
-    $email->setSendEachAt([1409348513, 1409348514]);
-    $email->addTo('no@one.com');
-    $json = $email->toWebFormat();
-    $xsmtpapi = json_decode($json['x-smtpapi']);
+    public function testToWebFormatWithSetSendEachAt() {
+      $email = new \SendGrid\Email();
+      $email->setSendEachAt([1409348513, 1409348514]);
+      $email->addTo('no@one.com');
+      $email->setHtml('Test Email');
+      $json = $email->toWebFormat();
+      $xsmtpapi = json_decode($json['x-smtpapi']);
 
-    $this->assertEquals([1409348513, 1409348514], $xsmtpapi->send_each_at);
-  }
+      $this->assertEquals([1409348513, 1409348514], $xsmtpapi->send_each_at);
+    }
 
-  public function testToWebFormatWithAddSendEachAt() {
-    $email = new \SendGrid\Email();
-    $email->addSendEachAt(1409348513);
-    $email->addSendEachAt(1409348514);
-    $email->addTo('no@one.com');
-    $json = $email->toWebFormat();
-    $xsmtpapi = json_decode($json['x-smtpapi']);
+    public function testToWebFormatWithAddSendEachAt() {
+      $email = new \SendGrid\Email();
+      $email->addSendEachAt(1409348513);
+      $email->addSendEachAt(1409348514);
+      $email->addTo('no@one.com');
+      $email->setHtml('Test Email');
+      $json = $email->toWebFormat();
+      $xsmtpapi = json_decode($json['x-smtpapi']);
 
-    $this->assertEquals([1409348513, 1409348514], $xsmtpapi->send_each_at);
-  }
-
+      $this->assertEquals([1409348513, 1409348514], $xsmtpapi->send_each_at);
+    }
+  */
   public function testToWebFormatWithToName() {
     $email = new \SendGrid\Email();
     $email->addTo('foo@bar.com', 'Frank Foo');
     $email->setFrom('from@site.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
 
-    $this->assertEquals($json['toname'], ['Frank Foo']);
+    print_r($json['personalizations']);
+
+    $this->assertEquals($json['personalizations'], ['Frank Foo']);
   }
 
   public function testToWebFormatWithSmtpapiTo() {
     $email = new \SendGrid\Email();
     $email->addSmtpapiTo('foo@bar.com');
     $email->setFrom('from@site.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
     $xsmtpapi = json_decode($json['x-smtpapi']);
 
@@ -661,6 +670,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addCc('foo@bar.com', 'Frank Foo');
     $email->setFrom('from@site.com');
     $email->addTo('no@one.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
 
     $this->assertEquals($json['ccname'], ['Frank Foo']);
@@ -679,6 +689,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->addSmtpapiTo('p1@mailinator.com');
     $email->addBcc('p2@mailinator.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
 
     $this->assertEquals($json['bcc'], ['p2@mailinator.com']);
@@ -690,6 +701,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addAttachment('./gif.gif');
     $f = pathinfo('./gif.gif');
     $email->addTo('no@one.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
     $this->assertEquals($json['files']['gif.gif'], $f['dirname'] . '/' . $f['basename']);
   }
@@ -699,6 +711,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addAttachment('./gif.gif', NULL, 'sample-cid');
     $email->addAttachment('./gif.gif', 'gif2.gif', 'sample-cid-2');
     $f = pathinfo('./gif.gif');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
 
     $this->assertEquals($json['files']['gif.gif'], $f['dirname'] . '/' . $f['basename']);
@@ -711,6 +724,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->setAttachment('./gif.gif', NULL, 'sample-cid');
     $f = pathinfo('./gif.gif');
     $email->addTo('no@one.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
 
     $this->assertEquals($json['files']['gif.gif'], $f['dirname'] . '/' . $f['basename']);
@@ -721,6 +735,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->addAttachment('./gif.gif', 'different.jpg');
     $f = pathinfo('./gif.gif');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
 
     $this->assertEquals($json['files']['gif.gif'], $f['dirname'] . '/' . $f['basename']);
@@ -730,6 +745,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->addHeader('X-Sent-Using', 'SendGrid-API');
     $email->addTo('no@one.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
 
     $headers = json_decode($json['headers'], TRUE);
