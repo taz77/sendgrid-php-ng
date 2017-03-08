@@ -1,4 +1,5 @@
 <?php
+
 namespace SendGrid;
 
 use \Email;
@@ -18,7 +19,6 @@ class Client {
     $options;
 
   public
-    $apiUser,
     $apiKey,
     $url,
     $endpoint,
@@ -27,24 +27,18 @@ class Client {
   /**
    * SendGrid constructor.
    *
-   * @param $apiUserOrKey
-   * @param null $apiKeyOrOptions
+   * @param string $apiKey
    * @param array $options
+   *
    * @throws string
    */
-  public function __construct($apiUserOrKey, $apiKeyOrOptions = NULL, $options = []) {
+  public function __construct($apiKey, $options = []) {
     // Check if given a username + password or api key.
-    if (is_array($apiKeyOrOptions) || $apiKeyOrOptions === NULL) {
+    try {
       // API key.
-      $this->apiKey = $apiUserOrKey;
-      $this->apiUser = NULL;
-
-      // With options.
-      if (is_array($apiKeyOrOptions)) {
-        $this->options = $apiKeyOrOptions;
-      }
+      $this->apiKey = $apiKey;
     }
-    else {
+    catch (\SendGrid\Exception $e) {
       // Won't be thrown?
       throw new InvalidArgumentException('Need an api key!');
     }
@@ -61,6 +55,13 @@ class Client {
     // Default to no port number.
     $port = isset($this->options['port']) ? $this->options['port'] : '';
 
+    // Set the options in the object for the class.
+    $this->options = $options;
+
+    if (!empty($options['proxy'])) {
+      $this->proxy = $options['proxy'];
+    }
+
     // Construct the URL for the Sendgrid Service.
     $this->url = isset($this->options['url']) ? $this->options['url'] : $protocol . '://' . $host . ($port ? ':' . $port : '');
     // Construct the endpoint URL.
@@ -76,11 +77,8 @@ class Client {
    */
   private function prepareHttpClient() {
     $headers = [];
-    // $headers['verify'] = !$this->options['turn_off_ssl_verification'];
-    // Using api key
-    if ($this->apiUser === NULL) {
-      $headers['Authorization'] = 'Bearer' . ' ' . $this->apiKey;
-    }
+    // Set the API key header for the request.
+    $headers['Authorization'] = 'Bearer' . ' ' . $this->apiKey;
 
     // Using http proxy
     if (isset($this->options['proxy'])) {
@@ -89,11 +87,16 @@ class Client {
     $headers['User-Agent'] = 'sendgrid/' . $this->version . ';php';
     // Create an empty stack for error processing.
     // Guzzlehttp will choose the most appropriate handler based on the system.
-    $stack = \GuzzleHttp\HandlerStack::create();
+    if (empty($this->options['handler'])) {
+      $stack = \GuzzleHttp\HandlerStack::create();
+    }
+    else {
+      $stack = $this->options['handler'];
+    }
     $client = new \GuzzleHttp\Client([
       'base_uri' => $this->url,
-      'headers' => $headers,
       'handler' => $stack,
+      'headers' => $headers,
     ]);
     return $client;
   }
@@ -113,17 +116,14 @@ class Client {
    * Returns response codes after sending and will throw exceptions on faults.
    *
    * @param \SendGrid\Email $email
+   *
    * @return \SendGrid\Response
    * @throws \SendGrid\Exception
    */
   public function send(\SendGrid\Email $email) {
     $form = $email->toWebFormat();
     // Adding API keys to header.
-    if ($this->apiUser !== NULL) {
-      $form['api_user'] = $this->apiUser;
-      $form['api_key'] = $this->apiKey;
-    }
-
+    $form['api_key'] = $this->apiKey;
     $response = $this->postRequest($this->endpoint, $form);
 
     if ($response->code != 200 && $this->options['raise_exceptions']) {
@@ -139,6 +139,7 @@ class Client {
    *
    * @param string $endpoint
    * @param array $form
+   *
    * @return bool|\SendGrid\Response
    */
   public function postRequest($endpoint, $form) {
@@ -161,6 +162,11 @@ class Client {
       $requestoptions['timeout'] = $this->options['timeout'];
     }
 
+    // Proxy settings
+    if (isset($this->options['proxy'])) {
+      $requestoptions['proxy'] = $this->options['proxy'];
+    }
+
     try {
       $res = $this->client->request('POST', $endpoint, $requestoptions);
     }
@@ -180,6 +186,7 @@ class Client {
    * Prepare a request to be submitted as multipart.
    *
    * @param array $data
+   *
    * @return array $message
    */
   public function prepareMultipart($data) {
