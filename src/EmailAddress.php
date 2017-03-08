@@ -11,7 +11,7 @@ namespace SendGrid;
 
 class EmailAddress {
 
-  private
+  public
     $name,
     $email;
 
