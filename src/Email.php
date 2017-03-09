@@ -98,8 +98,8 @@ class Email {
   }
 
   /**
-   * Add receipient email addresses to the X-SMTPAPI headers. You may optionally
-   * provide the name of thereceipient as a string.
+   * Add recipient email addresses to the X-SMTPAPI headers. You may optionally
+   * provide the name of the recipient as a string.
    *
    * @param string $email
    * @param string $name
@@ -113,7 +113,7 @@ class Email {
   }
 
   /**
-   * Add receipients as an array of addresses.
+   * Add recipients as an array of addresses.
    *
    * @param array $emails
    *
@@ -126,7 +126,7 @@ class Email {
   }
 
   /**
-   * Add receipient email addresses to the X-SMTPAPI headers as an array.
+   * Add recipient email addresses to the X-SMTPAPI headers as an array.
    *
    * @param array $emails
    *
@@ -139,7 +139,7 @@ class Email {
   }
 
   /**
-   * Add names of receipients.
+   * Add names of recipients.
    *
    * @param string $name
    *
@@ -1213,6 +1213,11 @@ class Email {
       };
     }
 
+    // Add the SMTPAPI headers if set.
+    $xsmtp = $this->getSmtpapi();
+    if (!empty($xsmtp)){
+      $web['x-smtpapi'] = $xsmtp;
+    }
     return $web;
   }
 }
