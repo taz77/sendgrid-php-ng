@@ -1093,11 +1093,18 @@ class Email {
     // Begin the array of objects for personalizations. V3 Upgrade.
     $personalization = new Personalization();
 
+    // Add the SMTPAPI headers if set.
+    $xsmtp = $this->getSmtpapi();
+    print_r($xsmtp);
+    if (!empty($xsmtp)){
+      $web['x-smtpapi'] = $xsmtp;
+    }
     // To addressing section of email.
     $toaddress = [];
-    if (empty($this->to)){
+    if (empty($this->to) && empty($xsmtp->to)){
       throw new Exception('There must be a to email address.');
     }
+
     $toaddress['email'] = $this->to;
     $toaddress['name'] = !empty($this->getToNames()) ? $this->getToNames() : '';
 
@@ -1211,12 +1218,6 @@ class Email {
         // full path as a value.
         $web['files'][$f['basename']] = $f['dirname'] . '/' . $f['basename'];
       };
-    }
-
-    // Add the SMTPAPI headers if set.
-    $xsmtp = $this->getSmtpapi();
-    if (!empty($xsmtp)){
-      $web['x-smtpapi'] = $xsmtp;
     }
     return $web;
   }
