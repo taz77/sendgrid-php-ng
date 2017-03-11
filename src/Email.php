@@ -1136,13 +1136,14 @@ class Email {
     // Blind copy addresses.
     if ($this->getBccs()) {
       $bccaddress = [];
-      $bccaddress['email'] = $this->getBccs();;
+      $bccaddress['email'] = $this->getBccs();
     }
     if ($this->getBccNames() && !$bccaddress['email']) {
       $bccaddress['name'] = $this->getBccNames();
     }
     if (!empty($bccaddress)) {
-      $personalization->addBcc($bccaddress);
+      $bccemail = new EmailAddress($bccaddress['name'], $bccaddress['email']);
+      $personalization->addBcc($bccemail);
     }
     if (!empty($this->smtpapi->send_at)) {
       $personalization->setSendAt($this->smtpapi->send_at);
