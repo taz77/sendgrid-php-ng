@@ -662,7 +662,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $xsmtpapi = json_decode($json['x-smtpapi']);
 
     $this->assertEquals($xsmtpapi->to, ['foo@bar.com']);
-    $this->assertEquals($json['to'], 'from@site.com');
+    $this->assertEquals($json['personalizations']['to'][0]->email[0], 'foo@bar.com');
   }
 
   public function testToWebFormatWithCcName() {
@@ -672,8 +672,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addTo('no@one.com');
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-
-    $this->assertEquals($json['ccname'], ['Frank Foo']);
+    $this->assertEquals($json['personalizations']['cc'][0]->name[0], ['Frank Foo']);
   }
 
   public function testToWebFormatWithBccName() {
