@@ -1069,7 +1069,7 @@ class Email {
   }
 
   /**
-   * Return the entire Smtpapi header.
+   * Return the entire Smtpapi header object.
    *
    * @return \Smtpapi\Header
    */
@@ -1094,18 +1094,24 @@ class Email {
     $personalization = new Personalization();
 
     // Add the SMTPAPI headers if set.
-    $xsmtp = $this->getSmtpapi();
-    print_r($xsmtp);
-    if (!empty($xsmtp)){
-      $web['x-smtpapi'] = $xsmtp;
+    if (!empty($this->smtpapi->jsonString()) || $this->smtpapi->jsonString() != '{}') {
+      $web['x-smtpapi'] = $this->smtpapi->jsonString();
+      $xsmtp = json_decode($web['x-smtpapi']);
     }
     // To addressing section of email.
     $toaddress = [];
-    if (empty($this->to) && empty($xsmtp->to)){
+    if (empty($this->to) && empty($this->smtpapi->to)) {
       throw new Exception('There must be a to email address.');
     }
+    // @todo Accomodate multiple addresses.
+    if (empty($this->to) && !empty($this->smtpapi->to)){
+      $toaddress['email'] = $this->smtpapi->to;
+    }
+    else {
+      $toaddress['email'] = $this->to;
+    }
 
-    $toaddress['email'] = $this->to;
+
     $toaddress['name'] = !empty($this->getToNames()) ? $this->getToNames() : '';
 
     $email = new EmailAddress($toaddress['name'], $toaddress['email']);
@@ -1123,7 +1129,7 @@ class Email {
       $ccaddress['name'] = '';
     }
     if (!empty($ccaddress['email'])) {
-      $ccemail = new EmailAddress($ccaddress['email'], $ccaddress['name']);
+      $ccemail = new EmailAddress($ccaddress['name'], $ccaddress['email']);
       $personalization->addCC($ccemail);
     }
 
@@ -1135,7 +1141,7 @@ class Email {
     if ($this->getBccNames() && !$bccaddress['email']) {
       $bccaddress['name'] = $this->getBccNames();
     }
-    if (!empty($bccaddress)){
+    if (!empty($bccaddress)) {
       $personalization->addBcc($bccaddress);
     }
     if (!empty($this->smtpapi->send_at)) {
