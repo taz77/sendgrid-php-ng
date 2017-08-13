@@ -1034,6 +1034,8 @@ class Email {
    * @param array $key_value_pairs
    *
    * @return $this
+   *
+   * @see https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html
    */
   public function setHeaders($key_value_pairs) {
     $this->headers = $key_value_pairs;
@@ -1184,11 +1186,13 @@ class Email {
       throw new Exception('Your email has no content. This cannot be sent to SendGrid.');
     }
 
+    // Process email message headers.
     if (!empty($this->getHeaders())) {
-      $headers = new \stdClass();
+      $headers = (object)[];
       foreach ($this->getHeaders() as $item => $value) {
-        $headers->$item = $headers->$value;
+        $headers->$item = $value;
       }
+      $web['headers'] = $headers;
     }
 
 
