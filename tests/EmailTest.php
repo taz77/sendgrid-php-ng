@@ -643,6 +643,10 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
       $this->assertEquals([1409348513, 1409348514], $xsmtpapi->send_each_at);
     }
   */
+
+  /**
+   * Test adding a name to the To address.
+   */
   public function testToWebFormatWithToName() {
     $email = new \SendGrid\Email();
     $email->addTo('foo@bar.com', 'Frank Foo');
@@ -653,6 +657,9 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($result, 'Frank Foo');
   }
 
+  /**
+   * Test adding To via the smtpapi.
+   */
   public function testToWebFormatWithSmtpapiTo() {
     $email = new \SendGrid\Email();
     $email->addSmtpapiTo('foo@bar.com');
@@ -725,6 +732,11 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($json['content[gif2.gif]'], 'sample-cid-2');
   }
 
+  /**
+   * Test email with attachment and CID.
+   *
+   * @see setAttachment()
+   */
   public function testToWebFormatWithSetAttachmentAndCid() {
     $email = new \SendGrid\Email();
     $email->setAttachment('./gif.gif', NULL, 'sample-cid');
@@ -737,6 +749,9 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($json['content[gif.gif]'], 'sample-cid');
   }
 
+  /**
+   * Test email with attachment that has a custom file name.
+   */
   public function testToWebFormatWithAttachmentCustomFilename() {
     $email = new \SendGrid\Email();
     $email->addAttachment('./gif.gif', 'different.jpg');
@@ -747,6 +762,9 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($json['files']['gif.gif'], $f['dirname'] . '/' . $f['basename']);
   }
 
+  /**
+   * Test email with headers.
+   */
   public function testToWebFormatWithHeaders() {
     $email = new \SendGrid\Email();
     $email->addHeader('X-Sent-Using', 'SendGrid-API');
@@ -758,6 +776,9 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('SendGrid-API', $headers['X-Sent-Using']);
   }
 
+  /**
+   * Test email with filters.
+   */
   public function testToWebFormatWithFilters() {
     $email = new \SendGrid\Email();
     $email->addFilter('footer', 'text/plain', 'Here is a plain text footer');

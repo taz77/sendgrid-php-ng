@@ -1111,13 +1111,12 @@ class Email {
       $toaddress['email'] = $this->to;
     }
 
-
     $toaddress['name'] = !empty($this->getToNames()) ? $this->getToNames() : '';
 
     $email = new EmailAddress($toaddress['name'], $toaddress['email']);
     $personalization->addTo($email);
 
-    // Carbon copy addresses
+    // Carbon copy addresses.
     if ($this->getCcs()) {
       $ccaddress = [];
       $ccaddress['email'] = $this->getCcs();
