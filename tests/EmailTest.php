@@ -704,7 +704,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addBcc('p2@mailinator.com');
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-    $this->assertEquals($json['bcc'], ['p2@mailinator.com']);
+    $this->assertEquals($json['personalizations']['bcc'][0]->email[0], 'p2@mailinator.com');
     $this->assertEquals($json['x-smtpapi'], '{"to":["p1@mailinator.com"]}');
   }
 
@@ -722,10 +722,10 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->addAttachment('./gif.gif', NULL, 'sample-cid');
     $email->addAttachment('./gif.gif', 'gif2.gif', 'sample-cid-2');
+    $email->addTo('no@one.com');
     $f = pathinfo('./gif.gif');
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-
     $this->assertEquals($json['files']['gif.gif'], $f['dirname'] . '/' . $f['basename']);
     $this->assertEquals($json['content[gif.gif]'], 'sample-cid');
     $this->assertEquals($json['content[gif2.gif]'], 'sample-cid-2');
@@ -756,8 +756,8 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addAttachment('./gif.gif', 'different.jpg');
     $f = pathinfo('./gif.gif');
     $email->setHtml('Test Email');
+    $email->addTo('no@one.com');
     $json = $email->toWebFormat();
-
     $this->assertEquals($json['files']['gif.gif'], $f['dirname'] . '/' . $f['basename']);
   }
 
@@ -770,9 +770,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addTo('no@one.com');
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-
-    $headers = json_decode($json['headers'], TRUE);
-    $this->assertEquals('SendGrid-API', $headers['X-Sent-Using']);
+    $this->assertEquals('SendGrid-API', $json['headers']->{'X-Sent-Using'});
   }
 
   /**
@@ -782,8 +780,8 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email = new \SendGrid\Email();
     $email->addFilter('footer', 'text/plain', 'Here is a plain text footer');
     $email->addTo('no@one.com');
+    $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-
     $xsmtpapi = json_decode($json['x-smtpapi'], TRUE);
     $this->assertEquals('Here is a plain text footer', $xsmtpapi['filters']['footer']['settings']['text/plain']);
   }
