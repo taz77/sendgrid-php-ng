@@ -1137,10 +1137,9 @@ class Email {
     if ($this->getBccs()) {
       $bccaddress = [];
       $bccaddress['email'] = $this->getBccs();
+      $bccaddress['name'] = empty($this->getBccNames()) ? '' : $this->getBccNames();
     }
-    if ($this->getBccNames() && !$bccaddress['email']) {
-      $bccaddress['name'] = $this->getBccNames();
-    }
+
     if (!empty($bccaddress)) {
       $bccemail = new EmailAddress($bccaddress['name'], $bccaddress['email']);
       $personalization->addBcc($bccemail);

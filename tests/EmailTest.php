@@ -685,11 +685,12 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addTo('no@one.com');
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-    // @todo remove this.
-    print_r($json['personalizations']['bcc']);
-    $this->assertEquals($json['bccname'], ['Frank Foo']);
+    $this->assertEquals($json['personalizations']['bcc'][0]->name[0], ['Frank Foo']);
   }
 
+  /**
+   * Test adding To and BCC via the smtpapi.
+   */
   public function testToWebFormatWithSmtpapiToAndBcc() {
     $email = new \SendGrid\Email();
     $email->addSmtpapiTo('p1@mailinator.com');
