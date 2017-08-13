@@ -692,7 +692,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addTo('no@one.com');
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-    $this->assertEquals($json['personalizations']['bcc'][0]->name[0], ['Frank Foo']);
+    $this->assertEquals($json['personalizations']['bcc'][0]->name[0], 'Frank Foo');
   }
 
   /**
@@ -704,7 +704,6 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addBcc('p2@mailinator.com');
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
-
     $this->assertEquals($json['bcc'], ['p2@mailinator.com']);
     $this->assertEquals($json['x-smtpapi'], '{"to":["p1@mailinator.com"]}');
   }
