@@ -675,6 +675,9 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($json['personalizations']['cc'][0]->name[0], 'Frank Foo');
   }
 
+  /**
+   * Test BCC names and addresses.
+   */
   public function testToWebFormatWithBccName() {
     $email = new \SendGrid\Email();
     $email->addBcc('foo@bar.com', 'Frank Foo');
@@ -682,6 +685,7 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->addTo('no@one.com');
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
+    // @todo remove this.
     print_r($json['personalizations']['bcc']);
     $this->assertEquals($json['bccname'], ['Frank Foo']);
   }
