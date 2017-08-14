@@ -5,10 +5,8 @@
 
 namespace SendGrid;
 
-use \Client;
-use \Exception;
-use \Response;
-use GuzzleHttp\Exception\ClientException;
+use Client;
+use Response;
 
 class API {
 
@@ -24,5 +22,4 @@ class API {
     $client = new \Client($this->api_key);
 
   }
-
 }
