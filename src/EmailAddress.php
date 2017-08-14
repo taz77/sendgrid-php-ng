@@ -9,12 +9,10 @@
 namespace SendGrid;
 
 
-class EmailAddress {
+class EmailAddress implements \JsonSerializable {
 
-  public
-    $name,
-    $email;
-
+  private $name;
+  private $email;
   public function __construct($name, $email) {
     $this->name = $name;
     $this->email = $email;
@@ -39,9 +37,12 @@ class EmailAddress {
   public function jsonSerialize() {
     return array_filter(
       [
-        'name' => $this->getName(),
-        'email' => $this->getEmail(),
-      ]
-    );
+        'name'  => $this->getName(),
+        'email' => $this->getEmail()
+      ],
+      function ($value) {
+        return $value !== null;
+      }
+    ) ?: null;
   }
 }
