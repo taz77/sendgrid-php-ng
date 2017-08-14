@@ -1,9 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: bowens
- * Date: 15/12/16
- * Time: 23:05
+ * Create the email address object serialized for V3 API of SendGrid.
+ *
+ * @author Brady Owens
+ * @package SendGrid
+ *
  */
 
 namespace SendGrid;

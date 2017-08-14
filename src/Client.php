@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Create the client for V3 API of SendGrid.
+ *
+ * @author Brady Owens
+ * @package SendGrid
+ *
+ */
+
+
 namespace SendGrid;
 
 use \Email;
