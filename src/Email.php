@@ -587,11 +587,15 @@ class Email {
    * @param integer $timestamp
    *
    * @return object $this
+   *
+   * @throws \Exception
    */
   public function setSendAt(int $timestamp) {
-    $this->smtpapi->setSendAt($timestamp);
-
-    return $this;
+    if ($this->isValidTimeStamp($timestamp)) {
+      $this->sendat = $timestamp;
+      return $this;
+    }
+    throw new \Exception('Invalid timestamp. Must be a unix timestamp.');
   }
 
   /**
@@ -600,7 +604,7 @@ class Email {
    * @return mixed
    */
   public function getSendAt() {
-    return $this->sendapi->send_at;
+    return $this->sendat = $timestamp;
   }
 
   /**
@@ -1096,14 +1100,13 @@ class Email {
    *
    */
   public function toWebFormat() {
+
     // Begin the array of objects for personalizations. V3 Upgrade.
     $personalization = new Personalization();
 
-    // Add the SMTPAPI headers if set.
-    if (!empty($this->smtpapi->jsonString()) || $this->smtpapi->jsonString() != '{}') {
-      $web['x-smtpapi'] = $this->smtpapi->jsonString();
-      $xsmtp = json_decode($web['x-smtpapi']);
-    }
+    // Begin the message to send across the wire.
+    $message = new Message();
+
     // To addressing section of email.
     $toaddress = [];
     if (empty($this->to) && empty($this->smtpapi->to)) {
@@ -1149,8 +1152,12 @@ class Email {
       $bccemail = new EmailAddress($bccaddress['name'], $bccaddress['email']);
       $personalization->addBcc($bccemail);
     }
-    if (!empty($this->smtpapi->send_at)) {
-      $personalization->setSendAt($this->smtpapi->send_at);
+
+    // Send at time set for both the message and the personalizations.
+    // @TODO make the personalizations have a separate sendat.
+    if (!empty($this->sendat)) {
+      $personalization->setSendAt($this->sendat);
+      $message->setSendAt($this->sendat);
     }
 
     $personalization->setSubject($this->getSubject());
