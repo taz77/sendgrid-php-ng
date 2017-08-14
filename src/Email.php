@@ -4,10 +4,12 @@ namespace SendGrid;
 
 /**
  * Class Email
+ *
  * @package SendGrid
  */
 
 class Email {
+
   public
     $to,
     $toName,
@@ -157,6 +159,7 @@ class Email {
 
   /**
    * Returns an array of names associate with TO addresses.
+   *
    * @return array $this->toName
    */
   public function getToNames() {
@@ -262,6 +265,7 @@ class Email {
 
   /**
    * Return the reply to name for the address as a string.
+   *
    * @return string
    */
   public function getReplyToName() {
@@ -1106,7 +1110,7 @@ class Email {
       throw new Exception('There must be a to email address.');
     }
     // @todo Accomodate multiple addresses.
-    if (empty($this->to) && !empty($this->smtpapi->to)){
+    if (empty($this->to) && !empty($this->smtpapi->to)) {
       $toaddress['email'] = $this->smtpapi->to;
     }
     else {
@@ -1184,7 +1188,7 @@ class Email {
 
     // Process email message headers.
     if (!empty($this->getHeaders())) {
-      $headers = (object)[];
+      $headers = (object) [];
       foreach ($this->getHeaders() as $item => $value) {
         $headers->$item = $value;
       }

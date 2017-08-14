@@ -4,9 +4,11 @@ namespace SendGrid;
 
 /**
  * Class Response
+ *
  * @package SendGrid
  */
 class Response {
+
   public
     $code,
     $headers,
@@ -15,6 +17,7 @@ class Response {
 
   /**
    * Response constructor.
+   *
    * @param $code
    * @param $headers
    * @param $raw_body
