@@ -11,6 +11,7 @@ namespace SendGrid;
 
 
 class Personalization implements \JsonSerializable {
+
   private
     $tos,
     $ccs,
@@ -86,6 +87,7 @@ class Personalization implements \JsonSerializable {
 
   /**
    * Return the subject.
+   *
    * @return string
    */
   public function getSubject() {
@@ -169,7 +171,10 @@ class Personalization implements \JsonSerializable {
         'substitutions' => $this->getSubstitutions(),
         'custom_args' => $this->getCustomArgs(),
         'send_at' => $this->getSendAt(),
-      ]
-    );
+      ],
+      function ($value) {
+        return $value !== NULL;
+      }
+    ) ?: NULL;
   }
 }
