@@ -1230,4 +1230,17 @@ class Email {
     }
     return $web;
   }
+
+  /**
+   * Checks for a valid Unix time stamp.
+   *
+   * @param int $timestamp
+   *
+   * @return bool
+   */
+  private function isValidTimeStamp($timestamp) {
+    return ((string) (int) $timestamp === $timestamp)
+      && ($timestamp <= PHP_INT_MAX)
+      && ($timestamp >= ~PHP_INT_MAX);
+  }
 }
