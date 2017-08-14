@@ -635,7 +635,7 @@ class Email {
    * @return object $this
    */
   public function setTemplateId($templateId) {
-    $this->addFilter('templates', 'enabled', 1);
+    $this->addFilter('templates', 'enable', 1);
     $this->addFilter('templates', 'template_id', $templateId);
 
     return $this;
