@@ -1152,7 +1152,7 @@ class Email {
     $personalization->setSubject($this->getSubject());
 
     // Pull object into the personalizations array.
-    $web['personalizations'] = $personalization->jsonSerialize();
+    $web['personalizations'][] = $personalization;
 
     // API V3 updates to new data structure.
     $from = new \stdClass();
@@ -1168,21 +1168,17 @@ class Email {
     }
 
     // Email content. An array of objects in the V3 API.
-    $content = [];
-    $contentemail = new \stdClass();
     if ($this->getText()) {
-      $contentemail->type = 'text/plain';
-      $contentemail->value = $this->getText();
-      $content[] = $contentemail;
+      $contentemail = new Content('text/plain', $this->getText());
+      $web['contents'][] = $contentemail;
     }
     if ($this->getHtml()) {
-      $contentemail->type = 'text/html';
-      $contentemail->value = $this->getHtml();
-      $content[] = $contentemail;
+      $contentemail = new Content('text/html', $this->getHtml());
+      $web['contents'][] = $contentemail;
     }
 
     // Content cannot be empty. Throw an exception.
-    if (empty($content)) {
+    if (empty($web['contents'])) {
       throw new Exception('Your email has no content. This cannot be sent to SendGrid.');
     }
 
