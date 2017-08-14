@@ -615,7 +615,6 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $email->setHtml('Test Email');
     $json = $email->toWebFormat();
     $send_at = json_decode($json['personalizations']['send_at']);
-
     $this->assertEquals(1409348513, $send_at);
   }
   /* This is not supported in V3
