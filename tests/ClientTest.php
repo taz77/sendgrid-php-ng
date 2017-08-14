@@ -28,7 +28,6 @@ class SendGridTest_Client extends \PHPUnit_Framework_TestCase {
   public function testInitWithApiKey() {
     $sendgrid = new s\Client('token123456789');
     $this->assertEquals('SendGrid\Client', get_class($sendgrid));
-    $this->assertNull($sendgrid->apiUser);
     $this->assertEquals($sendgrid->apiKey, 'token123456789');
   }
 

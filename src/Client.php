@@ -18,7 +18,6 @@ class Client {
     $options;
 
   public
-    $apiUser,
     $apiKey,
     $url,
     $endpoint,
@@ -37,7 +36,6 @@ class Client {
     if (is_array($apiKeyOrOptions) || $apiKeyOrOptions === NULL) {
       // API key.
       $this->apiKey = $apiUserOrKey;
-      $this->apiUser = NULL;
 
       // With options.
       if (is_array($apiKeyOrOptions)) {
@@ -70,11 +68,9 @@ class Client {
    */
   private function prepareHttpClient() {
     $headers = [];
-    // $headers['verify'] = !$this->options['turn_off_ssl_verification'];
-    // Using api key
-    if ($this->apiUser === NULL) {
-      $headers['Authorization'] = 'Bearer' . ' ' . $this->apiKey;
-    }
+    // Using api key.
+    $headers['Authorization'] = 'Bearer' . ' ' . $this->apiKey;
+
 
     // Using http proxy
     if (isset($this->options['proxy'])) {
@@ -112,11 +108,6 @@ class Client {
    */
   public function send(\SendGrid\Email $email) {
     $form = $email->toWebFormat();
-    // Adding API keys to header.
-    if ($this->apiUser !== NULL) {
-      $form['api_user'] = $this->apiUser;
-      $form['api_key'] = $this->apiKey;
-    }
 
     $response = $this->postRequest($this->endpoint, $form);
 
