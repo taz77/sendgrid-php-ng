@@ -15,7 +15,7 @@ To install this library it is best to use composer. I have published a package t
 
 ``` php
 "require": {
-    "fastglass/sendgrid": ">=1.0.5"
+    "fastglass/sendgrid": ">=1.0.6"
   }
 ```
 
