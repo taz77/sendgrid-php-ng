@@ -43,7 +43,7 @@ Important: This library requires PHP 5.5 or higher.
 
 
 ```php
-$sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY');
+$sendgrid = new SendGrid\Client('YOUR_SENDGRID_APIKEY');
 $email = new SendGrid\Email();
 $email
     ->addTo('foo@bar.com')
@@ -159,7 +159,7 @@ $sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY', $options);
 You may change the URL sendgrid-php uses to send email by supplying various parameters to `options`, all parameters are optional:
 
 ```php
-$sendgrid = new SendGrid(
+$sendgrid = new SendGrid\Client(
     'YOUR_SENDGRID_APIKEY',
     array(
         'protocol' => 'http',
@@ -173,7 +173,7 @@ $sendgrid = new SendGrid(
 A full URL may also be provided:
 
 ```php
-$sendgrid = new SendGrid(
+$sendgrid = new SendGrid\Client(
     'YOUR_SENDGRID_APIKEY',
     array( 'url' => 'http://sendgrid.org:80/send')
 );
@@ -184,7 +184,7 @@ $sendgrid = new SendGrid(
 You can optionally ignore verification of SSL certificate when using the Web API.
 
 ```php
-$sendgrid = new SendGrid(
+$sendgrid = new SendGrid\Client(
     'YOUR_SENDGRID_APIKEY',
     array("turn_off_ssl_verification" => true)
 );
