@@ -50,8 +50,7 @@ $email
     ->setFrom('me@bar.com')
     ->setSubject('Subject goes here')
     ->setText('Hello World!')
-    ->setHtml('<strong>Hello World!</strong>')
-;
+    ->setHtml('<strong>Hello World!</strong>');
 
 $sendgrid->send($email);
 
