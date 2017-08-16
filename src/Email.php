@@ -945,7 +945,7 @@ class Email {
 
   /**
    * Set headers by passing an array of key/value custom header values.
-   * 
+   *
    * @param array $key_value_pairs
    * @return $this
    */
@@ -1073,10 +1073,10 @@ class Email {
    * There needs to be at least one to address, or else the mail won't send.
    * This method modifies the data that will be sent via either Rest
    *
-   * @param mixed $data
-   * @return mixed $data
+   * @param array $data
+   * @return array $data
    */
-  public function updateMissingTo($data) {
+  public function updateMissingTo(array $data) {
     if ($this->smtpapi->to && (count($this->smtpapi->to) > 0)) {
       $data['to'] = $this->getFrom();
     }
