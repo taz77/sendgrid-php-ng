@@ -12,8 +12,6 @@ namespace SendGrid;
 
 class Message implements \JsonSerializable {
 
-  const VERSION = '1.0.0';
-
   protected $namespace = 'SendGrid';
 
   public $from;
@@ -195,6 +193,9 @@ class Message implements \JsonSerializable {
     return $this->reply_to;
   }
 
+  /**
+   * @return array | NULL
+   */
   public function jsonSerialize() {
     return array_filter(
       [
