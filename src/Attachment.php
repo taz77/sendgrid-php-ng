@@ -1,6 +1,6 @@
 <?php
 /**
- * Create the email address object serialized for V3 API of SendGrid.
+ * Create the attachment object serialized for V3 API of SendGrid.
  *
  * @author Brady Owens
  * @package SendGrid
