@@ -590,7 +590,7 @@ class Email {
    *
    * @throws \Exception
    */
-  public function setSendAt(int $timestamp) {
+  public function setSendAt($timestamp) {
     if ($this->isValidTimeStamp($timestamp)) {
       $this->sendat = $timestamp;
       return $this;
