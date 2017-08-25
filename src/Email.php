@@ -703,11 +703,12 @@ class Email {
    * @param string $file
    * @param string $custom_filename
    * @param string $cid
+   * @param string $mimetype
    *
    * @return object $this
    */
-  public function addAttachment($file, $custom_filename = NULL, $cid = NULL) {
-    $this->attachments[] = $this->getAttachmentInfo($file, $custom_filename, $cid);
+  public function addAttachment($file, $custom_filename = NULL, $cid = NULL, $mimetype = NULL) {
+    $this->attachments[] = $this->getAttachmentInfo($file, $custom_filename, $cid, $mimetype);
 
     return $this;
   }
@@ -741,10 +742,11 @@ class Email {
    * @param string $file
    * @param string $custom_filename
    * @param string $cid
+   * @param string $mimetype
    *
    * @return array $info
    */
-  private function getAttachmentInfo($file, $custom_filename = NULL, $cid = NULL) {
+  private function getAttachmentInfo($file, $custom_filename, $cid, $mimetype) {
     $info = pathinfo($file);
     $info['file'] = $file;
     if (!is_null($custom_filename)) {
@@ -753,7 +755,9 @@ class Email {
     if ($cid !== NULL) {
       $info['cid'] = $cid;
     }
-
+    if ($mimetype !== NULL) {
+      $info['mimetype'] = $mimetype;
+    }
     return $info;
   }
 
