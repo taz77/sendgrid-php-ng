@@ -23,7 +23,6 @@ class Email {
     $subject,
     $text,
     $html,
-    $date,
     $content,
     $headers,
     $smtpapi,
@@ -510,30 +509,6 @@ class Email {
    */
   public function getSubject() {
     return $this->subject;
-  }
-
-  /**
-   * Set the date header of the current message. Must be RFC 2822 ( date("r");
-   * ).
-   *
-   * @param string $date
-   *
-   * @return object $this
-   */
-  public function setDate($date) {
-    $this->date = $date;
-
-    return $this;
-  }
-
-  /**
-   * Returns the date header on the current messge. Returns RFC 2822 formated
-   * date.
-   *
-   * @return string $this->date
-   */
-  public function getDate() {
-    return $this->date;
   }
 
   /**

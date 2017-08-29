@@ -316,15 +316,6 @@ class SendGridTest_Email extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('Test Subject', $email->getSubject());
   }
 
-  public function testSetDate() {
-    $email = new \SendGrid\Email();
-
-    date_default_timezone_set('America/Los_Angeles');
-    $date = date('r');
-    $email->setDate($date);
-    $this->assertEquals($date, $email->getDate());
-  }
-
   public function testSetSendAt() {
     $email = new \SendGrid\Email();
 
