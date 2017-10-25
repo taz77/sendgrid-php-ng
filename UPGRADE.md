@@ -8,4 +8,4 @@ impact your use of this wrapper.
 
 Method changes:
   - setDate() is no longer supported
-  
+  - Attachments now require you to set the mimetype and disposition
