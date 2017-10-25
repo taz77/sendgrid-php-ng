@@ -1,9 +1,6 @@
 <?php
 namespace SendGrid;
 
-use \Email;
-use \Exception;
-use \Response;
 use GuzzleHttp\Exception\ClientException;
 
 /**
