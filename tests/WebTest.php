@@ -42,7 +42,7 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setSubject('foobar subject')
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
-      ->addAttachment('./tests/gif.gif');
+      ->addAttachment('gif.gif');
     try {
       $response = $sendgrid->send($email);
     }
@@ -65,7 +65,7 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setSubject('foobar subject')
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
-      ->addAttachment('./tests/text');
+      ->addAttachment('text');
     try {
       $response = $sendgrid->send($email);
     }
@@ -87,7 +87,7 @@ class SendGridTest_Web extends \PHPUnit_Framework_TestCase {
       ->setSubject('foobar subject')
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
-      ->addAttachment('./tests/text');
+      ->addAttachment('text');
     try {
       $response = $sendgrid->send($email);
     }
