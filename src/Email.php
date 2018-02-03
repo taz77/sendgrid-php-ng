@@ -35,7 +35,7 @@ class Email {
   public function __construct() {
     $this->fromName = FALSE;
     $this->replyTo = FALSE;
-    $this->smtpapi = new \Smtpapi\Header();
+    // $this->smtpapi = new \Smtpapi\Header();
   }
 
   /**
@@ -104,12 +104,12 @@ class Email {
    *
    * @param string $email
    * @param string $name
+   * @deprecated Use addTo().
    *
    * @return object $this
    */
   public function addSmtpapiTo($email, $name = NULL) {
-    $this->smtpapi->addTo($email, $name);
-
+    $this->addTo($email, $name);
     return $this;
   }
 
@@ -129,12 +129,16 @@ class Email {
   /**
    * Add recipient email addresses to the X-SMTPAPI headers as an array.
    *
+   * @deprecated Please use addTo().
+   *
    * @param array $emails
    *
    * @return object $this
    */
   public function setSmtpapiTos(array $emails) {
-    $this->smtpapi->setTos($emails);
+    foreach ($emails as $key => $value) {
+      $this->addTo($value, $key);
+    }
 
     return $this;
   }
@@ -666,8 +670,8 @@ class Email {
    *
    * @return object $this
    */
-  public function setAttachment($file, $custom_filename = NULL, $cid = NULL) {
-    $this->attachments = [$this->getAttachmentInfo($file, $custom_filename, $cid)];
+  public function setAttachment($file, $custom_filename = NULL, $cid = NULL, $mimetype = NULL, $disposition = 'attachment') {
+    $this->attachments = [$this->getAttachmentInfo($file, $custom_filename, $cid, $mimetype, $disposition)];
 
     return $this;
   }
@@ -682,8 +686,8 @@ class Email {
    *
    * @return object $this
    */
-  public function addAttachment($file, $custom_filename = NULL, $cid = NULL, $mimetype = NULL) {
-    $this->attachments[] = $this->getAttachmentInfo($file, $custom_filename, $cid, $mimetype);
+  public function addAttachment($file, $custom_filename = NULL, $cid = NULL, $mimetype = NULL, $disposition = 'attachment') {
+    $this->attachments[] = $this->getAttachmentInfo($file, $custom_filename, $cid, $mimetype, $disposition);
 
     return $this;
   }
@@ -721,7 +725,7 @@ class Email {
    *
    * @return array $info
    */
-  private function getAttachmentInfo($file, $custom_filename, $cid, $mimetype) {
+  private function getAttachmentInfo($file, $custom_filename, $cid, $mimetype, $disposition) {
     $info = pathinfo($file);
     $info['file'] = $file;
     if (!is_null($custom_filename)) {
@@ -733,6 +737,7 @@ class Email {
     if ($mimetype !== NULL) {
       $info['mimetype'] = $mimetype;
     }
+    $info['disposition'] = $disposition;
     return $info;
   }
 
@@ -1073,22 +1078,31 @@ class Email {
    *
    * @todo the conversion to v3 api will take place here.
    *
-   * @return array $web
+   * @return $message
    *
    * @throws Exception
    *
    */
   public function toWebFormat() {
 
-    // Begin the array of objects for personalizations. V3 Upgrade.
-    $personalization = new Personalization();
+    // Email content. An array of objects in the V3 API.
+    if ($this->getText()) {
+      $contentemail = new Content('text/plain', $this->getText());
+      $web['contents'][] = $contentemail;
+    }
+    if ($this->getHtml()) {
+      $contentemail = new Content('text/html', $this->getHtml());
+      $web['contents'][] = $contentemail;
+    }
 
-    // Begin the message to send across the wire.
-    $message = new Message();
+    // Content cannot be empty. Throw an exception.
+    if (empty($web['contents'])) {
+      throw new Exception('Your email has no content. This cannot be sent to SendGrid.');
+    }
 
     // To addressing section of email.
     $toaddress = [];
-    if (empty($this->to) && empty($this->smtpapi->to)) {
+    if (empty($this->to)) {
       throw new Exception('There must be a to email address.');
     }
     // @todo Accomodate multiple addresses.
@@ -1098,11 +1112,34 @@ class Email {
     else {
       $toaddress['email'] = $this->to;
     }
-
     $toaddress['name'] = !empty($this->getToNames()) ? $this->getToNames() : '';
+    $to = new EmailAddress($toaddress['name'], $toaddress['email']);
 
-    $email = new EmailAddress($toaddress['name'], $toaddress['email']);
-    $personalization->addTo($email);
+    // From addressing.
+    $fromname = !empty($this->getFromName()) ? $this->getFromName() : '';
+    $from = new EmailAddress($fromname, $this->getFrom());
+
+    // Subject.
+    $subject = $this->getSubject();
+
+    // Begin the message object.
+    $message = new Message($from, $subject, $to, $web['contents']);
+
+    // Send at time set for both the message and the personalizations.
+    // @TODO make the personalizations have a separate sendat.
+    if (!empty($this->sendat)) {
+      $message->setSendAt($this->sendat);
+    }
+
+    // Process replyto if it exists.
+    if ($this->getReplyTo()) {
+      $replytoname = !empty($this->getReplyToName()) ? $this->getReplyToName() : '';
+      $replyto = new EmailAddress($replytoname, $this->getReplyTo());
+      $message->setReplyTo($replyto);
+    }
+
+    // Begin the array of objects for personalizations. V3 Upgrade.
+    $personalization = new Personalization();
 
     // Carbon copy addresses.
     if ($this->getCcs()) {
@@ -1132,66 +1169,19 @@ class Email {
       $personalization->addBcc($bccemail);
     }
 
-    // Send at time set for both the message and the personalizations.
-    // @TODO make the personalizations have a separate sendat.
-    if (!empty($this->sendat)) {
-      $personalization->setSendAt($this->sendat);
-      $message->setSendAt($this->sendat);
-    }
-
-    $personalization->setSubject($this->getSubject());
-
-    // Pull object into the personalizations array.
-    $web['personalizations'][] = $personalization;
-
-    // API V3 updates to new data structure.
-    $from = new \stdClass();
-    $from->email = $this->getFrom();
-    if ($this->getFromName()) {
-      $from->name = $this->getFromName();
-    }
-
-    // API V3 updates to new data structure.
-    $replyto = new \stdClass();
-    if ($this->getReplyTo()) {
-      $replyto->email = $this->getReplyTo();
-    }
-
-    // Email content. An array of objects in the V3 API.
-    if ($this->getText()) {
-      $contentemail = new Content('text/plain', $this->getText());
-      $web['contents'][] = $contentemail;
-    }
-    if ($this->getHtml()) {
-      $contentemail = new Content('text/html', $this->getHtml());
-      $web['contents'][] = $contentemail;
-    }
-
-    // Content cannot be empty. Throw an exception.
-    if (empty($web['contents'])) {
-      throw new Exception('Your email has no content. This cannot be sent to SendGrid.');
-    }
+    // Add personalization.
+    $message->addPersonalization($personalization);
 
     // Process email message headers.
     if (!empty($this->getHeaders())) {
-      $headers = (object) [];
       foreach ($this->getHeaders() as $item => $value) {
-        $headers->$item = $value;
+        $message->addHeader($item, $value);
       }
-      $web['headers'] = $headers;
-    }
-
-
-    if ($this->getDate()) {
-      $web['date'] = $this->getDate();
-    }
-    if ($this->smtpapi->to && (count($this->smtpapi->to) > 0)) {
-      $web['to'] = "";
     }
 
     if ($this->getAttachments()) {
       foreach ($this->getAttachments() as $f) {
-        $file = $f['file'];
+
         $extension = NULL;
         if (array_key_exists('extension', $f)) {
           $extension = $f['extension'];
@@ -1212,9 +1202,21 @@ class Email {
         // This creates an keyed array with the filenames as the key and the
         // full path as a value.
         $web['files'][$f['basename']] = $f['dirname'] . '/' . $f['basename'];
+        $filesstring = file_get_contents($f['dirname'] . '/' . $f['basename']);
+        $filecontent = base64_encode($filesstring);
+        $attachment = new Attachment();
+        $attachment->setContent($filecontent);
+        if(!empty($f['mimetype'])){
+          $attachment->setType($f['mimetype']);
+        }
+        $attachment->setFilename($f['basename']);
+        $attachment->setDisposition('attachment');
+        $messageUuid = uniqid('', FALSE);
+        $attachment->setContentId($messageUuid);
+        $message->addAttachment($attachment);
       };
     }
-    return $web;
+    return $message;
   }
 
   /**
