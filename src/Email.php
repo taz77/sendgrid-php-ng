@@ -30,7 +30,8 @@ class Email {
     $sendat,
     $asm,
     $categories,
-    $substitutions;
+    $substitutions,
+    $sendeachat;
 
   /**
    * Email constructor.
@@ -602,13 +603,26 @@ class Email {
    * @return object $this
    */
   public function setSendEachAt(array $timestamps) {
-    $this->smtpapi->setSendEachAt($timestamps);
+    $this->sendeachat = $timestamps;
 
     return $this;
   }
 
-  public function addSendEachAt($timestamp) {
-    $this->smtpapi->addSendEachAt($timestamp);
+  /**
+   * Add a time-to-send-at to the array of times. If the array has not been set
+   * it will created.
+   *
+   * @param int $timestamp
+   *
+   * @return $this
+   */
+  public function addSendEachAt(int $timestamp) {
+    if (empty($this->sendeachat)) {
+      $this->substitutions = $timestamp;
+    }
+    else {
+      $this->sendeachat = array_merge($this->sendeachat, $timestamp);
+    }
 
     return $this;
   }
@@ -839,9 +853,9 @@ class Email {
   }
 
   /**
-   * Add a substitution to the existng message. Supply the values in a key-value pair
-   * as an array. These are values specific to users such as demographics (First Name, Contact
-   * phone, etc.).
+   * Add a substitution to the existng message. Supply the values in a
+   * key-value pair as an array. These are values specific to users such as
+   * demographics (First Name, Contact phone, etc.).
    *
    * @see https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html
    *
@@ -850,7 +864,7 @@ class Email {
    * @return object $this
    */
   public function addSubstitution(array $key_value_pairs) {
-    if (empty($this->substitutions)){
+    if (empty($this->substitutions)) {
       $this->substitutions = $key_value_pairs;
     }
     else {
