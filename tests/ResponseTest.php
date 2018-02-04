@@ -2,7 +2,9 @@
 
 namespace SendGrid\Tests;
 
-class responseTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class responseTest extends TestCase {
 
   public function tearDown() {
   }

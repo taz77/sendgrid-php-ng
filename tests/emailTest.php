@@ -2,9 +2,9 @@
 
 namespace SendGrid\Tests;
 
-use SendGrid\EmailAddress;
+use PHPUnit\Framework\TestCase;
 
-class emailTest extends \PHPUnit_Framework_TestCase {
+class emailTest extends TestCase {
 
   public function testConstructionEmail() {
     $email = new \SendGrid\Email();

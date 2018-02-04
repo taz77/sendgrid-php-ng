@@ -2,7 +2,9 @@
 
 namespace SendGrid\Tests;
 
-class webTest extends \PHPUnit_Framework_TestCase {
+use PHPUnit\Framework\TestCase;
+
+class webTest extends TestCase {
 
   public function testConstruction() {
     $sendgrid = new \SendGrid\Client('token123456789');

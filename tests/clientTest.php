@@ -11,8 +11,9 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
+use PHPUnit\Framework\TestCase;
 
-class clientTest extends \PHPUnit_Framework_TestCase {
+class clientTest extends TestCase {
 
   /**
    * Tear down test.
