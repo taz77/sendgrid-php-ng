@@ -28,7 +28,8 @@ class Email {
     $smtpapi,
     $attachments,
     $sendat,
-    $asm;
+    $asm,
+    $categories;
 
   /**
    * Email constructor.
@@ -773,7 +774,7 @@ class Email {
    * @return object $this
    */
   public function setCategories($categories) {
-    $this->smtpapi->setCategories($categories);
+    $this->categories = $categories;
 
     return $this;
   }
@@ -786,8 +787,10 @@ class Email {
    * @return object $this
    */
   public function setCategory($category) {
-    $this->smtpapi->setCategory($category);
-
+    if (!empty($this->categories)) {
+      unset($this->categories);
+    }
+    $this->categories = [$category];
     return $this;
   }
 
@@ -798,9 +801,8 @@ class Email {
    *
    * @return object $this
    */
-  public function addCategory($category) {
-    $this->smtpapi->addCategory($category);
-
+  public function addCategory(string $category) {
+    $this->categories[] = $category;
     return $this;
   }
 
@@ -812,7 +814,7 @@ class Email {
    * @return object $this
    */
   public function removeCategory($category) {
-    $this->smtpapi->removeCategory($category);
+    unset($this->categories[$category]);
 
     return $this;
   }
