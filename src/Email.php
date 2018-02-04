@@ -29,7 +29,8 @@ class Email {
     $attachments,
     $sendat,
     $asm,
-    $categories;
+    $categories,
+    $substitutions;
 
   /**
    * Email constructor.
@@ -832,26 +833,29 @@ class Email {
    * @return object $this
    */
   public function setSubstitutions(array $key_value_pairs) {
-    $this->smtpapi->setSubstitutions($key_value_pairs);
+    $this->substitutions = $key_value_pairs;
 
     return $this;
   }
 
   /**
-   * Add a substitution to the existng message. Supply the search phrase and an
-   * array of values to use as a substitution. One to many relation. These
-   * are values specific to users such as demographics (First Name, Contact
+   * Add a substitution to the existng message. Supply the values in a key-value pair
+   * as an array. These are values specific to users such as demographics (First Name, Contact
    * phone, etc.).
    *
    * @see https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html
    *
-   * @param string $from_value
-   * @param array $to_values
+   * @param array $key_value_pairs
    *
    * @return object $this
    */
-  public function addSubstitution($from_value, array $to_values) {
-    $this->smtpapi->addSubstitution($from_value, $to_values);
+  public function addSubstitution(array $key_value_pairs) {
+    if (empty($this->substitutions)){
+      $this->substitutions = $key_value_pairs;
+    }
+    else {
+      $this->substitutions = array_merge($this->substitutions, $key_value_pairs);
+    }
 
     return $this;
   }
