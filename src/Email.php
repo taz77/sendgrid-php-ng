@@ -31,7 +31,8 @@ class Email {
     $asm,
     $categories,
     $substitutions,
-    $sendeachat;
+    $sendeachat,
+    $sections;
 
   /**
    * Email constructor.
@@ -840,8 +841,6 @@ class Email {
    * overrides any existing substitutions. These values are specific to a
    * user. Can be used for demographics substitutions such as "First Name"
    *
-   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html
-   *
    * @param array $key_value_pairs
    *
    * @return object $this
@@ -856,8 +855,6 @@ class Email {
    * Add a substitution to the existng message. Supply the values in a
    * key-value pair as an array. These are values specific to users such as
    * demographics (First Name, Contact phone, etc.).
-   *
-   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html
    *
    * @param array $key_value_pairs
    *
@@ -879,15 +876,15 @@ class Email {
    * exisitng settings for sections. Sections are substitutions of text in the
    * message that are not user specific.
    *
-   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html
-   *
    * @param array $key_value_pairs
    *
    * @return $this
    */
   public function setSections(array $key_value_pairs) {
-    $this->smtpapi->setSections($key_value_pairs);
-
+    $this->sections = new \stdClass();
+    foreach ($key_value_pairs as $key => $value) {
+      $this->sections->$key = $value;
+    }
     return $this;
   }
 
@@ -896,16 +893,22 @@ class Email {
    * settings for sections. Sections are text replacements within the message
    * that are not specific to the user.
    *
-   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/section_tags.html
-   *
-   * @param string $from_value
-   * @param array $to_value
+   * @param array $key_value_pairs
    *
    * @return object $this
    */
-  public function addSection($from_value, $to_value) {
-    $this->smtpapi->addSection($from_value, $to_value);
-
+  public function addSection(array $key_value_pairs) {
+    if (empty($this->sections)) {
+      $this->sections = new \stdClass();
+      foreach ($key_value_pairs as $key => $value) {
+        $this->sections->$key = $value;
+      }
+    }
+    else {
+      foreach ($key_value_pairs as $key => $value) {
+        $this->sections->$key = $value;
+      }
+    }
     return $this;
   }
 
@@ -916,7 +919,6 @@ class Email {
    * have values and can be substituted as well Supply an array of arguements
    * and values. Keys of the array are the name of the arguments.
    *
-   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/unique_arguments.html
    *
    * @param array $key_value_pairs
    *
@@ -978,8 +980,6 @@ class Email {
    * their settings refer to the documentation below for the array
    * structure and options offered. This overrides any Filters set.
    *
-   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/apps.html
-   *
    * @param array $filter_settings
    *
    * @return object $this
@@ -1008,8 +1008,6 @@ class Email {
   /**
    * This is used to add a filter (App) to a message. Must provide the App name
    * paramater name and paramater value.
-   *
-   * @see https://sendgrid.com/docs/API_Reference/SMTP_API/apps.html
    *
    * @param string $filter_name
    * @param string $parameter_name
@@ -1070,7 +1068,7 @@ class Email {
    *
    * @return $this
    *
-   * @see https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html
+   * @see https://sendgrid.com/docs/API_Reference/api_v3.html
    */
   public function setHeaders($key_value_pairs) {
     $this->headers = $key_value_pairs;
@@ -1274,3 +1272,4 @@ class Email {
       && ($timestamp >= ~PHP_INT_MAX);
   }
 }
+
