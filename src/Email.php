@@ -27,7 +27,8 @@ class Email {
     $headers,
     $smtpapi,
     $attachments,
-    $sendat;
+    $sendat,
+    $asm;
 
   /**
    * Email constructor.
@@ -104,6 +105,7 @@ class Email {
    *
    * @param string $email
    * @param string $name
+   *
    * @deprecated Use addTo().
    *
    * @return object $this
@@ -627,13 +629,34 @@ class Email {
   /**
    * Set the ASM group ID for the current message.
    *
-   * @param string $groupId
+   * @param int $groupId
    *
    * @return object $this
    */
-  public function setAsmGroupId($groupId) {
-    $this->smtpapi->setASMGroupID($groupId);
+  public function setAsmGroupId(int $groupId) {
+    $this->asm = new \stdClass();
+    $this->asm->group_id = $groupId;
 
+    return $this;
+  }
+
+  /**
+   * Set the ASM groups to display on the unsubscribe page.
+   *
+   * @param array $groupId
+   *
+   * @return object $this
+   *
+   * @throws \Exception
+   *   A group ID is required for ASM.
+   */
+  public function setAsmGroupToDisplay(array $groupsToDisplay) {
+    if (!is_object($this->asm) && !empty($this->asm->group_id)) {
+      $this->asm->groups_to_display = $groupsToDisplay;
+    }
+    else {
+      throw new \Exception('An ASM Group ID must be set before setting ASM groups to display.');
+    }
     return $this;
   }
 
@@ -1205,7 +1228,7 @@ class Email {
         $filecontent = base64_encode($filesstring);
         $attachment = new Attachment();
         $attachment->setContent($filecontent);
-        if(!empty($f['mimetype'])){
+        if (!empty($f['mimetype'])) {
           $attachment->setType($f['mimetype']);
         }
         $attachment->setFilename($f['basename']);
