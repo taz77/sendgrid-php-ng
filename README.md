@@ -15,7 +15,7 @@ To install this library it is best to use composer. I have published a package t
 
 ``` php
 "require": {
-    "fastglass/sendgrid": ">=1.0.5"
+    "fastglass/sendgrid": ">=1.0.8"
   }
 ```
 
@@ -43,15 +43,14 @@ Important: This library requires PHP 5.5 or higher.
 
 
 ```php
-$sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY');
+$sendgrid = new SendGrid\Client('YOUR_SENDGRID_APIKEY');
 $email = new SendGrid\Email();
 $email
     ->addTo('foo@bar.com')
     ->setFrom('me@bar.com')
     ->setSubject('Subject goes here')
     ->setText('Hello World!')
-    ->setHtml('<strong>Hello World!</strong>')
-;
+    ->setHtml('<strong>Hello World!</strong>');
 
 $sendgrid->send($email);
 
@@ -104,7 +103,7 @@ There is a [sendgrid-php-example app](https://github.com/taz77/sendgrid-php-ng-e
 
 ## Usage
 
-To begin using this library, initialize the SendGrid object with your SendGrid credentials OR a SendGrid [API Key](https://sendgrid.com/docs/User_Guide/Account/api_keys.html). API Key is the preferred method. API Keys are in beta. To configure API keys, visit https://sendgrid.com/beta/settings/api_key.
+To begin using this library, initialize the SendGrid object with a SendGrid [API Key](https://sendgrid.com/docs/User_Guide/Account/api_keys.html). API Key is the only preferred method allowed. To configure API keys, visit https://sendgrid.com/beta/settings/api_key.
 
 ```php
 $sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY');
@@ -160,7 +159,7 @@ $sendgrid = new SendGrid('YOUR_SENDGRID_APIKEY', $options);
 You may change the URL sendgrid-php uses to send email by supplying various parameters to `options`, all parameters are optional:
 
 ```php
-$sendgrid = new SendGrid(
+$sendgrid = new SendGrid\Client(
     'YOUR_SENDGRID_APIKEY',
     array(
         'protocol' => 'http',
@@ -174,7 +173,7 @@ $sendgrid = new SendGrid(
 A full URL may also be provided:
 
 ```php
-$sendgrid = new SendGrid(
+$sendgrid = new SendGrid\Client(
     'YOUR_SENDGRID_APIKEY',
     array( 'url' => 'http://sendgrid.org:80/send')
 );
@@ -185,7 +184,7 @@ $sendgrid = new SendGrid(
 You can optionally ignore verification of SSL certificate when using the Web API.
 
 ```php
-$sendgrid = new SendGrid(
+$sendgrid = new SendGrid\Client(
     'YOUR_SENDGRID_APIKEY',
     array("turn_off_ssl_verification" => true)
 );

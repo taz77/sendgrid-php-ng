@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.8](https://github.com/taz77/sendgrid-php-ng/tree/v1.0.7) (2017-08-16)
+[Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.7...v1.0.8)
+
+**Fixed issues:**
+- Incorrect Client method in example documentation
+
 ## [1.0.7](https://github.com/taz77/sendgrid-php-ng/tree/v1.0.7) (2016-07-20)
 [Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.6...v1.0.7)
 

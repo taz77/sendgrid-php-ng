@@ -583,7 +583,7 @@ class Email {
    * @return mixed
    */
   public function getSendAt() {
-    return $this->sendat = $timestamp;
+    return $this->sendat;
   }
 
   /**
@@ -1065,7 +1065,6 @@ class Email {
   /**
    * Return the entire Smtpapi header object.
    *
-   * @return \Smtpapi\Header
    */
   public function getSmtpapi() {
     return $this->smtpapi;
