@@ -3,7 +3,7 @@
 namespace SendGrid\Tests;
 
 use \Mockery as m;
-use \SendGrid as s;
+use Fastglass\SendGrid as s;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -27,7 +27,7 @@ class clientTest extends TestCase {
    */
   public function testVersion() {
     $this->assertEquals(s\Client::VERSION, '2.0.0');
-    $this->assertEquals(json_decode(file_get_contents('composer.json'))->version, \SendGrid\Client::VERSION);
+    $this->assertEquals(json_decode(file_get_contents('composer.json'))->version, s\Client::VERSION);
   }
 
   /**
@@ -35,7 +35,7 @@ class clientTest extends TestCase {
    */
   public function testInitWithApiKey() {
     $sendgrid = new s\Client('token123456789');
-    $this->assertEquals('SendGrid\Client', get_class($sendgrid));
+    $this->assertEquals('Fastglass\SendGrid\Client', get_class($sendgrid));
     $this->assertEquals($sendgrid->apiKey, 'token123456789');
   }
 
@@ -44,7 +44,7 @@ class clientTest extends TestCase {
    */
   public function testInitWithApiKeyOptions() {
     $sendgrid = new s\Client('token123456789', ['foo' => 'bar']);
-    $this->assertEquals('SendGrid\Client', get_class($sendgrid));
+    $this->assertEquals('Fastglass\SendGrid\Client', get_class($sendgrid));
   }
 
   /**
@@ -64,7 +64,7 @@ class clientTest extends TestCase {
     $this->assertEquals('SendGrid\Client', get_class($sendgrid));
 
     // Send the request to the mock interface and see if the proxy was set.
-    $email = new \SendGrid\Email();
+    $email = new s\Email();
 
     $email->addTo('p1@mailinator.com');
     $this->assertEquals(['p1@mailinator.com'], $email->to);
@@ -107,7 +107,7 @@ class clientTest extends TestCase {
    * This test is currently not working.
    *
    * @todo fix this test
-   * @expectedException \SendGrid\Exception
+   * @expectedException Fastglass\SendGrid\Exception
    *
   public function testSendGridExceptionThrownWhenNot200() {
     $mockResponse = (object) [

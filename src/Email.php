@@ -1,6 +1,6 @@
 <?php
 
-namespace SendGrid;
+namespace Fastglass\SendGrid;
 
 /**
  * Class Email
@@ -40,7 +40,6 @@ class Email {
   public function __construct() {
     $this->fromName = FALSE;
     $this->replyTo = FALSE;
-    // $this->smtpapi = new \Smtpapi\Header();
   }
 
   /**
@@ -69,8 +68,8 @@ class Email {
   }
 
   /**
-   * Add receipient email addresses. You may optionally provide the name of the
-   * receipient as a string.
+   * Add recipient email addresses. You may optionally provide the name of the
+   * recipient as a string.
    *
    * @param string $email
    * @param string $name

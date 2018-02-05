@@ -1,14 +1,14 @@
 <?php
 
-namespace SendGrid\Tests;
+namespace Fastglass\SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
 
 class webTest extends TestCase {
 
   public function testConstruction() {
-    $sendgrid = new \SendGrid\Client('token123456789');
-    $this->assertEquals(new \SendGrid\Client('token123456789'), $sendgrid);
+    $sendgrid = new \Fastglass\SendGrid\Client('token123456789');
+    $this->assertEquals(new \Fastglass\SendGrid\Client('token123456789'), $sendgrid);
     $this->assertEquals(get_class($sendgrid), 'SendGrid\Client');
   }
 
@@ -16,9 +16,9 @@ class webTest extends TestCase {
    * Test sending a request with bad credentials.
    */
   public function testSendResponse() {
-    $sendgrid = new \SendGrid\Client('token123456789');
+    $sendgrid = new \Fastglass\SendGrid\Client('token123456789');
 
-    $email = new \SendGrid\Email();
+    $email = new \Fastglass\SendGrid\Email();
     $email->setFrom('bar@foo.com')
       ->setSubject('foobar subject')
       ->setText('foobar text')
@@ -37,9 +37,9 @@ class webTest extends TestCase {
    * Test sending a request with bad credentials and attachment.
    */
   public function testSendResponseWithAttachment() {
-    $sendgrid = new \SendGrid\Client('token123456789');
+    $sendgrid = new \Fastglass\SendGrid\Client('token123456789');
 
-    $email = new \SendGrid\Email();
+    $email = new \Fastglass\SendGrid\Email();
     $email->setFrom('p1@mailinator.com')
       ->setSubject('foobar subject')
       ->setText('foobar text')
@@ -60,9 +60,9 @@ class webTest extends TestCase {
    * extension.
    */
   public function testSendResponseWithAttachmentMissingExtension() {
-    $sendgrid = new \SendGrid\Client('token123456789');
+    $sendgrid = new \Fastglass\SendGrid\Client('token123456789');
 
-    $email = new \SendGrid\Email();
+    $email = new \Fastglass\SendGrid\Email();
     $email->setFrom('p1@mailinator.com')
       ->setSubject('foobar subject')
       ->setText('foobar text')
@@ -82,9 +82,9 @@ class webTest extends TestCase {
    * Test sending a request with bad credentials and SSL verification off.
    */
   public function testSendResponseWithSslOptionFalse() {
-    $sendgrid = new \SendGrid\Client('token123456789', ['switch_off_ssl_verification' => TRUE]);
+    $sendgrid = new \Fastglass\SendGrid\Client('token123456789', ['switch_off_ssl_verification' => TRUE]);
 
-    $email = new \SendGrid\Email();
+    $email = new \Fastglass\SendGrid\Email();
     $email->setFrom('p1@mailinator.com')
       ->setSubject('foobar subject')
       ->setText('foobar text')

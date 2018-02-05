@@ -3,10 +3,10 @@
  * API specific integration
  */
 
-namespace SendGrid;
+namespace Fastglass\SendGrid;
 
-use Client;
-use Response;
+use Fastglass\SendGrid\Client;
+use Fastglass\SendGrid\Response;
 
 class API {
 
@@ -19,7 +19,7 @@ class API {
   }
 
   public function getApiKeys() {
-    $client = new \Client($this->api_key);
+    $client = new Client($this->api_key);
 
   }
 }

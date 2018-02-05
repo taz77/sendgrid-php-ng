@@ -1,6 +1,6 @@
 <?php
 
-namespace SendGrid\Tests;
+namespace Fastglass\SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
 
@@ -10,12 +10,12 @@ class responseTest extends TestCase {
   }
 
   public function testConstructionResponse() {
-    $res = new \SendGrid\Response(200, 'headers', 'raw_body', 'body');
+    $res = new \Fastglass\SendGrid\Response(200, 'headers', 'raw_body', 'body');
     $this->assertEquals(get_class($res), 'SendGrid\Response');
   }
 
   public function testPublicAttributes() {
-    $res = new \SendGrid\Response(200, 'headers', 'raw_body', 'body');
+    $res = new \Fastglass\SendGrid\Response(200, 'headers', 'raw_body', 'body');
     $this->assertEquals($res->code, 200);
     $this->assertEquals($res->headers, 'headers');
     $this->assertEquals($res->raw_body, 'raw_body');
@@ -23,7 +23,7 @@ class responseTest extends TestCase {
   }
 
   public function testGetters() {
-    $res = new \SendGrid\Response(200, 'headers', 'raw_body', 'body');
+    $res = new \Fastglass\SendGrid\Response(200, 'headers', 'raw_body', 'body');
     $this->assertEquals($res->getCode(), 200);
     $this->assertEquals($res->getHeaders(), 'headers');
     $this->assertEquals($res->getRawBody(), 'raw_body');

@@ -1,6 +1,6 @@
 <?php
 
-namespace SendGrid;
+namespace Fastglass\SendGrid;
 
 /**
  * Class Response

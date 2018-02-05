@@ -7,7 +7,7 @@
  *
  */
 
-namespace SendGrid;
+namespace Fastglass\SendGrid;
 
 
 class Message implements \JsonSerializable {

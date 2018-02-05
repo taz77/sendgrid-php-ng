@@ -6,7 +6,7 @@
  * Time: 23:27
  */
 
-namespace SendGrid;
+namespace Fastglass\SendGrid;
 
 
 class Content implements \JsonSerializable {
