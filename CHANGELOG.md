@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0](https://github.com/taz77/sendgrid-php-ng/tree/v2.0.0) (2018-02-xx)
+[Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.8...v2.0.0)
+
+**Major Update**
+
+Version 2.0.0 is an upgrade to the [V3 API](https://sendgrid.com/docs/API_Reference/api_v3.html). 
+
+**Changes**
+- New namespace: `Fastglass/Sendgrid`
+- UniqueArgs are not supported in V3 API
+
 ## [1.0.8](https://github.com/taz77/sendgrid-php-ng/tree/v1.0.7) (2017-08-16)
 [Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.7...v1.0.8)
 
