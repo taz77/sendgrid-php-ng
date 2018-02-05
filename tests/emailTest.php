@@ -1,23 +1,24 @@
 <?php
 
-namespace SendGrid\Tests;
+namespace Fastglass\SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Fastglass\SendGrid;
 
 class emailTest extends TestCase {
 
   public function testConstructionEmail() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $this->assertEquals(get_class($email), 'SendGrid\Email');
   }
 
   public function testConstructionEmailIsSendGridEmail() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $this->assertEquals(get_class($email), 'SendGrid\Email');
   }
 
   public function testAddToWithDeprectedEmailClass() {
-    $mail = new \SendGrid\Email();
+    $mail = new SendGrid\Email();
 
     $mail->addSmtpapiTo('p1@mailinator.com');
     $this->assertEquals(['p1@mailinator.com'], $mail->getSmtpapi()->to);
@@ -30,7 +31,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddTo() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addTo('p1@mailinator.com');
     $this->assertEquals(['p1@mailinator.com'], $email->to);
@@ -43,7 +44,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddSmtpapiTo() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addSmtpapiTo('p1@mailinator.com');
     $this->assertEquals(['p1@mailinator.com'], $email->getSmtpapi()->to);
@@ -56,7 +57,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddToWithName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addTo('p1@mailinator.com', 'Person One');
     $this->assertEquals(['p1@mailinator.com'], $email->to);
@@ -71,7 +72,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddSmtpapiToWithName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addSmtpapiTo('p1@mailinator.com', 'Person One');
     $this->assertEquals(['Person One <p1@mailinator.com>'], $email->getSmtpapi()->to);
@@ -84,7 +85,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddToWithArray() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addTo(['foo@bar.com', 'bar@bar.com']);
     $this->assertEquals(['foo@bar.com', 'bar@bar.com'], $email->to);
@@ -98,7 +99,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddToWithArrayAndName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addTo(['foo@bar.com', 'bar@bar.com'], ['Mike Foo', 'Joe Bar']);
     $this->assertEquals(['Mike Foo', 'Joe Bar'], $email->toName);
@@ -108,7 +109,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddToName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addToName('Foo Bar');
     $this->assertEquals(['Foo Bar'], $email->toName);
@@ -119,35 +120,35 @@ class emailTest extends TestCase {
 
 
   public function testSetTos() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setTos(['foo@bar.com', 'baz@bar.com']);
     $this->assertEquals(['foo@bar.com', 'baz@bar.com'], $email->to);
   }
 
   public function testSetSmtpapiTo() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setSmtpapiTos(['p1@mailinator.com']);
     $this->assertEquals(['p1@mailinator.com'], $email->getSmtpapi()->to);
   }
 
   public function testSetSmtpapiTos() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setSmtpapiTos(['p1@mailinator.com']);
     $this->assertEquals(['p1@mailinator.com'], $email->getSmtpapi()->to);
   }
 
   public function testRemoveTo() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addSmtpapiTo('p1@mailinator.com');
     $this->assertEquals(['p1@mailinator.com'], $email->getSmtpapi()->to);
   }
 
   public function testSetFrom() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setFrom('foo@bar.com');
     $email->setFromName('John Doe');
@@ -157,7 +158,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetFromName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $this->assertFalse($email->getFromName());
     $email->setFromName('Swift');
@@ -165,7 +166,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetReplyTo() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $this->assertFalse($email->getReplyTo());
     $email->setReplyTo('swift@sendgrid.com');
@@ -173,7 +174,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetCc() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setCc('p1@mailinator.com');
     $email->setCc('p2@mailinator.com');
@@ -184,7 +185,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetCcs() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setCcs(['raz@mailinator.com', 'ber@mailinator.com']);
 
@@ -197,7 +198,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddCc() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addCc('foo@bar.com');
     $email->addCc('raz@bar.com');
@@ -220,7 +221,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddCcWithName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addCc('p1@mailinator.com', 'Person One');
     $this->assertEquals(['p1@mailinator.com'], $email->cc);
@@ -235,7 +236,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddCcName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addCcName('Foo Bar');
     $this->assertEquals(['Foo Bar'], $email->ccName);
@@ -245,7 +246,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetBcc() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setBcc('bar');
     $email->setBcc('foo');
@@ -256,7 +257,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetBccs() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setBccs(['raz', 'ber']);
     $this->assertEquals(2, count($email->getBccs()));
@@ -267,7 +268,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddBcc() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addBcc('foo');
     $email->addBcc('raz');
@@ -285,7 +286,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddBccWithName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addBcc('p1@mailinator.com', 'Person One');
     $this->assertEquals(['p1@mailinator.com'], $email->bcc);
@@ -300,7 +301,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddBccName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addBccName('Foo Bar');
     $this->assertEquals(['Foo Bar'], $email->bccName);
@@ -310,14 +311,14 @@ class emailTest extends TestCase {
   }
 
   public function testSetSubject() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setSubject('Test Subject');
     $this->assertEquals('Test Subject', $email->getSubject());
   }
 
   public function testSetSendAt() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setSendAt(1409348513);
     $this->assertEquals('{"send_at":1409348513}', $email->getSmtpapi()
@@ -325,7 +326,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetSendEachAt() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setSendEachAt([1409348513, 1409348514, 1409348515]);
     $this->assertEquals('{"send_each_at":[1409348513,1409348514,1409348515]}', $email->getSmtpapi()
@@ -333,7 +334,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddSendEachAt() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addSendEachAt(1409348513);
     $email->addSendEachAt(1409348514);
     $email->addSendEachAt(1409348515);
@@ -342,7 +343,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetTemplateId() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->setTemplateId('123-456');
     $filter = [
       'templates' => [
@@ -356,13 +357,13 @@ class emailTest extends TestCase {
   }
 
   public function testSetAsmGroupId() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->setAsmGroupId('my_id');
     $this->assertEquals('my_id', $email->smtpapi->asm_group_id);
   }
 
   public function testSetText() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $text = 'sample plain text';
     $email->setText($text);
@@ -370,7 +371,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetHtml() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $html = "<p style = 'color:red;'>Sample HTML text</p>";
     $email->setHtml($html);
@@ -378,7 +379,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetAttachments() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $attachments =
       [
@@ -397,7 +398,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetAttachmentsWithCustomFilename() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $array_of_attachments =
       [
@@ -415,7 +416,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddAttachment() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     //ensure that addAttachment appends to the list of attachments
     $email->addAttachment('../file_4.png');
@@ -427,7 +428,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddAttachmentCustomFilename() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->addAttachment('../file_4.png', 'different.png');
 
@@ -438,7 +439,7 @@ class emailTest extends TestCase {
 
 
   public function testSetAttachment() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     //Setting an attachment removes all other files
     $email->setAttachment('only_attachment.sad');
@@ -451,7 +452,7 @@ class emailTest extends TestCase {
   }
 
   public function testSetAttachmentCustomFilename() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     //Setting an attachment removes all other files
     $email->setAttachment('only_attachment.sad', 'different');
@@ -466,7 +467,7 @@ class emailTest extends TestCase {
   }
 
   public function testAddAttachmentWithoutExtension() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     //ensure that addAttachment appends to the list of attachments
     $email->addAttachment('../file_4');
@@ -478,7 +479,7 @@ class emailTest extends TestCase {
   }
 
   public function testCategoryAccessors() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $email->setCategories(['category_0']);
     $this->assertEquals('{"category":["category_0"]}', $email->getSmtpapi()
@@ -499,7 +500,7 @@ class emailTest extends TestCase {
   }
 
   public function testSubstitutionAccessors() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $substitutions = [
       'sub_1' => ['val_1.1', 'val_1.2', 'val_1.3'],
@@ -515,7 +516,7 @@ class emailTest extends TestCase {
   }
 
   public function testSectionAccessors() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $sections = [
       "sub_1" => ["val_1.1", "val_1.2", "val_1.3"],
@@ -531,7 +532,7 @@ class emailTest extends TestCase {
   }
 
   public function testUniqueArgsAccessors() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
 
     $unique_arguments = [
       'sub_1' => ['val_1.1', 'val_1.2', 'val_1.3'],
@@ -553,7 +554,7 @@ class emailTest extends TestCase {
 
   public function testHeaderAccessors() {
     // A new message shouldn't have any RFC-822 headers set
-    $message = new \SendGrid\Email();
+    $message = new SendGrid\Email();
     $this->assertEquals('{}', $message->getSmtpapi()->jsonString());
 
     // Add some message headers, check they are correctly stored
@@ -588,7 +589,7 @@ class emailTest extends TestCase {
   }
 
   public function testToWebFormatWithDate() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     date_default_timezone_set('America/Los_Angeles');
     $date = date('r');
     $email->setDate($date);
@@ -600,7 +601,7 @@ class emailTest extends TestCase {
   }
 
   public function testToWebFormatWithSetSendAt() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->setSendAt(1409348513);
     $email->addTo('no@one.com');
     $email->setHtml('Test Email');
@@ -638,7 +639,7 @@ class emailTest extends TestCase {
    * Test adding a name to the To address.
    */
   public function testToWebFormatWithToName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addTo('foo@bar.com', 'Frank Foo');
     $email->setFrom('from@site.com');
     $email->setHtml('Test Email');
@@ -651,7 +652,7 @@ class emailTest extends TestCase {
    * Test adding To via the smtpapi.
    */
   public function testToWebFormatWithSmtpapiTo() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addSmtpapiTo('foo@bar.com');
     $email->setFrom('from@site.com');
     $email->setHtml('Test Email');
@@ -663,7 +664,7 @@ class emailTest extends TestCase {
   }
 
   public function testToWebFormatWithCcName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addCc('foo@bar.com', 'Frank Foo');
     $email->setFrom('from@site.com');
     $email->addTo('no@one.com');
@@ -676,7 +677,7 @@ class emailTest extends TestCase {
    * Test BCC names and addresses.
    */
   public function testToWebFormatWithBccName() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addBcc('foo@bar.com', 'Frank Foo');
     $email->setFrom('from@site.com');
     $email->addTo('no@one.com');
@@ -689,7 +690,7 @@ class emailTest extends TestCase {
    * Test adding To and BCC via the smtpapi.
    */
   public function testToWebFormatWithSmtpapiToAndBcc() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addSmtpapiTo('p1@mailinator.com');
     $email->addBcc('p2@mailinator.com');
     $email->setHtml('Test Email');
@@ -699,7 +700,7 @@ class emailTest extends TestCase {
   }
 
   public function testToWebFormatWithAttachment() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addAttachment('./gif.gif');
     $f = pathinfo('./gif.gif');
     $email->addTo('no@one.com');
@@ -709,7 +710,7 @@ class emailTest extends TestCase {
   }
 
   public function testToWebFormatWithAttachmentAndCid() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addAttachment('./gif.gif', NULL, 'sample-cid');
     $email->addAttachment('./gif.gif', 'gif2.gif', 'sample-cid-2');
     $email->addTo('no@one.com');
@@ -727,7 +728,7 @@ class emailTest extends TestCase {
    * @see setAttachment()
    */
   public function testToWebFormatWithSetAttachmentAndCid() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->setAttachment('./gif.gif', NULL, 'sample-cid');
     $f = pathinfo('./gif.gif');
     $email->addTo('no@one.com');
@@ -742,7 +743,7 @@ class emailTest extends TestCase {
    * Test email with attachment that has a custom file name.
    */
   public function testToWebFormatWithAttachmentCustomFilename() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addAttachment('./gif.gif', 'different.jpg');
     $f = pathinfo('./gif.gif');
     $email->setHtml('Test Email');
@@ -755,7 +756,7 @@ class emailTest extends TestCase {
    * Test email with headers.
    */
   public function testToWebFormatWithHeaders() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addHeader('X-Sent-Using', 'SendGrid-API');
     $email->addTo('no@one.com');
     $email->setHtml('Test Email');
@@ -767,7 +768,7 @@ class emailTest extends TestCase {
    * Test email with filters.
    */
   public function testToWebFormatWithFilters() {
-    $email = new \SendGrid\Email();
+    $email = new SendGrid\Email();
     $email->addFilter('footer', 'text/plain', 'Here is a plain text footer');
     $email->addTo('no@one.com');
     $email->setHtml('Test Email');
