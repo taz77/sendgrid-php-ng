@@ -25,7 +25,6 @@ class Email {
     $html,
     $content,
     $headers,
-    $smtpapi,
     $attachments,
     $sendat,
     $asm,
@@ -616,7 +615,7 @@ class Email {
    *
    * @return $this
    */
-  public function addSendEachAt(int $timestamp) {
+  public function addSendEachAt($timestamp) {
     if (empty($this->sendeachat)) {
       $this->substitutions = $timestamp;
     }
@@ -649,7 +648,7 @@ class Email {
    *
    * @return object $this
    */
-  public function setAsmGroupId(int $groupId) {
+  public function setAsmGroupId($groupId) {
     $this->asm = new \stdClass();
     $this->asm->group_id = $groupId;
 
@@ -816,7 +815,7 @@ class Email {
    *
    * @return object $this
    */
-  public function addCategory(string $category) {
+  public function addCategory($category) {
     $this->categories[] = $category;
     return $this;
   }
@@ -912,40 +911,33 @@ class Email {
   }
 
   /**
-   * Set the unique arguments for the message. Unique arguments are used to help
-   * generate reports and sort messages in the Sendgrid UI. This will override
-   * any existing settings for UniqueArgs in the current message. Arguements
-   * have values and can be substituted as well Supply an array of arguements
-   * and values. Keys of the array are the name of the arguments.
    *
+   * @deprecated Not supported in V3 API
    *
    * @param array $key_value_pairs
    *
    * @return object $this
    */
   public function setUniqueArgs(array $key_value_pairs) {
-    $this->smtpapi->setUniqueArgs($key_value_pairs);
 
     return $this;
   }
 
   /**
-   * Synonyum function to set unique arguements.
    *
-   * @see function setUniqueArgs()
+   * @deprecated Not supported in V3 API
    *
    * @param array $key_value_pairs
    *
    * @return $this
    */
   public function setUniqueArguments(array $key_value_pairs) {
-    $this->smtpapi->setUniqueArgs($key_value_pairs);
 
     return $this;
   }
 
   /**
-   * Add a unique argument to the current message.
+   * @deprecated Not supported in V3 API
    *
    * @param string $key
    * @param string $value
@@ -953,13 +945,12 @@ class Email {
    * @return object $this
    */
   public function addUniqueArg($key, $value) {
-    $this->smtpapi->addUniqueArg($key, $value);
 
     return $this;
   }
 
   /**
-   * Synonym function for adding unique arguments.
+   * @deprecated Not supported in V3 API
    *
    * @see function addUniqueArg()
    *
@@ -969,7 +960,6 @@ class Email {
    * @return object $this
    */
   public function addUniqueArgument($key, $value) {
-    $this->smtpapi->addUniqueArg($key, $value);
 
     return $this;
   }
