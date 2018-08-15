@@ -1,7 +1,7 @@
 <?php
 namespace SendGrid\Tests;
 
-class SendGridTest_Exception extends \PHPUnit_Framework_TestCase {
+class SendGridTest_Exception extends \PHPUnit\Framework\TestCase {
 
   public function tearDown() {
   }
