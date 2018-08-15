@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\ClientException;
  * Class SendGrid
  */
 class Client {
-  const VERSION = '1.0.8';
+  const VERSION = '1.0.9';
 
   protected
     $headers = ['Content-Type' => 'application/json'],
