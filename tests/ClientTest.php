@@ -18,7 +18,7 @@ class SendGridTest_Client extends \PHPUnit_Framework_TestCase {
    * Test the version number.
    */
   public function testVersion() {
-    $this->assertEquals(s\Client::VERSION, '1.0.8');
+    $this->assertEquals(s\Client::VERSION, '1.0.9');
     $this->assertEquals(json_decode(file_get_contents('composer.json'))->version, \SendGrid\Client::VERSION);
   }
 
