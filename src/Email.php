@@ -936,7 +936,7 @@ class Email {
    * @return null|string
    */
   public function getHeadersJson() {
-    if (count($this->getHeaders()) <= 0) {
+    if (is_array($this->getHeaders()) && count($this->getHeaders()) <= 0) {
       return NULL;
     }
 
@@ -1034,7 +1034,7 @@ class Email {
     if ($this->getDate()) {
       $web['date'] = $this->getDate();
     }
-    if ($this->smtpapi->to && (count($this->smtpapi->to) > 0)) {
+    if (is_array($this->smtpapi->to) && (count($this->smtpapi->to) > 0)) {
       $web['to'] = "";
     }
 
@@ -1077,7 +1077,7 @@ class Email {
    * @return array $data
    */
   public function updateMissingTo(array $data) {
-    if ($this->smtpapi->to && (count($this->smtpapi->to) > 0)) {
+    if (is_array($this->smtpapi->to) && (count($this->smtpapi->to) > 0)) {
       $data['to'] = $this->getFrom();
     }
 
