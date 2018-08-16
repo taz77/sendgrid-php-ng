@@ -5,7 +5,7 @@ namespace SendGrid\Tests;
 use \Mockery as m;
 use \SendGrid as s;
 
-class SendGridTest_Client extends \PHPUnit_Framework_TestCase {
+class SendGridTest_Client extends \PHPUnit\Framework\TestCase {
 
   /**
    * Tear down test.
