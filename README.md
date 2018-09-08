@@ -900,8 +900,7 @@ The existing tests in the `test` directory can be run using [PHPUnit](https://gi
 
 ```bash
 composer update --dev
-cd test
-../vendor/bin/phpunit
+./vendor/bin/phpunit ./tests
 ```
 
 or if you already have PHPUnit installed globally.
