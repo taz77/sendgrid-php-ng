@@ -898,10 +898,9 @@ $result = $sendgrid->send($email);
 
 The existing tests in the `test` directory can be run using [PHPUnit](https://github.com/sebastianbergmann/phpunit/) with the following command:
 
-````bash
+```bash
 composer update --dev
-cd test
-../vendor/bin/phpunit
+./vendor/bin/phpunit ./tests
 ```
 
 or if you already have PHPUnit installed globally.
