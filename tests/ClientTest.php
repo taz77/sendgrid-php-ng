@@ -1,10 +1,10 @@
 <?php
 
-namespace SendGrid\Tests;
+namespace Fastglass\SendGrid;
 
 use \Mockery as m;
-use Fastglass\SendGrid as s;
-
+use Fastglass\SendGrid\Client as sendGridClient;
+use Fastglass\SendGrid\Email;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -26,15 +26,15 @@ class clientTest extends TestCase {
    * Test the version number.
    */
   public function testVersion() {
-    $this->assertEquals(s\Client::VERSION, '2.0.0');
-    $this->assertEquals(json_decode(file_get_contents('composer.json'))->version, s\Client::VERSION);
+    $this->assertEquals(sendGridClient::VERSION, '2.0.0');
+    $this->assertEquals(json_decode(file_get_contents('composer.json'))->version, sendGridClient::VERSION);
   }
 
   /**
    * Test initializing client with API key.
    */
   public function testInitWithApiKey() {
-    $sendgrid = new s\Client('token123456789');
+    $sendgrid = new sendGridClient('token123456789');
     $this->assertEquals('Fastglass\SendGrid\Client', get_class($sendgrid));
     $this->assertEquals($sendgrid->apiKey, 'token123456789');
   }
@@ -43,7 +43,7 @@ class clientTest extends TestCase {
    * Test initializing client with API key and options.
    */
   public function testInitWithApiKeyOptions() {
-    $sendgrid = new s\Client('token123456789', ['foo' => 'bar']);
+    $sendgrid = new sendGridClient('token123456789', ['foo' => 'bar']);
     $this->assertEquals('Fastglass\SendGrid\Client', get_class($sendgrid));
   }
 
@@ -57,14 +57,14 @@ class clientTest extends TestCase {
     ]);
     $handler = HandlerStack::create($mock);
 
-    $sendgrid = new s\Client('token123456789', [
+    $sendgrid = new sendGridClient('token123456789', [
       'proxy' => ['http' => 'http://myproxy.net:3128'],
       'handler' => $handler,
       ]);
     $this->assertEquals('SendGrid\Client', get_class($sendgrid));
 
     // Send the request to the mock interface and see if the proxy was set.
-    $email = new s\Email();
+    $email = new Email();
 
     $email->addTo('p1@mailinator.com');
     $this->assertEquals(['p1@mailinator.com'], $email->to);
@@ -81,7 +81,7 @@ class clientTest extends TestCase {
    * Test the default URL being returned by the client.
    */
   public function testDefaultURL() {
-    $sendgrid = new s\Client('token123456789');
+    $sendgrid = new sendGridClient('token123456789');
     $this->assertEquals('https://api.sendgrid.com', $sendgrid->url);
   }
 
@@ -89,7 +89,7 @@ class clientTest extends TestCase {
    * Test the default endpoint being returned by the client.
    */
   public function testDefaultEndpoint() {
-    $sendgrid = new s\Client('token123456789');
+    $sendgrid = new sendGridClient('token123456789');
     $this->assertEquals('/v3/mail/send', $sendgrid->endpoint);
   }
 
@@ -97,7 +97,7 @@ class clientTest extends TestCase {
    * Test creating a client with SSL verification turned off.
    */
   public function testSwitchOffSSLVerification() {
-    $sendgrid = new s\Client('token123456789', ['turn_off_ssl_verification' => TRUE]);
+    $sendgrid = new sendGridClient('token123456789', ['turn_off_ssl_verification' => TRUE]);
     $options = $sendgrid->getOptions();
     $this->assertTrue(isset($options['turn_off_ssl_verification']));
   }

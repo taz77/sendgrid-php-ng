@@ -4,7 +4,7 @@
  * Create the client for V3 API of SendGrid.
  *
  * @author Brady Owens
- * @copyright 2017 Fastglass LLC
+ * @copyright 2018 Fastglass LLC
  * @package SendGrid
  * @license https://opensource.org/licenses/MIT
  * @link https://packagist.org/packages/fastglass/sendgrid
@@ -13,8 +13,6 @@
 
 
 namespace Fastglass\SendGrid;
-
-use Fastglass\SendGrid;
 
 /**
  * Class SendGrid
