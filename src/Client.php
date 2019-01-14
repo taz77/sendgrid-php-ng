@@ -41,7 +41,7 @@ class Client {
     }
     else {
       // Won't be thrown?
-      throw new InvalidArgumentException('Need an api key!');
+      throw new \InvalidArgumentException('Need an api key!');
     }
 
     $this->options['turn_off_ssl_verification'] = (isset($this->options['turn_off_ssl_verification']) && $this->options['turn_off_ssl_verification'] == TRUE);
@@ -108,7 +108,7 @@ class Client {
 
     $response = $this->postRequest($this->endpoint, $form);
 
-    if ($response->code != 200 && $this->options['raise_exceptions']) {
+    if ($response && $response->code != 200 && $this->options['raise_exceptions']) {
       throw new \SendGrid\Exception($response->raw_body, $response->code);
     }
 
@@ -146,7 +146,7 @@ class Client {
     try {
       $res = $this->client->request('POST', $endpoint, $requestoptions);
     }
-    catch (GuzzleHttp\Exception\ClientException $e) {
+    catch (ClientException $e) {
       echo 'Sendgrid API has experienced and error completing your request.';
       echo '<pre>';
       var_dump($e);

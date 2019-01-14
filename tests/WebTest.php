@@ -21,14 +21,9 @@ class SendGridTest_Web extends \PHPUnit\Framework\TestCase {
       ->setSubject('foobar subject')
       ->setText('foobar text')
       ->addTo('foo@bar.com');
-    try {
-      $response = $sendgrid->send($email);
-    }
-    catch (\GuzzleHttp\Exception\ClientException $e) {
-      $response = $e->getResponse();
-      $responseBodyAsString = $response->getBody()->getContents();
-    }
-    $this->assertContains('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
+
+    $response = $sendgrid->send($email);
+    $this->assertFalse($response);
   }
 
   /**
@@ -43,14 +38,9 @@ class SendGridTest_Web extends \PHPUnit\Framework\TestCase {
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
       ->addAttachment('./tests/gif.gif');
-    try {
-      $response = $sendgrid->send($email);
-    }
-    catch (\GuzzleHttp\Exception\ClientException $e) {
-      $response = $e->getResponse();
-      $responseBodyAsString = $response->getBody()->getContents();
-    }
-    $this->assertContains('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
+
+    $response = $sendgrid->send($email);
+    $this->assertFalse($response);
   }
 
   /**
@@ -66,14 +56,9 @@ class SendGridTest_Web extends \PHPUnit\Framework\TestCase {
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
       ->addAttachment('./tests/text');
-    try {
-      $response = $sendgrid->send($email);
-    }
-    catch (\GuzzleHttp\Exception\ClientException $e) {
-      $response = $e->getResponse();
-      $responseBodyAsString = $response->getBody()->getContents();
-    }
-    $this->assertContains('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
+
+    $response = $sendgrid->send($email);
+    $this->assertFalse($response);
   }
 
   /**
@@ -88,13 +73,8 @@ class SendGridTest_Web extends \PHPUnit\Framework\TestCase {
       ->setText('foobar text')
       ->addTo('p1@mailinator.com')
       ->addAttachment('./tests/text');
-    try {
-      $response = $sendgrid->send($email);
-    }
-    catch (\GuzzleHttp\Exception\ClientException $e) {
-      $response = $e->getResponse();
-      $responseBodyAsString = $response->getBody()->getContents();
-    }
-    $this->assertContains('The provided authorization grant is invalid, expired, or revoked', $responseBodyAsString);
+
+    $response = $sendgrid->send($email);
+    $this->assertFalse($response);
   }
 }
