@@ -100,7 +100,7 @@ class Client {
    * Returns response codes after sending and will throw exceptions on faults.
    *
    * @param \SendGrid\Email $email
-   * @return \SendGrid\Response
+   * @return bool|\SendGrid\Response
    * @throws \SendGrid\Exception
    */
   public function send(\SendGrid\Email $email) {
@@ -108,7 +108,7 @@ class Client {
 
     $response = $this->postRequest($this->endpoint, $form);
 
-    if ($response && $response->code != 200 && $this->options['raise_exceptions']) {
+    if ($response && ($response->code != 200 || $response->code != 250) && $this->options['raise_exceptions']) {
       throw new \SendGrid\Exception($response->raw_body, $response->code);
     }
 
@@ -147,11 +147,11 @@ class Client {
       $res = $this->client->request('POST', $endpoint, $requestoptions);
     }
     catch (ClientException $e) {
-      echo 'Sendgrid API has experienced and error completing your request.';
-      echo '<pre>';
-      var_dump($e);
-      echo '</pre>';
-      return FALSE;
+      if (empty($e->getResponse())) {
+        return FALSE;
+      }
+
+      $res = $e->getResponse();
     }
     $response = new \SendGrid\Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(TRUE), json_decode($res->getBody(TRUE)));
 
