@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.11](https://github.com/taz77/sendgrid-php-ng/tree/v1.0.11) (2019-01-15)
+[Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.10...v1.0.11)
+
 ## [1.0.10](https://github.com/taz77/sendgrid-php-ng/tree/v1.0.10) (2018-09-08)
 [Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.9...v1.0.10)
 
