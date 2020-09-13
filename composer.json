@@ -23,7 +23,8 @@
   "require": {
     "php": ">=5.6.0",
     "guzzlehttp/guzzle": ">=6.2.1",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-mbstring": "*"
   },
   "require-dev": {
     "mockery/mockery": "~0.9",
@@ -37,7 +38,8 @@
   "type": "library",
   "autoload": {
     "psr-4": {
-      "SendGrid\\Mail": "src/mail"
+      "SendGrid\\Mail": "src/mail",
+      "SendGrid\\Helper\\": "src/helper/"
     },
     "classmap": [
       "src/Client.php",
