@@ -2,6 +2,8 @@
 
 namespace SendGrid\Mail;
 
+use Exception;
+
 /**
  * Class Exception
  *
@@ -9,7 +11,7 @@ namespace SendGrid\Mail;
  *
  * @package SendGrid
  */
-class Exception extends \Exception {
+class GridException extends Exception {
 
   public function getErrors() {
     return json_decode($this->message)->errors;
