@@ -12,22 +12,22 @@
  */
 
 
-namespace Fastglass\SendGrid;
+namespace SendGrid;
 
 /**
  * Class SendGrid
  */
-class Client {
+abstract class Client {
 
   const VERSION = '2.0.0';
 
   protected
     $headers = ['Content-Type' => 'application/json'],
-    $client,
     $options;
 
   public
     $apiKey,
+    $client,
     $url,
     $endpoint,
     $version = self::VERSION;
