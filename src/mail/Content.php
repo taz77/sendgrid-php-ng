@@ -11,10 +11,10 @@
  *
  */
 
-namespace Fastglass\SendGrid;
+namespace SendGrid\Mail;
 
 
-class Content implements \JsonSerializable {
+class Content implements \\JsonSerializable {
 
   private $type;
 

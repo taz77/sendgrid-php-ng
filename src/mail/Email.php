@@ -1,6 +1,6 @@
 <?php
 
-namespace Fastglass\SendGrid;
+namespace SendGrid\Mail;
 
 /**
  * Class Email

@@ -7,7 +7,7 @@
  *
  */
 
-namespace Fastglass\SendGrid;
+namespace SendGrid\Mail;
 
 
 class EmailAddress implements \JsonSerializable {
