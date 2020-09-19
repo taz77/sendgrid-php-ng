@@ -22,7 +22,7 @@ class GroupId implements JsonSerializable
 	 * Optional constructor
 	 *
 	 * @param int|null $group_id The unsubscribe group to associate with this email
-	 * @throws \SendGrid\Mail\GridException
+	 * @throws \SendGrid\Exception
 	 */
     public function __construct($group_id = null)
     {
@@ -36,7 +36,7 @@ class GroupId implements JsonSerializable
      *
      * @param int $group_id The unsubscribe group to associate with this email
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setGroupId($group_id)
     {

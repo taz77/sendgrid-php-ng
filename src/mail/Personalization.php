@@ -105,7 +105,7 @@ class Personalization implements JsonSerializable
      *
      * @param Subject|string $subject Subject object or string
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setSubject($subject)
     {
@@ -156,7 +156,7 @@ class Personalization implements JsonSerializable
      *                                  dynamic data
      * @param string|null $value The value of dynamic data
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function addDynamicTemplateData($data, $value = null)
     {
@@ -180,7 +180,7 @@ class Personalization implements JsonSerializable
      *                                          substitution
      * @param string|null $value The value of a substitution
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function addSubstitution($substitution, $value = null)
     {
@@ -206,7 +206,7 @@ class Personalization implements JsonSerializable
      *
      * @param CustomArg $custom_arg CustomArg object
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function addCustomArg($custom_arg)
     {
@@ -230,7 +230,7 @@ class Personalization implements JsonSerializable
      *
      * @param SendAt $send_at SendAt object
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setSendAt($send_at)
     {
@@ -254,7 +254,7 @@ class Personalization implements JsonSerializable
      *
      * @param bool $has_dynamic_template are we using dynamic templates
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setHasDynamicTemplate($has_dynamic_template)
     {

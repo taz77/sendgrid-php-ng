@@ -38,7 +38,7 @@ class MailSettings implements JsonSerializable
 	 * @param Footer|null               $footer                 Footer object
 	 * @param SandBoxMode|null          $sandbox_mode           SandBoxMode object
 	 * @param SpamCheck|null            $spam_check             SpamCheck object
-	 * @throws \SendGrid\Mail\GridException
+	 * @throws \SendGrid\Exception
 	 */
     public function __construct(
         $bcc_settings = null,
@@ -72,7 +72,7 @@ class MailSettings implements JsonSerializable
      * @param string|null $email The email address that you would like
      *                                 to receive the BCC
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setBccSettings($enable, $email = null)
     {
@@ -104,7 +104,7 @@ class MailSettings implements JsonSerializable
      *                                          object or an indication
      *                                          if the setting is enabled
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setBypassListManagement($enable)
     {
@@ -137,7 +137,7 @@ class MailSettings implements JsonSerializable
      * @param string|null $text The plain text content of your footer
      * @param string|null $html The HTML content of your footer
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setFooter($enable, $text = null, $html = null)
     {
@@ -165,7 +165,7 @@ class MailSettings implements JsonSerializable
      * @param SandBoxMode|bool $enable The SandBoxMode object or an
      *                                 indication if the setting is enabled
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setSandboxMode($enable)
     {
@@ -193,7 +193,7 @@ class MailSettings implements JsonSerializable
     /**
      * Enable sandbox mode on a MailSettings object
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function enableSandboxMode()
     {
@@ -203,7 +203,7 @@ class MailSettings implements JsonSerializable
     /**
      * Disable sandbox mode on a MailSettings object
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function disableSandboxMode()
     {
@@ -223,7 +223,7 @@ class MailSettings implements JsonSerializable
      *                                    a copy of your email along with the spam
      *                                    report to be sent to
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setSpamCheck($enable, $threshold = null, $post_to_url = null)
     {

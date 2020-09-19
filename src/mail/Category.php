@@ -24,7 +24,7 @@ class Category implements JsonSerializable
 	 * @param string|null $category A category name for an email message.
 	 *                              Each category name may not exceed 255
 	 *                              characters
-	 * @throws \SendGrid\Mail\GridException
+	 * @throws \SendGrid\Exception
 	 */
     public function __construct($category = null)
     {
@@ -40,7 +40,7 @@ class Category implements JsonSerializable
      *                         Each category name may not exceed 255
      *                         characters
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setCategory($category)
     {

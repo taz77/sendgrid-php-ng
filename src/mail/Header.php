@@ -29,7 +29,7 @@ class Header implements JsonSerializable
 	 *
 	 * @param string|null $key   Header key
 	 * @param string|null $value Header value
-	 * @throws \SendGrid\Mail\GridException
+	 * @throws \SendGrid\Exception
 	 */
     public function __construct($key = null, $value = null)
     {
@@ -46,7 +46,7 @@ class Header implements JsonSerializable
      *
      * @param string $key Header key
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setKey($key)
     {
@@ -70,7 +70,7 @@ class Header implements JsonSerializable
      *
      * @param string $value Header value
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setValue($value)
     {

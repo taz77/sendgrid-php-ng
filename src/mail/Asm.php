@@ -37,7 +37,7 @@ class Asm implements JsonSerializable
      *                                                      to be displayed
      *                                                      on the unsubscribe
      *                                                      preferences page.
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function __construct(
         $group_id = null,
@@ -57,7 +57,7 @@ class Asm implements JsonSerializable
      * @param int|GroupId $group_id The unsubscribe group to associate with this
      *                              email
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setGroupId($group_id)
     {
@@ -96,7 +96,7 @@ class Asm implements JsonSerializable
      *                                                 on the unsubscribe
      *                                                 preferences page.
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setGroupsToDisplay($groups_to_display)
     {

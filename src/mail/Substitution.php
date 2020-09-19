@@ -36,7 +36,7 @@ class Substitution implements JsonSerializable
      *
      * @param string|null $key Substitution key
      * @param string|null $value Substitution value
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function __construct($key = null, $value = null)
     {
@@ -53,7 +53,7 @@ class Substitution implements JsonSerializable
      *
      * @param string $key Substitution key
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setKey($key)
     {
@@ -77,7 +77,7 @@ class Substitution implements JsonSerializable
      *
      * @param string|array|object|bool|int|float $value Substitution value
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setValue($value)
     {

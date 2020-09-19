@@ -17,7 +17,7 @@ class PlainTextContent extends Content
      *
      * @param string $value plain text formatted content
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function __construct($value)
     {

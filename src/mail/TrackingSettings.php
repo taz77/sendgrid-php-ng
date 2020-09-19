@@ -33,7 +33,7 @@ class TrackingSettings implements JsonSerializable
      *                                                         object
      * @param Ganalytics|null $ganalytics Ganalytics object
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function __construct(
         $click_tracking = null,
@@ -64,7 +64,7 @@ class TrackingSettings implements JsonSerializable
      *                                        included in the text/plain portion of
      *                                        your email
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setClickTracking($enable, $enable_text = null)
     {
@@ -99,7 +99,7 @@ class TrackingSettings implements JsonSerializable
      *                                            This tag will be replaced by
      *                                            the open tracking pixelail
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setOpenTracking($enable, $substitution_tag = null)
     {
@@ -152,7 +152,7 @@ class TrackingSettings implements JsonSerializable
      *                                                    tag’s location, with no
      *                                                    additional formatting
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setSubscriptionTracking(
         $enable,
@@ -193,7 +193,7 @@ class TrackingSettings implements JsonSerializable
      *                                      advertisements
      * @param string|null $utm_campaign The name of the campaign
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setGanalytics(
         $enable,

@@ -1,9 +1,9 @@
 <?php
 
-namespace Fastglass\SendGrid\Tests;
+namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Fastglass\SendGrid;
+use SendGrid;
 
 class emailTest extends TestCase {
 

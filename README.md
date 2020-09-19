@@ -372,7 +372,7 @@ $email
     ->setReplyTo('someone.else@example.com')
     ->setFromName('John Doe')
    ...
-;
+
 ```
 
 ### Cc
@@ -419,7 +419,7 @@ $email
     ->addSmtpapiTo('someotheraddress@bar.com')
     ->addSmtpapiTo('another@another.com')
    ...
-;
+
 ```
 
 But if you do still have a need for Bcc you can do the following:
@@ -663,7 +663,7 @@ $email
         array('Subject to John', 'Subject to Harry', 'Subject to Bob')
     )
     ...
-;
+
 ```
 
 #### setSubstitutions
@@ -678,7 +678,7 @@ $email
         '%subject%' => array('Subject to John', 'Subject to Harry', 'Subject to Bob')
     ))
     ...
-;
+
 ```
 
 ### Sections ###

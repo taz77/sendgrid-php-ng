@@ -36,7 +36,7 @@ class EmailAddress implements JsonSerializable
      *                                   be be applied to the text and html content
      *                                   of the email body
      * @param string|null $subject       The personalized subject of the email
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function __construct(
         $emailAddress = null,
@@ -63,7 +63,7 @@ class EmailAddress implements JsonSerializable
      *
      * @param string $emailAddress The email address
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setEmailAddress($emailAddress)
     {
@@ -97,7 +97,7 @@ class EmailAddress implements JsonSerializable
      *
      * @param string $name The name of the person associated with the email
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setName($name)
     {
@@ -144,7 +144,7 @@ class EmailAddress implements JsonSerializable
      *                             be be applied to the text and html content
      *                             of the email body
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setSubstitutions($substitutions)
     {
@@ -166,7 +166,7 @@ class EmailAddress implements JsonSerializable
      *
      * @param string $subject The personalized subject of the email
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setSubject($subject)
     {

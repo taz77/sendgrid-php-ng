@@ -28,7 +28,7 @@ class BypassListManagement implements JsonSerializable
 	 * Optional constructor
 	 *
 	 * @param bool|null $enable Indicates if this setting is enabled
-	 * @throws \SendGrid\Mail\GridException
+	 * @throws \SendGrid\Exception
 	 */
     public function __construct($enable = null)
     {
@@ -42,7 +42,7 @@ class BypassListManagement implements JsonSerializable
      *
      * @param bool $enable Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setEnable($enable)
     {

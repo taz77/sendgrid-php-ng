@@ -26,7 +26,7 @@ class BccSettings implements JsonSerializable
 	 * @param bool|null   $enable Indicates if this setting is enabled
 	 * @param string|null $email  The email address that you would like
 	 *                            to receive the BCC
-	 * @throws \SendGrid\Mail\GridException
+	 * @throws \SendGrid\Exception
 	 */
     public function __construct($enable = null, $email = null)
     {
@@ -43,7 +43,7 @@ class BccSettings implements JsonSerializable
      *
      * @param bool $enable Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setEnable($enable)
     {
@@ -68,7 +68,7 @@ class BccSettings implements JsonSerializable
      * @param string $email The email address that you would like
      *                      to receive the BCC
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setEmail($email)
     {

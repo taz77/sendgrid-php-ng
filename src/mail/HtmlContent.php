@@ -17,7 +17,7 @@ class HtmlContent extends Content
      *
      * @param string $value HTML formatted content
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function __construct($value)
     {

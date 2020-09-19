@@ -30,7 +30,7 @@ class TemplateId implements JsonSerializable
 	 *                                 a subject and content (either text or html),
 	 *                                 you do not need to specify those at the
 	 *                                 personalizations nor message level
-	 * @throws \SendGrid\Mail\GridException
+	 * @throws \SendGrid\Exception
 	 */
     public function __construct($template_id = null)
     {
@@ -48,7 +48,7 @@ class TemplateId implements JsonSerializable
      *                            you do not need to specify those at the
      *                            personalizations nor message level
      *
-     * @throws \SendGrid\Mail\GridException
+     * @throws \SendGrid\Exception
      */
     public function setTemplateId($template_id)
     {

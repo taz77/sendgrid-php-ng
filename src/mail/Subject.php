@@ -23,7 +23,7 @@ class Subject implements JsonSerializable
      *
      * @param string|null $subject The email subject
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function __construct($subject = null)
     {
@@ -37,7 +37,7 @@ class Subject implements JsonSerializable
      *
      * @param string $subject The email subject
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception
      */
     public function setSubject($subject)
     {
