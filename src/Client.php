@@ -14,10 +14,17 @@
 
 namespace SendGrid;
 
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
+use SendGrid\Mail\GridException;
+use SendGrid\Mail\Mail;
+
 /**
  * Class SendGrid
  */
-abstract class Client {
+class Client {
 
   const VERSION = '2.0.0';
 
@@ -89,7 +96,7 @@ abstract class Client {
     // Create an empty stack for error processing.
     // Guzzlehttp will choose the most appropriate handler based on the system.
     if (empty($this->options['handler'])) {
-      $stack = \GuzzleHttp\HandlerStack::create();
+      $stack = HandlerStack::create();
     }
     else {
       $stack = $this->options['handler'];
@@ -116,19 +123,19 @@ abstract class Client {
    * Makes a post request to SendGrid to send an email from an email object.
    * Returns response codes after sending and will throw exceptions on faults.
    *
-   * @param SendGrid\Email $email
+   * @param Mail $email
    *
-   * @return SendGrid\Response
-   * @throws SendGrid\Exception
+   * @return \SendGrid\Response
+   * @throws \SendGrid\Mail\GridException
    */
-  public function send(SendGrid\Email $email) {
-    $form = $email->toWebFormat();
+  public function send(Mail $email) {
+
     // Adding API keys to header.
     // $form['api_key'] = $this->apiKey;
-    $response = $this->postRequest($this->endpoint, $form);
+    $response = $this->postRequest($this->endpoint, $email);
 
-    if ($response->code != 200 && $this->options['raise_exceptions']) {
-      throw new Exception($response->raw_body, $response->code);
+    if ($response->getCode() != 200) {
+      throw new GridException($response->raw_body, $response->code);
     }
 
     return $response;
@@ -139,19 +146,15 @@ abstract class Client {
    * array of ready options for SendGrid email.
    *
    * @param string $endpoint
-   * @param array $form
+   * @param Mail $email
    *
-   * @return bool|SendGrid\Response
+   * @return \SendGrid\Response
    */
-  public function postRequest($endpoint, $form) {
+   private function postRequest($endpoint, $email) {
     $requestoptions = [];
-    if (array_key_exists('files', $form)) {
-      // If the email contains files we must process as multipart.
-      $requestoptions['multipart'] = $this->prepareMultipart($form);
-    }
-    else {
-      $requestoptions['form_params'] = $form;
-    }
+
+    // Add email project to request as json.
+    $requestoptions['json'] = json_encode($email);
 
     // Allow for contection timeout.
     if (isset($this->options['connect_timeout'])) {
@@ -171,16 +174,11 @@ abstract class Client {
     try {
       $res = $this->client->request('POST', $endpoint, $requestoptions);
     }
-    catch (\GuzzleHttp\Exception\ClientException $e) {
-      echo 'Sendgrid API has experienced and error completing your request.';
-      echo '<pre>';
-      var_dump($e);
-      echo '</pre>';
-      return FALSE;
+    catch (RequestException $e) {
+      // Guzzle returns PRS-7 meessages for all responses.
+      $res =  $e->getResponse();
     }
-    $response = new Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(TRUE), json_decode($res->getBody(TRUE)));
-
-    return $response;
+     return new Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(), json_decode($res->getBody()));
   }
 
   /**
