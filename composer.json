@@ -21,14 +21,14 @@
     }
   ],
   "require": {
-    "php": ">=5.6.0",
-    "guzzlehttp/guzzle": ">=6.2.1",
+    "php": ">=7.0",
+    "guzzlehttp/guzzle": "^6.3",
     "ext-json": "*",
     "ext-mbstring": "*"
   },
   "require-dev": {
     "mockery/mockery": "~0.9",
-    "phpunit/phpunit": "~6.5",
+    "phpunit/phpunit": "^9",
     "vlucas/phpdotenv": "~1.0",
     "squizlabs/php_codesniffer": "2.*"
   },
@@ -38,7 +38,7 @@
   "type": "library",
   "autoload": {
     "psr-4": {
-      "SendGrid\\Mail": "src/mail",
+      "SendGrid\\Mail\\": "src/mail",
       "SendGrid\\Helper\\": "src/helper/"
     },
     "classmap": [
