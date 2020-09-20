@@ -2,16 +2,13 @@
 
 namespace Fastglass\SendGrid;
 
-use \Mockery as m;
-use Fastglass\SendGrid\Client as sendGridClient;
-use Fastglass\SendGrid\Email;
-use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Exception\RequestException;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Client as sendGridClient;
+use SendGrid\Email;
 
 class clientTest extends TestCase {
 

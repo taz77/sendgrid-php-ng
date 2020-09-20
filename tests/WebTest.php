@@ -1,14 +1,17 @@
 <?php
 
-namespace Fastglass\SendGrid\Tests;
+namespace SendGrid\Tests;
 
+use GuzzleHttp\Exception\ClientException;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Client;
+use SendGrid\Email;
 
 class webTest extends TestCase {
 
   public function testConstruction() {
-    $sendgrid = new \Fastglass\SendGrid\Client('token123456789');
-    $this->assertEquals(new \Fastglass\SendGrid\Client('token123456789'), $sendgrid);
+    $sendgrid = new Client('token123456789');
+    $this->assertEquals(new Client('token123456789'), $sendgrid);
     $this->assertEquals(get_class($sendgrid), 'SendGrid\Client');
   }
 
@@ -16,9 +19,9 @@ class webTest extends TestCase {
    * Test sending a request with bad credentials.
    */
   public function testSendResponse() {
-    $sendgrid = new \Fastglass\SendGrid\Client('token123456789');
+    $sendgrid = new Client('token123456789');
 
-    $email = new \Fastglass\SendGrid\Email();
+    $email = new Email();
     $email->setFrom('bar@foo.com')
       ->setSubject('foobar subject')
       ->setText('foobar text')
@@ -26,7 +29,7 @@ class webTest extends TestCase {
     try {
       $response = $sendgrid->send($email);
     }
-    catch (\GuzzleHttp\Exception\ClientException $e) {
+    catch (ClientException $e) {
       $response = $e->getResponse();
       $responseBodyAsString = $response->getBody()->getContents();
     }
@@ -37,9 +40,9 @@ class webTest extends TestCase {
    * Test sending a request with bad credentials and attachment.
    */
   public function testSendResponseWithAttachment() {
-    $sendgrid = new \Fastglass\SendGrid\Client('token123456789');
+    $sendgrid = new Client('token123456789');
 
-    $email = new \Fastglass\SendGrid\Email();
+    $email = new Email();
     $email->setFrom('p1@mailinator.com')
       ->setSubject('foobar subject')
       ->setText('foobar text')
@@ -48,7 +51,7 @@ class webTest extends TestCase {
     try {
       $response = $sendgrid->send($email);
     }
-    catch (\GuzzleHttp\Exception\ClientException $e) {
+    catch (ClientException $e) {
       $response = $e->getResponse();
       $responseBodyAsString = $response->getBody()->getContents();
     }
@@ -60,9 +63,9 @@ class webTest extends TestCase {
    * extension.
    */
   public function testSendResponseWithAttachmentMissingExtension() {
-    $sendgrid = new \Fastglass\SendGrid\Client('token123456789');
+    $sendgrid = new Client('token123456789');
 
-    $email = new \Fastglass\SendGrid\Email();
+    $email = new Email();
     $email->setFrom('p1@mailinator.com')
       ->setSubject('foobar subject')
       ->setText('foobar text')
@@ -71,7 +74,7 @@ class webTest extends TestCase {
     try {
       $response = $sendgrid->send($email);
     }
-    catch (\GuzzleHttp\Exception\ClientException $e) {
+    catch (ClientException $e) {
       $response = $e->getResponse();
       $responseBodyAsString = $response->getBody()->getContents();
     }
@@ -82,9 +85,9 @@ class webTest extends TestCase {
    * Test sending a request with bad credentials and SSL verification off.
    */
   public function testSendResponseWithSslOptionFalse() {
-    $sendgrid = new \Fastglass\SendGrid\Client('token123456789', ['switch_off_ssl_verification' => TRUE]);
+    $sendgrid = new Client('token123456789', ['switch_off_ssl_verification' => TRUE]);
 
-    $email = new \Fastglass\SendGrid\Email();
+    $email = new Email();
     $email->setFrom('p1@mailinator.com')
       ->setSubject('foobar subject')
       ->setText('foobar text')
@@ -93,7 +96,7 @@ class webTest extends TestCase {
     try {
       $response = $sendgrid->send($email);
     }
-    catch (\GuzzleHttp\Exception\ClientException $e) {
+    catch (ClientException $e) {
       $response = $e->getResponse();
       $responseBodyAsString = $response->getBody()->getContents();
     }
