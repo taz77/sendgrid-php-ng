@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a BatchId object for the /mail/send API call
@@ -23,7 +24,7 @@ class BatchId implements JsonSerializable
 	 *
 	 * @param string|null $batch_id This ID represents a batch of emails to
 	 *                              be sent at the same time
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($batch_id = null)
     {
@@ -38,7 +39,7 @@ class BatchId implements JsonSerializable
      * @param string $batch_id This ID represents a batch of emails to be sent
      *                         at the same time
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setBatchId($batch_id)
     {

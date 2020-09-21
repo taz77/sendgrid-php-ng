@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a Personalization object for
@@ -105,7 +106,7 @@ class Personalization implements JsonSerializable
      *
      * @param Subject|string $subject Subject object or string
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setSubject($subject)
     {
@@ -156,7 +157,7 @@ class Personalization implements JsonSerializable
      *                                  dynamic data
      * @param string|null $value The value of dynamic data
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addDynamicTemplateData($data, $value = null)
     {
@@ -180,7 +181,7 @@ class Personalization implements JsonSerializable
      *                                          substitution
      * @param string|null $value The value of a substitution
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addSubstitution($substitution, $value = null)
     {
@@ -206,7 +207,7 @@ class Personalization implements JsonSerializable
      *
      * @param CustomArg $custom_arg CustomArg object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addCustomArg($custom_arg)
     {
@@ -230,7 +231,7 @@ class Personalization implements JsonSerializable
      *
      * @param SendAt $send_at SendAt object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setSendAt($send_at)
     {
@@ -254,7 +255,7 @@ class Personalization implements JsonSerializable
      *
      * @param bool $has_dynamic_template are we using dynamic templates
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setHasDynamicTemplate($has_dynamic_template)
     {

@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a Footer object for the /mail/send API call
@@ -28,7 +29,7 @@ class Footer implements JsonSerializable
 	 * @param bool|null   $enable Indicates if this setting is enabled
 	 * @param string|null $text   The plain text content of your footer
 	 * @param string|null $html   The HTML content of your footer
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($enable = null, $text = null, $html = null)
     {
@@ -48,7 +49,7 @@ class Footer implements JsonSerializable
      *
      * @param bool $enable Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setEnable($enable)
     {
@@ -72,7 +73,7 @@ class Footer implements JsonSerializable
      *
      * @param string $text The plain text content of your footer
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setText($text)
     {
@@ -96,7 +97,7 @@ class Footer implements JsonSerializable
      *
      * @param string $html The HTML content of your footer
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setHtml($html)
     {

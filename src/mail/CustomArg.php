@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a CustomArg object for the /mail/send API call
@@ -32,7 +33,7 @@ class CustomArg implements JsonSerializable
 	 *
 	 * @param string|null $key   Custom arg key
 	 * @param string|null $value Custom arg value
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($key = null, $value = null)
     {
@@ -49,7 +50,7 @@ class CustomArg implements JsonSerializable
      *
      * @param string $key Custom arg key
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setKey($key)
     {
@@ -73,7 +74,7 @@ class CustomArg implements JsonSerializable
      *
      * @param string $value Custom arg value
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setValue($value)
     {

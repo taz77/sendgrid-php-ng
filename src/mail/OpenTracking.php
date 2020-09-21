@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException
 
 /**
  * This class is used to construct a OpenTracking object for the /mail/send API call
@@ -33,7 +34,7 @@ class OpenTracking implements JsonSerializable
 	 *                                      of your email at a location that you
 	 *                                      desire. This tag will be replaced by
 	 *                                      the open tracking pixel
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($enable = null, $substitution_tag = null)
     {
@@ -50,7 +51,7 @@ class OpenTracking implements JsonSerializable
      *
      * @param bool $enable Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setEnable($enable)
     {
@@ -78,7 +79,7 @@ class OpenTracking implements JsonSerializable
      *                                 desire. This tag will be replaced by
      *                                 the open tracking pixel
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setSubstitutionTag($substitution_tag)
     {

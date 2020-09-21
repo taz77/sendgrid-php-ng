@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a Content object for the /mail/send API call
@@ -36,7 +37,7 @@ class Content implements JsonSerializable
      * @param string|null $value The actual content of the specified mime type
      *                           that you are including in your email
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function __construct($type = null, $value = null)
     {
@@ -55,7 +56,7 @@ class Content implements JsonSerializable
      *                     in your email. For example, “text/plain” or
      *                     “text/html”
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setType($type)
     {
@@ -80,7 +81,7 @@ class Content implements JsonSerializable
      * @param string $value The actual content of the specified mime type
      *                      that you are including in your email
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setValue($value)
     {

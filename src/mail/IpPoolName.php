@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a IpPoolName object for the /mail/send API call
@@ -24,7 +25,7 @@ class IpPoolName implements JsonSerializable
 	 * @param string|null $ip_pool_name The IP Pool that you would like to
 	 *                                  send this email from. Minimum length:
 	 *                                  2, Maximum Length: 64
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($ip_pool_name = null)
     {
@@ -40,7 +41,7 @@ class IpPoolName implements JsonSerializable
      *                             send this email from. Minimum length:
      *                             2, Maximum Length: 64
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setIpPoolName($ip_pool_name)
     {

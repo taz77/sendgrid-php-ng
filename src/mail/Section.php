@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a Section object for the /mail/send API call
@@ -28,7 +29,7 @@ class Section implements JsonSerializable
 	 *
 	 * @param string|null $key   Section key
 	 * @param string|null $value Section value
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($key = null, $value = null)
     {
@@ -45,7 +46,7 @@ class Section implements JsonSerializable
      *
      * @param string $key Section key
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setKey($key)
     {
@@ -69,7 +70,7 @@ class Section implements JsonSerializable
      *
      * @param string $value Section value
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setValue($value)
     {

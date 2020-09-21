@@ -5,6 +5,8 @@
 
 namespace SendGrid\Mail;
 
+use SendGrid\Exception\SendgridException;
+
 /**
  * This class is used to construct a Content object for the /mail/send API call
  *
@@ -17,7 +19,7 @@ class HtmlContent extends Content
      *
      * @param string $value HTML formatted content
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function __construct($value)
     {

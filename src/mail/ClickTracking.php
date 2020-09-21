@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a ClickTracking object for the /mail/send API call
@@ -27,7 +28,7 @@ class ClickTracking implements JsonSerializable
 	 * @param bool|null $enable_text Indicates if this setting should be
 	 *                               included in the text/plain portion of
 	 *                               your email
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($enable = null, $enable_text = null)
     {
@@ -44,7 +45,7 @@ class ClickTracking implements JsonSerializable
      *
      * @param bool $enable Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setEnable($enable)
     {
@@ -68,7 +69,7 @@ class ClickTracking implements JsonSerializable
      *
      * @param bool $enable_text Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setEnableText($enable_text)
     {

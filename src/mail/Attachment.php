@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a Attachment object for the /mail/send API call
@@ -36,7 +37,7 @@ class Attachment implements JsonSerializable
 	 *                            or attachment, default is attachment
 	 * @param string $content_id  Used when disposition is inline to display the
 	 *                            file within the body of the email
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct(
         $content = null,
@@ -67,7 +68,7 @@ class Attachment implements JsonSerializable
      *
      * @param string $content Base64 encoded content
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setContent($content)
     {
@@ -95,7 +96,7 @@ class Attachment implements JsonSerializable
      *
      * @param string $type Mime type of the attachment
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setType($type)
     {
@@ -119,7 +120,7 @@ class Attachment implements JsonSerializable
      *
      * @param string $filename File name of the attachment
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setFilename($filename)
     {
@@ -144,7 +145,7 @@ class Attachment implements JsonSerializable
      * @param string $disposition How the attachment should be displayed:
      *                            inline or attachment, default is attachment
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setDisposition($disposition)
     {
@@ -168,7 +169,7 @@ class Attachment implements JsonSerializable
 	 *
 	 * @param string $content_id Used when disposition is inline to display
 	 *                           the file within the body of the email
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function setContentID($content_id)
     {

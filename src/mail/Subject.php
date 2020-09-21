@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a Subject object for the /mail/send API call
@@ -23,7 +24,7 @@ class Subject implements JsonSerializable
      *
      * @param string|null $subject The email subject
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function __construct($subject = null)
     {
@@ -37,7 +38,7 @@ class Subject implements JsonSerializable
      *
      * @param string $subject The email subject
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setSubject($subject)
     {

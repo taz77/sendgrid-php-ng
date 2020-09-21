@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 use function is_array;
 use function is_bool;
 use function is_float;
@@ -36,7 +37,7 @@ class Substitution implements JsonSerializable
      *
      * @param string|null $key Substitution key
      * @param string|null $value Substitution value
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function __construct($key = null, $value = null)
     {
@@ -53,7 +54,7 @@ class Substitution implements JsonSerializable
      *
      * @param string $key Substitution key
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setKey($key)
     {
@@ -77,7 +78,7 @@ class Substitution implements JsonSerializable
      *
      * @param string|array|object|bool|int|float $value Substitution value
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setValue($value)
     {

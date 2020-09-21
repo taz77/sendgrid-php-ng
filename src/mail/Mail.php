@@ -8,6 +8,7 @@ namespace SendGrid\Mail;
 use InvalidArgumentException;
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 use function count;
 use function current;
 use function end;
@@ -86,7 +87,7 @@ class Mail implements JsonSerializable
      * @param HtmlContent|null          $htmlContent         Html version of content
      * @param Substitution[]|array|null $globalSubstitutions Substitutions for entire email
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function __construct(
         $from = null,
@@ -167,7 +168,7 @@ class Mail implements JsonSerializable
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     private function addRecipientEmail(
         $emailType,
@@ -216,7 +217,7 @@ class Mail implements JsonSerializable
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     private function addRecipientEmails(
         $emailType,
@@ -254,7 +255,7 @@ class Mail implements JsonSerializable
      *
      * @param Personalization $personalization A Personalization object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addPersonalization($personalization)
     {
@@ -274,7 +275,7 @@ class Mail implements JsonSerializable
      *
      * @return Personalization
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function getPersonalization($personalizationIndex = null, $personalization = null)
     {
@@ -364,7 +365,7 @@ class Mail implements JsonSerializable
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addTo(
         $to,
@@ -393,7 +394,7 @@ class Mail implements JsonSerializable
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addTos(
         $toEmails,
@@ -423,7 +424,7 @@ class Mail implements JsonSerializable
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addCc(
         $cc,
@@ -452,7 +453,7 @@ class Mail implements JsonSerializable
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addCcs(
         $ccEmails,
@@ -482,7 +483,7 @@ class Mail implements JsonSerializable
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addBcc(
         $bcc,
@@ -511,7 +512,7 @@ class Mail implements JsonSerializable
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addBccs(
         $bccEmails,
@@ -542,7 +543,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setSubject(
         $subject,
@@ -591,7 +592,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addHeader(
         $key,
@@ -624,7 +625,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addHeaders(
         $headers,
@@ -669,7 +670,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addDynamicTemplateData(
         $key,
@@ -689,7 +690,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addDynamicTemplateDatas(
         $datas,
@@ -725,7 +726,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addSubstitution(
         $key,
@@ -759,7 +760,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addSubstitutions(
         $substitutions,
@@ -806,7 +807,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addCustomArg(
         $key,
@@ -840,7 +841,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addCustomArgs(
         $custom_args,
@@ -889,7 +890,7 @@ class Mail implements JsonSerializable
      *                                       Personalization objects
      * @param Personalization|null $personalization A pre-created
      *                                              Personalization object
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setSendAt(
         $send_at,
@@ -922,7 +923,7 @@ class Mail implements JsonSerializable
      * @param string|From $email Email address or From object
      * @param string|null $name  Sender name
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setFrom($email, $name = null)
     {
@@ -954,7 +955,7 @@ class Mail implements JsonSerializable
      * @param string|ReplyTo $email Email address or From object
      * @param string|null $name Reply to name
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setReplyTo($email, $name = null)
     {
@@ -984,7 +985,7 @@ class Mail implements JsonSerializable
      *
      * @param string|Subject $subject Email subject
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setGlobalSubject($subject)
     {
@@ -1013,7 +1014,7 @@ class Mail implements JsonSerializable
      * @param string|Content $type Mime type or Content object
      * @param string|null $value Contents (e.g. text or html)
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addContent($type, $value = null)
     {
@@ -1031,7 +1032,7 @@ class Mail implements JsonSerializable
      * @param array|Content[] $contents Array of Content objects
      *                                  or key value pairs
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addContents($contents)
     {
@@ -1087,7 +1088,7 @@ class Mail implements JsonSerializable
      * @param string|null $content_id Used when disposition is inline
      *                                       to display the file within the
      *                                       body of the email
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addAttachment(
         $attachment,
@@ -1121,7 +1122,7 @@ class Mail implements JsonSerializable
      *
      * @param array|Attachment[] $attachments Array of Attachment objects or
      *                                        arrays
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addAttachments($attachments)
     {
@@ -1145,7 +1146,7 @@ class Mail implements JsonSerializable
      *
      * @param TemplateId|string $template_id The id of the template to be
      *                                       applied to this email
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setTemplateId($template_id)
     {
@@ -1317,7 +1318,7 @@ class Mail implements JsonSerializable
      * Add a category to a Mail object
      *
      * @param string|Category $category Category object or category name
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addCategory($category)
     {
@@ -1340,7 +1341,7 @@ class Mail implements JsonSerializable
      * Adds multiple categories to a Mail object
      *
      * @param array|Category[] $categories Array of Category objects or arrays
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addCategories($categories)
     {
@@ -1418,7 +1419,7 @@ class Mail implements JsonSerializable
      * global timestamps.
      *
      * @param int|SendAt $send_at A unix timestamp
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setGlobalSendAt($send_at)
     {
@@ -1443,7 +1444,7 @@ class Mail implements JsonSerializable
      *
      * @param string|BatchId $batch_id Id for a batch of emails
      *                                 to be sent at the same time
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setBatchId($batch_id)
     {
@@ -1471,7 +1472,7 @@ class Mail implements JsonSerializable
      * @param array $groups_to_display Array of integer ids of unsubscribe
      *                                   groups to be displayed on the
      *                                   unsubscribe preferences page
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setAsm($group_id, $groups_to_display = null)
     {
@@ -1499,7 +1500,7 @@ class Mail implements JsonSerializable
      *
      * @param string|IpPoolName $ip_pool_name The IP Pool that you would
      *                                        like to send this email from
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setIpPoolName($ip_pool_name)
     {
@@ -1549,7 +1550,7 @@ class Mail implements JsonSerializable
      * @param bool|BccSettings $enable A BccSettings object or a boolean
      *                                 to determine if this setting is active
      * @param string|null      $email  The email address to be bcc'ed
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setBccSettings($enable, $email = null)
     {
@@ -1567,7 +1568,7 @@ class Mail implements JsonSerializable
      * be used in emergencies when it is absolutely necessary that every
      * recipient receives your email.
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function enableBypassListManagement()
     {
@@ -1585,7 +1586,7 @@ class Mail implements JsonSerializable
      * be used in emergencies when it is absolutely necessary that every
      * recipient receives your email.
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function disableBypassListManagement()
     {
@@ -1603,7 +1604,7 @@ class Mail implements JsonSerializable
      * @param string|null $text The plain text content of the footer
      * @param string|null $html The HTML content of the footer
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setFooter($enable = null, $text = null, $html = null)
     {
@@ -1619,7 +1620,7 @@ class Mail implements JsonSerializable
      * This allows you to send a test email to ensure that your request
      * body is valid and formatted correctly.
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function enableSandBoxMode()
     {
@@ -1635,7 +1636,7 @@ class Mail implements JsonSerializable
      * This allows you to send a test email to ensure that your request
      * body is valid and formatted correctly.
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function disableSandBoxMode()
     {
@@ -1658,7 +1659,7 @@ class Mail implements JsonSerializable
      *                                    a copy of your email along with the spam
      *                                    report to be sent to
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setSpamCheck($enable = null, $threshold = null, $post_to_url = null)
     {
@@ -1700,7 +1701,7 @@ class Mail implements JsonSerializable
      *                                        included in the text/plain portion of
      *                                        your email
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setClickTracking($enable = null, $enable_text = null)
     {
@@ -1723,7 +1724,7 @@ class Mail implements JsonSerializable
      *                                            This tag will be replaced by the
      *                                            open tracking pixel
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setOpenTracking($enable = null, $substitution_tag = null)
     {
@@ -1798,7 +1799,7 @@ class Mail implements JsonSerializable
      *                                 from advertisements
      * @param string|null $utm_campaign The name of the campaign
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setGanalytics(
         $enable = null,
@@ -1825,7 +1826,7 @@ class Mail implements JsonSerializable
      * Return an array representing a request object for the Twilio SendGrid API
      *
      * @return null|array
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function jsonSerialize()
     {

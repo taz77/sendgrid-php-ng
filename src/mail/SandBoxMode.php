@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a SandBoxMode object for the /mail/send API call
@@ -24,7 +25,7 @@ class SandBoxMode implements JsonSerializable
 	 * Optional constructor
 	 *
 	 * @param bool|null $enable Indicates if this setting is enabled
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($enable = null)
     {
@@ -38,7 +39,7 @@ class SandBoxMode implements JsonSerializable
      *
      * @param bool $enable Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setEnable($enable)
     {

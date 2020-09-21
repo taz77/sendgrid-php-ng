@@ -6,6 +6,7 @@
 namespace SendGrid\Mail;
 
 use JsonSerializable;
+use SendGrid\Exception\SendgridException;
 use SendGrid\Helper\Assert;
 use function count;
 use function is_array;
@@ -30,7 +31,7 @@ class GroupsToDisplay implements JsonSerializable
      *                                          be displayed on the
      *                                          unsubscribe preferences
      *                                          page. Maximum of 25
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function __construct($groups_to_display = null)
     {
@@ -47,7 +48,7 @@ class GroupsToDisplay implements JsonSerializable
      *                                     displayed on the unsubscribe
      *                                     preferences page
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setGroupsToDisplay($groups_to_display)
     {
@@ -64,7 +65,7 @@ class GroupsToDisplay implements JsonSerializable
      *                                     displayed on the unsubscribe
      *                                     preferences page
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function addGroupToDisplay($group_to_display)
     {

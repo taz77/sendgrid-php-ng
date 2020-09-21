@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a BypassListManagement object for
@@ -28,7 +29,7 @@ class BypassListManagement implements JsonSerializable
 	 * Optional constructor
 	 *
 	 * @param bool|null $enable Indicates if this setting is enabled
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($enable = null)
     {
@@ -42,7 +43,7 @@ class BypassListManagement implements JsonSerializable
      *
      * @param bool $enable Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setEnable($enable)
     {

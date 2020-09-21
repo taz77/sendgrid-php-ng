@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a SubscriptionTracking object for
@@ -64,7 +65,7 @@ class SubscriptionTracking implements JsonSerializable
 	 *                                      and html parameters. The URL of the link
 	 *                                      will be placed at the substitution tag’s
 	 *                                      location, with no additional formatting
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct(
         $enable = null,
@@ -91,7 +92,7 @@ class SubscriptionTracking implements JsonSerializable
      *
      * @param bool $enable Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setEnable($enable)
     {
@@ -118,7 +119,7 @@ class SubscriptionTracking implements JsonSerializable
      *                     control where the link is by using the
      *                     tag <% %>
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setText($text)
     {
@@ -145,7 +146,7 @@ class SubscriptionTracking implements JsonSerializable
      *                     control where the link is by using the
      *                     tag <% %>
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setHtml($html)
     {
@@ -175,7 +176,7 @@ class SubscriptionTracking implements JsonSerializable
      *                                 will be placed at the substitution tag’s
      *                                 location, with no additional formatting %>
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setSubstitutionTag($substitution_tag)
     {

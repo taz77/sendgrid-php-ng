@@ -8,7 +8,7 @@
 
 namespace SendGrid\Helper;
 
-use SendGrid\Mail\GridException;
+use SendGrid\Exception\SendgridException;
 use function count;
 use function get_class;
 use function in_array;
@@ -27,7 +27,7 @@ class Assert
      * @param string $property
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function string($value, $property, $message = null)
     {
@@ -38,7 +38,7 @@ class Assert
                 $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -49,7 +49,7 @@ class Assert
      * @param string $property
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function email($value, $property, $message = null)
     {
@@ -66,7 +66,7 @@ class Assert
                 $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -77,7 +77,7 @@ class Assert
      * @param string $property
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function integer($value, $property, $message = null)
     {
@@ -88,7 +88,7 @@ class Assert
                 $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -99,7 +99,7 @@ class Assert
      * @param string $property
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function boolean($value, $property, $message = null)
     {
@@ -110,7 +110,7 @@ class Assert
                 $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -122,7 +122,7 @@ class Assert
      * @param string $className
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function isInstanceOf($value, $property, $className, $message = null)
     {
@@ -134,7 +134,7 @@ class Assert
                 is_object($value) ? get_class($value) : (string) $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -145,7 +145,7 @@ class Assert
      * @param string $property
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function isArray($value, $property, $message = null)
     {
@@ -156,7 +156,7 @@ class Assert
                 $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -167,7 +167,7 @@ class Assert
      * @param string|null $property
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function isCallable($value, $property, $message = null)
     {
@@ -178,7 +178,7 @@ class Assert
                 $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -190,7 +190,7 @@ class Assert
      * @param callable $callback
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function accept($value, $property, $callback, $message = null)
     {
@@ -202,7 +202,7 @@ class Assert
                 $property
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -214,7 +214,7 @@ class Assert
      * @param int $size
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function maxItems($value, $property, $size, $message = null)
     {
@@ -227,7 +227,7 @@ class Assert
                 $size
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -239,7 +239,7 @@ class Assert
      * @param int $size
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function minItems($value, $property, $size, $message = null)
     {
@@ -252,7 +252,7 @@ class Assert
                 $size
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -264,7 +264,7 @@ class Assert
      * @param int $limit
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function maxValue($value, $property, $limit, $message = null)
     {
@@ -280,7 +280,7 @@ class Assert
                 $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -292,7 +292,7 @@ class Assert
      * @param int $limit
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function minValue($value, $property, $limit, $message = null)
     {
@@ -308,7 +308,7 @@ class Assert
                 $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -320,7 +320,7 @@ class Assert
      * @param int $limit
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws \SendGrid\Exception\SendgridException
      */
     public static function maxLength($value, $property, $limit, $message = null)
     {
@@ -336,7 +336,7 @@ class Assert
                 $length
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -348,7 +348,7 @@ class Assert
      * @param int $limit
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function minLength($value, $property, $limit, $message = null)
     {
@@ -364,7 +364,7 @@ class Assert
                 $length
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 
@@ -376,7 +376,7 @@ class Assert
      * @param array $choices
      * @param string|null $message
      *
-     * @throws GridException
+     * @throws SendgridException
      */
     public static function anyOf($value, $property, array $choices, $message = null)
     {
@@ -388,7 +388,7 @@ class Assert
                 $value
             );
 
-            throw new GridException($message);
+            throw new SendgridException($message);
         }
     }
 }

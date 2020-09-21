@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a Asm object for the /mail/send API call
@@ -37,7 +38,7 @@ class Asm implements JsonSerializable
      *                                                      to be displayed
      *                                                      on the unsubscribe
      *                                                      preferences page.
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function __construct(
         $group_id = null,
@@ -57,7 +58,7 @@ class Asm implements JsonSerializable
      * @param int|GroupId $group_id The unsubscribe group to associate with this
      *                              email
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setGroupId($group_id)
     {
@@ -96,7 +97,7 @@ class Asm implements JsonSerializable
      *                                                 on the unsubscribe
      *                                                 preferences page.
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setGroupsToDisplay($groups_to_display)
     {

@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a BccSettings object for the /mail/send API call
@@ -26,7 +27,7 @@ class BccSettings implements JsonSerializable
 	 * @param bool|null   $enable Indicates if this setting is enabled
 	 * @param string|null $email  The email address that you would like
 	 *                            to receive the BCC
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($enable = null, $email = null)
     {
@@ -43,7 +44,7 @@ class BccSettings implements JsonSerializable
      *
      * @param bool $enable Indicates if this setting is enabled
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setEnable($enable)
     {
@@ -68,7 +69,7 @@ class BccSettings implements JsonSerializable
      * @param string $email The email address that you would like
      *                      to receive the BCC
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setEmail($email)
     {

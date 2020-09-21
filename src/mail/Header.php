@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Helper\Assert;
+use SendGrid\Exception\SendgridException;
 
 /**
  * This class is used to construct a Header object for the /mail/send API call
@@ -29,7 +30,7 @@ class Header implements JsonSerializable
 	 *
 	 * @param string|null $key   Header key
 	 * @param string|null $value Header value
-	 * @throws \SendGrid\Exception
+	 * @throws SendgridException
 	 */
     public function __construct($key = null, $value = null)
     {
@@ -46,7 +47,7 @@ class Header implements JsonSerializable
      *
      * @param string $key Header key
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setKey($key)
     {
@@ -70,7 +71,7 @@ class Header implements JsonSerializable
      *
      * @param string $value Header value
      *
-     * @throws \SendGrid\Exception
+     * @throws SendgridException
      */
     public function setValue($value)
     {
