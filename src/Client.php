@@ -133,7 +133,7 @@ class Client {
     $response = $this->postRequest($this->endpoint, $email);
 
     if ($response->getCode() != 200) {
-      throw new GridException($response->raw_body, $response->code);
+      throw new SendgridException($response->getRawBody(), $response->getCode());
     }
 
     return $response;

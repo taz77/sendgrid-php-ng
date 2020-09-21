@@ -2,6 +2,8 @@
 
 namespace SendGrid\Exception;
 
-class SendgridException extends \Exception implements SendgridThrowable {
+use Exception;
+
+class SendgridException extends Exception implements SendgridThrowable {
 
 }
