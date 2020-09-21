@@ -16,7 +16,7 @@ namespace SendGrid;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
-use SendGrid\Exception;
+use SendGrid\Exception\SendgridException;
 use SendGrid\Mail\Mail;
 
 /**
@@ -124,7 +124,7 @@ class Client {
    * @param Mail $email
    *
    * @return \SendGrid\Response
-   * @throws \SendGrid\Exception
+   * @throws SendgridException
    */
   public function send(Mail $email) {
 
