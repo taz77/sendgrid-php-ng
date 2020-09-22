@@ -1,0 +1,11 @@
+pipeline:
+  build:
+    image: debian
+    commands:
+      - sleep 30
+      - apt-get update
+      - apt-get upgrade -y
+      - echo "This is the build step.."
+      - echo "This is a second build step of build..."
+      - ls -alh
+
