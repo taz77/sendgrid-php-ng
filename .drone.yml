@@ -5,6 +5,7 @@ pipeline:
       - sleep 1
       - apt-get update
       - apt-get upgrade -y
+      - composer install
       - echo "This is the build step.."
       - echo "This is a second build step of build..."
       - ls -alh
