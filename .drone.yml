@@ -2,7 +2,7 @@ pipeline:
   build:
     image: debian
     commands:
-      - sleep 30
+      - sleep 1
       - apt-get update
       - apt-get upgrade -y
       - echo "This is the build step.."
