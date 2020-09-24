@@ -27,7 +27,6 @@ class Client {
   const VERSION = '2.0.0';
 
   protected
-    $headers = ['Content-Type' => 'application/json'],
     $options;
 
   public
@@ -50,9 +49,6 @@ class Client {
     $this->apiKey = $apiKey;
 
     $this->options['turn_off_ssl_verification'] = (isset($this->options['turn_off_ssl_verification']) && $this->options['turn_off_ssl_verification'] == TRUE);
-    if (!isset($this->options['raise_exceptions'])) {
-      $this->options['raise_exceptions'] = TRUE;
-    }
 
     // Default to https protocol.
     $protocol = isset($this->options['protocol']) ? $this->options['protocol'] : 'https';
@@ -152,7 +148,7 @@ class Client {
     $requestoptions = [];
 
     // Add email project to request as json.
-    $requestoptions['json'] = json_encode($email);
+    $requestoptions['json'] = $email;
 
     // Allow for contection timeout.
     if (isset($this->options['connect_timeout'])) {
@@ -173,7 +169,7 @@ class Client {
       $res = $this->client->request('POST', $endpoint, $requestoptions);
     }
     catch (RequestException $e) {
-      // Guzzle returns PRS-7 meessages for all responses.
+      // Guzzle returns PRS-7 messages for all responses.
       $res =  $e->getResponse();
     }
      return new Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(), json_decode($res->getBody()));
