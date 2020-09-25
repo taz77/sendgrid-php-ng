@@ -7,4 +7,6 @@ pipeline:
       - composer install --no-interaction
       - vendor/bin/phpunit --coverage-clover clover.xml
       - ls -alh
-
+  notify:
+    image: plugins/slack
+    channel: cicd
