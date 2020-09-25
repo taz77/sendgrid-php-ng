@@ -23,7 +23,7 @@ catch (SendgridException $e) {
   // Do something with Exception like log it.
 }
 try {
-  $email->addTo("brady@fastglass.net", "Example User");
+  $email->addTo("test@test.com", "Example User");
 }
 catch (SendgridException $e) {
   // Do something with Exception like log it.
