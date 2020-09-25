@@ -4,6 +4,8 @@ pipeline:
     commands:
       - sleep 1
       - composer self-update
+      - composer config -g repositories.packagist.org false
+      - composer config -g repositories.root composer https://cache.dev.ruinix.com/repository/packagist/
       - composer install --no-interaction
 #      - vendor/bin/phpunit --coverage-clover clover.xml
       - ls -alh
