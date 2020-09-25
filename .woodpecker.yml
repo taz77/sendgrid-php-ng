@@ -5,8 +5,9 @@ pipeline:
       - sleep 1
       - composer self-update
       - composer install --no-interaction
-      - vendor/bin/phpunit --coverage-clover clover.xml
+#      - vendor/bin/phpunit --coverage-clover clover.xml
       - ls -alh
   notify:
     image: plugins/slack
     channel: cicd
+    secrets: [ slack_webhook ]
