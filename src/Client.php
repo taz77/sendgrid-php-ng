@@ -144,7 +144,7 @@ class Client {
    *
    * @return \SendGrid\Response
    */
-   private function postRequest($endpoint, $email) {
+  private function postRequest($endpoint, $email) {
     $requestoptions = [];
 
     // Add email project to request as json.
@@ -170,51 +170,8 @@ class Client {
     }
     catch (RequestException $e) {
       // Guzzle returns PRS-7 messages for all responses.
-      $res =  $e->getResponse();
+      $res = $e->getResponse();
     }
-     return new Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(), json_decode($res->getBody()));
-  }
-
-  /**
-   * Prepare a request to be submitted as multipart.
-   *
-   * @param array $data
-   *
-   * @return array $message
-   */
-  public function prepareMultipart($data) {
-    // The contents of the multipart request.
-    $message = [];
-    foreach ($data as $key => $value) {
-      // If the value is an array we have to perform a hack to handle array values.
-      if (is_array($value) && $key != 'files') {
-        foreach ($value as $item) {
-          $message[] = [
-            'name' => $key . '[]',
-            'contents' => $item,
-          ];
-        }
-      }
-      // If the item is the files, we build a special array to include
-      // the filenames as the indicies.
-      elseif (is_array($value) && $key == 'files') {
-        foreach ($value as $filekey => $filevalue) {
-          // Guzzle 6.x requires passing a file with an fopen resource
-          $message[] = [
-            'name' => 'files[' . $filekey . ']',
-            'contents' => fopen($filevalue, 'r'),
-            'filename' => $filekey,
-          ];
-
-        }
-      }
-      else {
-        $message[] = [
-          'name' => $key,
-          'contents' => $value,
-        ];
-      }
-    }
-    return $message;
+    return new Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(), json_decode($res->getBody()));
   }
 }
