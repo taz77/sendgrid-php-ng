@@ -72,11 +72,18 @@ $sendgrid = new Client(getenv('SENDGRID_API_KEY'));
 try {
   $response = $sendgrid->send($email);
   print $response->getCode() . "\n";
+  print_r($response->getBody());
+  print_r($response->getHeaders());
+  echo "\n";
   // print_r($response->getHeaders());
   print_r(json_encode($response->getBody(), JSON_PRETTY_PRINT));
 }
 catch (SendgridException $e) {
   print_r($e->getCode());
+  echo "\n";
+  $json = json_decode($e->getMessage());
+  echo json_encode($json, JSON_PRETTY_PRINT);
+  echo "\n";
 }
 
 
