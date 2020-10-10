@@ -18,10 +18,10 @@ ci-install: clean
 	composer install --no-dev
 
 test:
-	vendor/bin/phpunit test/unit --filter test*
+	vendor/bin/phpunit Tests --filter test*
 
 test-integ: test
-	vendor/bin/phpunit test --filter test*
+	vendor/bin/phpunit Tests --filter test*
 
 version ?= latest
 test-docker:
