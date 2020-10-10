@@ -32,7 +32,7 @@ class EmailAddressTest extends TestCase
     /**
      * Use a fresh instance in every test
      */
-    public function setUp()
+    public function setUp() : void
     {
         $this->email = new EmailAddress();
     }
