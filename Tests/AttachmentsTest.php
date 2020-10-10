@@ -2,7 +2,7 @@
 /**
  * This file tests Attachments.
  */
-namespace SendGrid\Tests\Unit;
+namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
 use SendGrid\Mail\Attachment;

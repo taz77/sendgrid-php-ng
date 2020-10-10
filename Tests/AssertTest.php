@@ -2,7 +2,7 @@
 /**
  * Assert class unit tests.
  */
-namespace SendGrid\Tests\Unit;
+namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
 use SendGrid\Helper\Assert;
