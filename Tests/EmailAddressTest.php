@@ -15,7 +15,7 @@ use SendGrid\Mail\Mail;
 use SendGrid\Mail\Personalization;
 use SendGrid\Mail\Subject;
 use SendGrid\Mail\To;
-use SendGrid\Mail\TypeException;
+use SendGrid\Exception\TypeException;
 use SendGrid\Tests\BaseTestClass;
 use Swaggest\JsonDiff\Exception as JsonDiffException;
 
@@ -661,7 +661,7 @@ JSON;
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$emailAddress" must be a valid email address.
      */
     public function testSetEmailAddressOnInvalidFormat()
@@ -671,7 +671,7 @@ JSON;
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$emailAddress" must be a string.
      */
     public function testSetEmailAddressOnInvalidType()
@@ -689,7 +689,7 @@ JSON;
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$name" must be a string.
      */
     public function testSetNameOnInvalidType()
@@ -707,7 +707,7 @@ JSON;
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$substitutions" must be an array.
      */
     public function testSetSubstitutionsOnInvalidType()
@@ -727,7 +727,7 @@ JSON;
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$subject" must be a string.
      */
     public function testSetSubjectOnInvalidType()

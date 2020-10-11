@@ -32,7 +32,7 @@ class SendAtTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$send_at" must be an integer.
      */
     public function testSendAtOnInvalidType()

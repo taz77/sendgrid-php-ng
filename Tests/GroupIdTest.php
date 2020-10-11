@@ -30,7 +30,7 @@ class GroupIdTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$group_id" must be an integer.
      */
     public function testSetGroupIdOnInvalidType()

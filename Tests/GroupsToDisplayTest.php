@@ -7,7 +7,7 @@ namespace SendGrid\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use SendGrid\Mail\GroupsToDisplay;
-use SendGrid\Mail\TypeException;
+use SendGrid\Exception\TypeException;
 
 class GroupsToDisplayTest extends TestCase
 {
@@ -48,7 +48,7 @@ class GroupsToDisplayTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$groups_to_display" must be an array.
      */
     public function testSetGroupsToDisplayOnInvalidType()

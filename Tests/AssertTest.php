@@ -6,7 +6,7 @@ namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
 use SendGrid\Helper\Assert;
-use SendGrid\Mail\TypeException;
+use SendGrid\Exception\TypeException;
 
 class AssertTest extends TestCase
 {

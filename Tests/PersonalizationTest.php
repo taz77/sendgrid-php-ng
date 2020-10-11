@@ -55,7 +55,7 @@ class PersonalizationTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$subject" must be an instance of SendGrid\Mail\Subject or a string
      */
     public function testSetSubjectOnInvalidSubjectClass()
@@ -97,7 +97,7 @@ class PersonalizationTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$send_at" must be an instance of "SendGrid\Mail\SendAt"
      */
     public function testSendAtOnInvalidSendAtClass()
@@ -115,7 +115,7 @@ class PersonalizationTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$has_dynamic_template" must be a boolean.
      */
     public function testSetHasDynamicTemplateOnInvalidType()

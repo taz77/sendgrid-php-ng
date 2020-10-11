@@ -31,7 +31,7 @@ class TemplateIdTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$template_id" must be a string.
      */
     public function testSetTemplateIdOnInvalidType()

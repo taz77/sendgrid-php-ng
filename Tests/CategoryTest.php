@@ -31,7 +31,7 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$category" must be a string.
      */
     public function testSetCategoryOnInvalidType()

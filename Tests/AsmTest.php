@@ -40,7 +40,7 @@ class AsmTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$groups_to_display" must be an instance of SendGrid\Mail\GroupsToDisplay or an array.
      */
     public function testSetGroupToDisplayOnInvalidValue()
@@ -50,7 +50,7 @@ class AsmTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$group_id" must be an instance of SendGrid\Mail\GroupId or an integer.
      */
     public function testSetGroupIdOnInvalidGroupId()

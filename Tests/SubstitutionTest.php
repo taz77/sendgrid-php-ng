@@ -31,7 +31,7 @@ class SubstitutionTest extends TestCase
         $this->assertEquals($substitution->getValue(), $testNumberInt);
         $substitution->setValue($testNumberFloat);
         $this->assertEquals($substitution->getValue(), $testNumberFloat);
-        $this->expectException('SendGrid\Mail\TypeException');
+        $this->expectException('SendGrid\Exception\TypeException');
         $substitution->setValue($testInvalidInput);
     }
 
@@ -53,7 +53,7 @@ class SubstitutionTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$key" must be a string.
      */
     public function testSetKeyOnInvalidType()
@@ -71,7 +71,7 @@ class SubstitutionTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$value" must be an array, object, boolean, string, numeric or integer.
      */
     public function testSetValueOnInvalidType()

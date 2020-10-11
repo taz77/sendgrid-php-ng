@@ -33,7 +33,7 @@ class FooterTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$enable" must be a boolean.
      */
     public function testSetEnableOnInvalidType()
@@ -51,7 +51,7 @@ class FooterTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$text" must be a string.
      */
     public function testSetTextOnInvalidType()
@@ -69,7 +69,7 @@ class FooterTest extends TestCase
     }
 
     /**
-     * @expectedException \SendGrid\Mail\TypeException
+     * @expectedException \SendGrid\Exception\TypeException
      * @expectedExceptionMessage "$html" must be a string.
      */
     public function testSetHtmlOnInvalidType()

@@ -17,7 +17,7 @@ class MailGetContentsTest extends TestCase
      * text/plain Content object first when Mail instantiated with text/html
      * content before text/plain
      *
-     * @throws \SendGrid\Mail\TypeException
+     * @throws \SendGrid\Exception\TypeException
      */
     public function testWillReturnPlainContentFirst()
     {
