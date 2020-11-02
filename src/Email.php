@@ -1062,7 +1062,7 @@ class Email {
         }
         // This creates an keyed array with the filenames as the key and the
         // full path as a value.
-        $web['files'][$f['basename']] = $f['dirname'] . '/' . $f['basename'];
+        $web['files'][$full_filename] = $f['dirname'] . '/' . $f['basename'];
       };
     }
 
