@@ -1,42 +1,40 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests BypassListManagement.
  */
+
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
 use SendGrid\Mail\BypassListManagement;
+use  SendGrid\Exception\TypeException;
 
 /**
  * This file tests BypassListManagement.
  *
  * @package SendGrid\Tests
  */
-class BypassListManagementTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $bypassListManagement = new BypassListManagement(true);
+class BypassListManagementTest extends TestCase {
 
-        $this->assertInstanceOf(BypassListManagement::class, $bypassListManagement);
-        $this->assertTrue($bypassListManagement->getEnable());
-    }
+  public function testConstructor(): void {
+    $bypassListManagement = new BypassListManagement(TRUE);
 
-    public function testSetEnable()
-    {
-        $bypassListManagement = new BypassListManagement();
-        $bypassListManagement->setEnable(true);
+    $this->assertInstanceOf(BypassListManagement::class, $bypassListManagement);
+    $this->assertTrue($bypassListManagement->getEnable());
+  }
 
-        $this->assertTrue($bypassListManagement->getEnable());
-    }
+  public function testSetEnable(): void {
+    $bypassListManagement = new BypassListManagement();
+    $bypassListManagement->setEnable(TRUE);
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$enable" must be a boolean.
-     */
-    public function testSetEnableOnInvalidType()
-    {
-        $bypassListManagement = new BypassListManagement();
-        $bypassListManagement->setEnable('invalid_bool_type');
-    }
+    $this->assertTrue($bypassListManagement->getEnable());
+  }
+
+  public function testSetEnableOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$enable" must be a boolean.');
+    $bypassListManagement = new BypassListManagement();
+    $bypassListManagement->setEnable('invalid_bool_type');
+  }
 }
