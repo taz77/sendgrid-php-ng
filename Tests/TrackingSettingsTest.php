@@ -1,100 +1,95 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests TrackingSettings.
  */
 
 namespace SendGrid\Tests;
 
-use SendGrid\Mail\TrackingSettings;
+use PHPUnit\Framework\TestCase;
 use SendGrid\Mail\ClickTracking;
+use SendGrid\Mail\Ganalytics;
 use SendGrid\Mail\OpenTracking;
 use SendGrid\Mail\SubscriptionTracking;
-use SendGrid\Mail\Ganalytics;
-use PHPUnit\Framework\TestCase;
+use SendGrid\Mail\TrackingSettings;
 
 /**
  * This class tests TrackingSettings.
  *
  * @package SendGrid\Tests
  */
-class TrackingSettingsTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $trackingSettings = new TrackingSettings(
-            new ClickTracking(true, true),
-            new OpenTracking(true, 'sub_tag'),
-            new SubscriptionTracking(true, 'text', '<p>html_text</p>', 'sub_tag'),
-            new Ganalytics(true)
-        );
+class TrackingSettingsTest extends TestCase {
 
-        $this->assertTrue($trackingSettings->getClickTracking()->getEnableText());
-        $this->assertTrue($trackingSettings->getOpenTracking()->getEnable());
-        $this->assertTrue($trackingSettings->getSubscriptionTracking()->getEnable());
-        $this->assertTrue($trackingSettings->getGanalytics()->getEnable());
-    }
+  public function testConstructor(): void {
+    $trackingSettings = new TrackingSettings(
+      new ClickTracking(TRUE, TRUE),
+      new OpenTracking(TRUE, 'sub_tag'),
+      new SubscriptionTracking(TRUE, 'text', '<p>html_text</p>', 'sub_tag'),
+      new Ganalytics(TRUE)
+    );
 
-    public function testSetClickTracking()
-    {
-        $trackingSettings = new TrackingSettings();
-        $trackingSettings->setClickTracking(true, true);
+    $this->assertTrue($trackingSettings->getClickTracking()->getEnableText());
+    $this->assertTrue($trackingSettings->getOpenTracking()->getEnable());
+    $this->assertTrue($trackingSettings->getSubscriptionTracking()
+      ->getEnable());
+    $this->assertTrue($trackingSettings->getGanalytics()->getEnable());
+  }
 
-        $this->assertTrue($trackingSettings->getClickTracking()->getEnable());
-    }
+  public function testSetClickTracking(): void {
+    $trackingSettings = new TrackingSettings();
+    $trackingSettings->setClickTracking(TRUE, TRUE);
 
-    public function testSetClickTrackingOnInstance()
-    {
-        $trackingSettings = new TrackingSettings();
-        $trackingSettings->setClickTracking(new ClickTracking(true, true));
+    $this->assertTrue($trackingSettings->getClickTracking()->getEnable());
+  }
 
-        $this->assertTrue($trackingSettings->getClickTracking()->getEnable());
-    }
+  public function testSetClickTrackingOnInstance(): void {
+    $trackingSettings = new TrackingSettings();
+    $trackingSettings->setClickTracking(new ClickTracking(TRUE, TRUE));
 
-    public function testSetOpenTracking()
-    {
-        $trackingSettings = new TrackingSettings();
-        $trackingSettings->setOpenTracking(true);
+    $this->assertTrue($trackingSettings->getClickTracking()->getEnable());
+  }
 
-        $this->assertTrue($trackingSettings->getOpenTracking()->getEnable());
-    }
+  public function testSetOpenTracking(): void {
+    $trackingSettings = new TrackingSettings();
+    $trackingSettings->setOpenTracking(TRUE);
 
-    public function testSetOpenTrackingOnOpenTrackingInstance()
-    {
-        $trackingSettings = new TrackingSettings();
-        $trackingSettings->setOpenTracking(new OpenTracking(true));
+    $this->assertTrue($trackingSettings->getOpenTracking()->getEnable());
+  }
 
-        $this->assertTrue($trackingSettings->getOpenTracking()->getEnable());
-    }
+  public function testSetOpenTrackingOnOpenTrackingInstance(): void {
+    $trackingSettings = new TrackingSettings();
+    $trackingSettings->setOpenTracking(new OpenTracking(TRUE));
 
-    public function testSetSubscriptionTracking()
-    {
-        $trackingSettings = new TrackingSettings();
-        $trackingSettings->setSubscriptionTracking(true);
+    $this->assertTrue($trackingSettings->getOpenTracking()->getEnable());
+  }
 
-        $this->assertTrue($trackingSettings->getSubscriptionTracking()->getEnable());
-    }
+  public function testSetSubscriptionTracking(): void {
+    $trackingSettings = new TrackingSettings();
+    $trackingSettings->setSubscriptionTracking(TRUE);
 
-    public function testSetSubscriptionTrackingOnSubscriptionTrackingInstance()
-    {
-        $trackingSettings = new TrackingSettings();
-        $trackingSettings->setSubscriptionTracking(new SubscriptionTracking(true));
+    $this->assertTrue($trackingSettings->getSubscriptionTracking()
+      ->getEnable());
+  }
 
-        $this->assertTrue($trackingSettings->getSubscriptionTracking()->getEnable());
-    }
+  public function testSetSubscriptionTrackingOnSubscriptionTrackingInstance(): void {
+    $trackingSettings = new TrackingSettings();
+    $trackingSettings->setSubscriptionTracking(new SubscriptionTracking(TRUE));
 
-    public function testSetGanalytics()
-    {
-        $trackingSettings = new TrackingSettings();
-        $trackingSettings->setGanalytics(true);
+    $this->assertTrue($trackingSettings->getSubscriptionTracking()
+      ->getEnable());
+  }
 
-        $this->assertTrue($trackingSettings->getGanalytics()->getEnable());
-    }
+  public function testSetGanalytics(): void {
+    $trackingSettings = new TrackingSettings();
+    $trackingSettings->setGanalytics(TRUE);
 
-    public function testSetGanalyticsOnGanalyticsInstance()
-    {
-        $trackingSettings = new TrackingSettings();
-        $trackingSettings->setGanalytics(new Ganalytics(true));
+    $this->assertTrue($trackingSettings->getGanalytics()->getEnable());
+  }
 
-        $this->assertTrue($trackingSettings->getGanalytics()->getEnable());
-    }
+  public function testSetGanalyticsOnGanalyticsInstance(): void {
+    $trackingSettings = new TrackingSettings();
+    $trackingSettings->setGanalytics(new Ganalytics(TRUE));
+
+    $this->assertTrue($trackingSettings->getGanalytics()->getEnable());
+  }
 }
