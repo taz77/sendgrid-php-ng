@@ -37,6 +37,24 @@ class Client {
     $version = self::VERSION;
 
   /**
+   * Get base URL.
+   *
+   * @return string|null
+   */
+  public function getUrl(): ?string {
+    return $this->url;
+  }
+
+  /**
+   * Get Endpoint.
+   *
+   * @return string|null
+   */
+  public function getEndpoint(): ?string {
+    return $this->endpoint;
+  }
+
+  /**
    * SendGrid constructor.
    *
    * @param string $apiKey
