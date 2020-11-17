@@ -105,7 +105,7 @@ class GanalyticsTest extends TestCase {
 
     $this->assertSame('utm_campaign_name', $ganalytics->getCampaignName());
   }
-  
+
   public function testSetCampaignNameOnInvalidType(): void {
     $this->expectException(TypeException::class);
     $this->expectExceptionMessage('"$utm_campaign" must be a string.');
