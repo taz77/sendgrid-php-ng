@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests SendAt.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\SendAt;
 
 /**
@@ -15,25 +17,21 @@ use SendGrid\Mail\SendAt;
  */
 class SendAtTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $sendAt = new SendAt(1539368762);
-
     $this->assertInstanceOf(SendAt::class, $sendAt);
     $this->assertSame(1539368762, $sendAt->getSendAt());
   }
 
-  public function testSendAt() {
+  public function testSendAt(): void {
     $sendAt = new SendAt();
     $sendAt->setSendAt(1539368762);
-
     $this->assertSame(1539368762, $sendAt->getSendAt());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$send_at" must be an integer.
-   */
-  public function testSendAtOnInvalidType() {
+  public function testSendAtOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$send_at" must be an integer.');
     $sendAt = new SendAt();
     $sendAt->setSendAt('invalid_int_type');
   }
