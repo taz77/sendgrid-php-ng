@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests Content.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\Content;
 
 /**
@@ -30,11 +32,9 @@ class ContentTest extends TestCase {
     $this->assertSame('type', $content->getType());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$type" must be a string.
-   */
   public function testSetTypeOnInvalidType() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$type" must be a string.');
     $content = new Content();
     $content->setType(['type']);
   }
@@ -46,11 +46,9 @@ class ContentTest extends TestCase {
     $this->assertSame('value', $content->getValue());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$value" must be a string.
-   */
   public function testSetValueOnInvalidType() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$value" must be a string.');
     $content = new Content();
     $content->setValue(['value']);
   }
