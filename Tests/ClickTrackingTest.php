@@ -2,9 +2,11 @@
 /**
  * This file tests ClickTracking.
  */
+
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\ClickTracking;
 
 /**
@@ -12,50 +14,41 @@ use SendGrid\Mail\ClickTracking;
  *
  * @package SendGrid\Tests
  */
-class ClickTrackingTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $clickTracking = new ClickTracking(true, true);
+class ClickTrackingTest extends TestCase {
 
-        $this->assertInstanceOf(ClickTracking::class, $clickTracking);
-        $this->assertTrue($clickTracking->getEnable());
-        $this->assertTrue($clickTracking->getEnableText());
-    }
+  public function testConstructor() {
+    $clickTracking = new ClickTracking(TRUE, TRUE);
 
-    public function testSetEnable()
-    {
-        $clickTracking = new ClickTracking();
-        $clickTracking->setEnable(true);
+    $this->assertInstanceOf(ClickTracking::class, $clickTracking);
+    $this->assertTrue($clickTracking->getEnable());
+    $this->assertTrue($clickTracking->getEnableText());
+  }
 
-        $this->assertTrue($clickTracking->getEnable());
-    }
+  public function testSetEnable() {
+    $clickTracking = new ClickTracking();
+    $clickTracking->setEnable(TRUE);
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$enable" must be a boolean.
-     */
-    public function testSetEnableOnInvalidType()
-    {
-        $clickTracking = new ClickTracking();
-        $clickTracking->setEnable('invalid_bool');
-    }
+    $this->assertTrue($clickTracking->getEnable());
+  }
 
-    public function testSetEnableText()
-    {
-        $clickTracking = new ClickTracking();
-        $clickTracking->setEnableText(true);
+  public function testSetEnableOnInvalidType() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$enable" must be a boolean.');
+    $clickTracking = new ClickTracking();
+    $clickTracking->setEnable('invalid_bool');
+  }
 
-        $this->assertTrue($clickTracking->getEnableText());
-    }
+  public function testSetEnableText() {
+    $clickTracking = new ClickTracking();
+    $clickTracking->setEnableText(TRUE);
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$enable_text" must be a boolean.
-     */
-    public function testSetEnableTextOnInvalidType()
-    {
-        $clickTracking = new ClickTracking();
-        $clickTracking->setEnableText('invalid_bool');
-    }
+    $this->assertTrue($clickTracking->getEnableText());
+  }
+
+  public function testSetEnableTextOnInvalidType() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$enable_text" must be a boolean.');
+    $clickTracking = new ClickTracking();
+    $clickTracking->setEnableText('invalid_bool');
+  }
 }
