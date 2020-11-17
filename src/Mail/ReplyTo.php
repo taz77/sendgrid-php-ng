@@ -12,6 +12,6 @@ use JsonSerializable;
  *
  * @package SendGrid\Mail
  */
-class ReplyTo extends EmailAddress implements JsonSerializable
-{
+class ReplyTo extends EmailAddress implements JsonSerializable {
+
 }

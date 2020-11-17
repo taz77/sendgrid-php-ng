@@ -6,132 +6,127 @@
 namespace SendGrid\Mail;
 
 use JsonSerializable;
-use SendGrid\Helper\Assert;
 use SendGrid\Exception\SendgridException;
+use SendGrid\Helper\Assert;
 
 /**
  * This class is used to construct a Footer object for the /mail/send API call
  *
  * @package SendGrid\Mail
  */
-class Footer implements JsonSerializable
-{
-    /** @var $enable bool Indicates if this setting is enabled */
-    private $enable;
-    /** @var $text string The plain text content of your footer */
-    private $text;
-    /** @var $html string The HTML content of your footer */
-    private $html;
+class Footer implements JsonSerializable {
 
-	/**
-	 * Optional constructor
-	 *
-	 * @param bool|null   $enable Indicates if this setting is enabled
-	 * @param string|null $text   The plain text content of your footer
-	 * @param string|null $html   The HTML content of your footer
-	 * @throws SendgridException
-	 */
-    public function __construct($enable = null, $text = null, $html = null)
-    {
-        if (isset($enable)) {
-            $this->setEnable($enable);
-        }
-        if (isset($text)) {
-            $this->setText($text);
-        }
-        if (isset($html)) {
-            $this->setHtml($html);
-        }
+  /** @var $enable bool Indicates if this setting is enabled */
+  private $enable;
+
+  /** @var $text string The plain text content of your footer */
+  private $text;
+
+  /** @var $html string The HTML content of your footer */
+  private $html;
+
+  /**
+   * Optional constructor
+   *
+   * @param bool|null $enable Indicates if this setting is enabled
+   * @param string|null $text The plain text content of your footer
+   * @param string|null $html The HTML content of your footer
+   *
+   * @throws SendgridException
+   */
+  public function __construct($enable = NULL, $text = NULL, $html = NULL) {
+    if (isset($enable)) {
+      $this->setEnable($enable);
     }
-
-    /**
-     * Update the enable setting on a Footer object
-     *
-     * @param bool $enable Indicates if this setting is enabled
-     *
-     * @throws SendgridException
-     */
-    public function setEnable($enable)
-    {
-        Assert::boolean($enable, 'enable');
-
-        $this->enable = $enable;
+    if (isset($text)) {
+      $this->setText($text);
     }
-
-    /**
-     * Retrieve the enable setting on a Footer object
-     *
-     * @return bool
-     */
-    public function getEnable()
-    {
-        return $this->enable;
+    if (isset($html)) {
+      $this->setHtml($html);
     }
+  }
 
-    /**
-     * Add text to a Footer object
-     *
-     * @param string $text The plain text content of your footer
-     *
-     * @throws SendgridException
-     */
-    public function setText($text)
-    {
-        Assert::string($text, 'text');
+  /**
+   * Update the enable setting on a Footer object
+   *
+   * @param bool $enable Indicates if this setting is enabled
+   *
+   * @throws SendgridException
+   */
+  public function setEnable($enable) {
+    Assert::boolean($enable, 'enable');
 
-        $this->text = $text;
-    }
+    $this->enable = $enable;
+  }
 
-    /**
-     * Retrieve text to a Footer object
-     *
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
+  /**
+   * Retrieve the enable setting on a Footer object
+   *
+   * @return bool
+   */
+  public function getEnable() {
+    return $this->enable;
+  }
 
-    /**
-     * Add html to a Footer object
-     *
-     * @param string $html The HTML content of your footer
-     *
-     * @throws SendgridException
-     */
-    public function setHtml($html)
-    {
-        Assert::string($html, 'html');
+  /**
+   * Add text to a Footer object
+   *
+   * @param string $text The plain text content of your footer
+   *
+   * @throws SendgridException
+   */
+  public function setText($text) {
+    Assert::string($text, 'text');
 
-        $this->html = $html;
-    }
+    $this->text = $text;
+  }
 
-    /**
-     * Retrieve html from a Footer object
-     *
-     * @return string
-     */
-    public function getHtml()
-    {
-        return $this->html;
-    }
+  /**
+   * Retrieve text to a Footer object
+   *
+   * @return string
+   */
+  public function getText() {
+    return $this->text;
+  }
 
-    /**
-     * Return an array representing a Footer object for the Twilio SendGrid API
-     *
-     * @return null|array
-     */
-    public function jsonSerialize()
-    {
-        return array_filter(
-            [
-                'enable' => $this->getEnable(),
-                'text' => $this->getText(),
-                'html' => $this->getHtml()
-            ],
-            function ($value) {
-                return $value !== null;
-            }
-        ) ?: null;
-    }
+  /**
+   * Add html to a Footer object
+   *
+   * @param string $html The HTML content of your footer
+   *
+   * @throws SendgridException
+   */
+  public function setHtml($html) {
+    Assert::string($html, 'html');
+
+    $this->html = $html;
+  }
+
+  /**
+   * Retrieve html from a Footer object
+   *
+   * @return string
+   */
+  public function getHtml() {
+    return $this->html;
+  }
+
+  /**
+   * Return an array representing a Footer object for the Twilio SendGrid API
+   *
+   * @return null|array
+   */
+  public function jsonSerialize() {
+    return array_filter(
+      [
+        'enable' => $this->getEnable(),
+        'text' => $this->getText(),
+        'html' => $this->getHtml(),
+      ],
+      function ($value) {
+        return $value !== NULL;
+      }
+    ) ?: NULL;
+  }
 }

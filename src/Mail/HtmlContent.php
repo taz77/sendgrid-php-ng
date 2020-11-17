@@ -12,17 +12,16 @@ use SendGrid\Exception\SendgridException;
  *
  * @package SendGrid\Mail
  */
-class HtmlContent extends Content
-{
-    /**
-     * Create a Content object with a HTML mime type
-     *
-     * @param string $value HTML formatted content
-     *
-     * @throws SendgridException
-     */
-    public function __construct($value)
-    {
-        parent::__construct(MimeType::HTML, $value);
-    }
+class HtmlContent extends Content {
+
+  /**
+   * Create a Content object with a HTML mime type
+   *
+   * @param string $value HTML formatted content
+   *
+   * @throws SendgridException
+   */
+  public function __construct($value) {
+    parent::__construct(MimeType::HTML, $value);
+  }
 }

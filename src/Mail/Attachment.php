@@ -220,6 +220,6 @@ class Attachment implements JsonSerializable {
       function ($value) {
         return $value !== NULL;
       }
-    ) ?: null;
+    ) ?: NULL;
   }
 }

@@ -6,75 +6,76 @@
 namespace SendGrid\Mail;
 
 use JsonSerializable;
-use SendGrid\Helper\Assert;
 use SendGrid\Exception\SendgridException;
+use SendGrid\Helper\Assert;
 
 /**
- * This class is used to construct a TemplateId object for the /mail/send API call
+ * This class is used to construct a TemplateId object for the /mail/send API
+ * call
  *
  * @package SendGrid\Mail
  */
-class TemplateId implements JsonSerializable
-{
-    /**
-     * @var $template_id string The id of a template that you would like to use. If you use a
-     * template that contains a subject and content (either text or html), you do
-     * not need to specify those at the personalizations nor message level
-     */
-    private $template_id;
+class TemplateId implements JsonSerializable {
 
-	/**
-	 * Optional constructor
-	 *
-	 * @param string|null $template_id The id of a template that you would like
-	 *                                 to use. If you use a template that contains
-	 *                                 a subject and content (either text or html),
-	 *                                 you do not need to specify those at the
-	 *                                 personalizations nor message level
-	 * @throws SendgridException
-	 */
-    public function __construct($template_id = null)
-    {
-        if (isset($template_id)) {
-            $this->setTemplateId($template_id);
-        }
+  /**
+   * @var $template_id string The id of a template that you would like to use.
+   *   If you use a template that contains a subject and content (either text
+   *   or html), you do not need to specify those at the personalizations nor
+   *   message level
+   */
+  private $template_id;
+
+  /**
+   * Optional constructor
+   *
+   * @param string|null $template_id The id of a template that you would like
+   *                                 to use. If you use a template that
+   *   contains
+   *                                 a subject and content (either text or
+   *   html), you do not need to specify those at the personalizations nor
+   *   message level
+   *
+   * @throws SendgridException
+   */
+  public function __construct($template_id = NULL) {
+    if (isset($template_id)) {
+      $this->setTemplateId($template_id);
     }
+  }
 
-    /**
-     * Add a template id to a TemplateId object
-     *
-     * @param string $template_id The id of a template that you would like
-     *                            to use. If you use a template that contains
-     *                            a subject and content (either text or html),
-     *                            you do not need to specify those at the
-     *                            personalizations nor message level
-     *
-     * @throws SendgridException
-     */
-    public function setTemplateId($template_id)
-    {
-        Assert::string($template_id, 'template_id');
+  /**
+   * Add a template id to a TemplateId object
+   *
+   * @param string $template_id The id of a template that you would like
+   *                            to use. If you use a template that contains
+   *                            a subject and content (either text or html),
+   *                            you do not need to specify those at the
+   *                            personalizations nor message level
+   *
+   * @throws SendgridException
+   */
+  public function setTemplateId($template_id) {
+    Assert::string($template_id, 'template_id');
 
-        $this->template_id = $template_id;
-    }
+    $this->template_id = $template_id;
+  }
 
-    /**
-     * Retrieve a template id from a TemplateId object
-     *
-     * @return string
-     */
-    public function getTemplateId()
-    {
-        return $this->template_id;
-    }
+  /**
+   * Retrieve a template id from a TemplateId object
+   *
+   * @return string
+   */
+  public function getTemplateId() {
+    return $this->template_id;
+  }
 
-    /**
-     * Return an array representing a TemplateId object for the Twilio SendGrid API
-     *
-     * @return string
-     */
-    public function jsonSerialize()
-    {
-        return $this->getTemplateId();
-    }
+  /**
+   * Return an array representing a TemplateId object for the Twilio SendGrid
+   * API
+   *
+   * @return string
+   */
+  public function jsonSerialize() {
+    return $this->getTemplateId();
+  }
 }
