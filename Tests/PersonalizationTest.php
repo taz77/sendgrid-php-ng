@@ -1,126 +1,101 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests Personalization.
  */
 
 namespace SendGrid\Tests;
 
-use SendGrid\Mail\Personalization;
-use SendGrid\Mail\To;
-use SendGrid\Mail\Cc;
-use SendGrid\Mail\Bcc;
-use SendGrid\Mail\Header;
-use SendGrid\Mail\Subject;
-use SendGrid\Mail\CustomArg;
-use SendGrid\Mail\SendAt;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
+use SendGrid\Mail\Bcc;
+use SendGrid\Mail\Cc;
+use SendGrid\Mail\CustomArg;
+use SendGrid\Mail\Header;
+use SendGrid\Mail\Personalization;
+use SendGrid\Mail\SendAt;
+use SendGrid\Mail\Subject;
+use SendGrid\Mail\To;
 
 /**
  * This class tests Personalization.
  *
  * @package SendGrid\Tests
  */
-class PersonalizationTest extends TestCase
-{
-    public function testAddTo()
-    {
-        $personalization = new Personalization();
-        $personalization->addTo(new To('dx@sendgrid.com'));
+class PersonalizationTest extends TestCase {
 
-        $this->assertSame('dx@sendgrid.com', $personalization->getTos()[0]->getEmail());
-    }
+  public function testAddTo() {
+    $personalization = new Personalization();
+    $personalization->addTo(new To('dx@sendgrid.com'));
+    $this->assertSame('dx@sendgrid.com', $personalization->getTos()[0]->getEmail());
+  }
 
-    public function testAddCc()
-    {
-        $personalization = new Personalization();
-        $personalization->addCc(new Cc('dx@sendgrid.com'));
+  public function testAddCc() {
+    $personalization = new Personalization();
+    $personalization->addCc(new Cc('dx@sendgrid.com'));
+    $this->assertSame('dx@sendgrid.com', $personalization->getCcs()[0]->getEmail());
+  }
 
-        $this->assertSame('dx@sendgrid.com', $personalization->getCcs()[0]->getEmail());
-    }
+  public function testAddBcc() {
+    $personalization = new Personalization();
+    $personalization->addBcc(new Bcc('dx@sendgrid.com'));
+    $this->assertSame('dx@sendgrid.com', $personalization->getBccs()[0]->getEmail());
+  }
 
-    public function testAddBcc()
-    {
-        $personalization = new Personalization();
-        $personalization->addBcc(new Bcc('dx@sendgrid.com'));
+  public function testSetSubject() {
+    $personalization = new Personalization();
+    $personalization->setSubject(new Subject('subject'));
+    $this->assertSame('subject', $personalization->getSubject()->getSubject());
+  }
 
-        $this->assertSame('dx@sendgrid.com', $personalization->getBccs()[0]->getEmail());
-    }
+  public function testSetSubjectOnInvalidSubjectClass() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$subject" must be an instance of SendGrid\Mail\Subject or a string');
+    $personalization = new Personalization();
+    $personalization->setSubject(FALSE);
+  }
 
-    public function testSetSubject()
-    {
-        $personalization = new Personalization();
-        $personalization->setSubject(new Subject('subject'));
+  public function testAddHeader() {
+    $personalization = new Personalization();
+    $personalization->addHeader(new Header('Content-Type', 'text/plain'));
+    $this->assertSame(['Content-Type' => 'text/plain'], $personalization->getHeaders());
+  }
 
-        $this->assertSame('subject', $personalization->getSubject()->getSubject());
-    }
+  public function testAddDynamicTemplateData() {
+    $personalization = new Personalization();
+    $personalization->addDynamicTemplateData('data', 'data_value');
+    $this->assertSame(['data' => 'data_value'], $personalization->getDynamicTemplateData());
+  }
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$subject" must be an instance of SendGrid\Mail\Subject or a string
-     */
-    public function testSetSubjectOnInvalidSubjectClass()
-    {
-        $personalization = new Personalization();
-        $personalization->setSubject(false);
-    }
+  public function testAddCustomArg() {
+    $personalization = new Personalization();
+    $personalization->addCustomArg(new CustomArg('custom_arg', 'arg_value'));
+    $this->assertSame(['custom_arg' => 'arg_value'], $personalization->getCustomArgs());
+  }
 
-    public function testAddHeader()
-    {
-        $personalization = new Personalization();
-        $personalization->addHeader(new Header('Content-Type', 'text/plain'));
+  public function testSetSendAt() {
+    $personalization = new Personalization();
+    $personalization->setSendAt(new SendAt(1539363393));
+    $this->assertSame(1539363393, $personalization->getSendAt()->getSendAt());
+  }
 
-        $this->assertSame(['Content-Type' => 'text/plain'], $personalization->getHeaders());
-    }
+  public function testSendAtOnInvalidSendAtClass() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$send_at" must be an instance of "SendGrid\Mail\SendAt"');
+    $personalization = new Personalization();
+    $personalization->setSendAt('invalid_send_at_class');
+  }
 
-    public function testAddDynamicTemplateData()
-    {
-        $personalization = new Personalization();
-        $personalization->addDynamicTemplateData('data', 'data_value');
+  public function testSetHasDynamicTemplate() {
+    $personalization = new Personalization();
+    $personalization->setHasDynamicTemplate(TRUE);
+    $this->assertTrue($personalization->getHasDynamicTemplate());
+  }
 
-        $this->assertSame(['data' => 'data_value'], $personalization->getDynamicTemplateData());
-    }
-
-    public function testAddCustomArg()
-    {
-        $personalization = new Personalization();
-        $personalization->addCustomArg(new CustomArg('custom_arg', 'arg_value'));
-
-        $this->assertSame(['custom_arg' => 'arg_value'], $personalization->getCustomArgs());
-    }
-
-    public function testSetSendAt()
-    {
-        $personalization = new Personalization();
-        $personalization->setSendAt(new SendAt(1539363393));
-
-        $this->assertSame(1539363393, $personalization->getSendAt()->getSendAt());
-    }
-
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$send_at" must be an instance of "SendGrid\Mail\SendAt"
-     */
-    public function testSendAtOnInvalidSendAtClass()
-    {
-        $personalization = new Personalization();
-        $personalization->setSendAt('invalid_send_at_class');
-    }
-
-    public function testSetHasDynamicTemplate()
-    {
-        $personalization = new Personalization();
-        $personalization->setHasDynamicTemplate(true);
-
-        $this->assertTrue($personalization->getHasDynamicTemplate());
-    }
-
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$has_dynamic_template" must be a boolean.
-     */
-    public function testSetHasDynamicTemplateOnInvalidType()
-    {
-        $personalization = new Personalization();
-        $personalization->setHasDynamicTemplate('invalid_bool_type');
-    }
+  public function testSetHasDynamicTemplateOnInvalidType() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$has_dynamic_template" must be a boolean.');
+    $personalization = new Personalization();
+    $personalization->setHasDynamicTemplate('invalid_bool_type');
+  }
 }
