@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests Subject.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\Subject;
 
 /**
@@ -15,32 +17,30 @@ use SendGrid\Mail\Subject;
  */
 class SubjectTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $subject = new Subject('subject');
 
     $this->assertInstanceOf(Subject::class, $subject);
     $this->assertSame('subject', $subject->getSubject());
   }
 
-  public function testSetSubject() {
+  public function testSetSubject(): void {
     $subject = new Subject();
     $subject->setSubject('subject');
 
     $this->assertSame('subject', $subject->getSubject());
   }
 
-  public function testJsonSerialize() {
+  public function testJsonSerialize(): void {
     $subject = new Subject();
     $subject->setSubject('subject');
 
     $this->assertSame('subject', $subject->jsonSerialize());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$subject" must be a string.
-   */
-  public function testSetSubjectOnInvalidType() {
+  public function testSetSubjectOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$subject" must be a string.');
     $subject = new Subject();
     $subject->setSubject(TRUE);
   }
