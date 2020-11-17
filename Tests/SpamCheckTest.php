@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests SpamCheck.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\SpamCheck;
 
 /**
@@ -15,7 +17,7 @@ use SendGrid\Mail\SpamCheck;
  */
 class SpamCheckTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $spamCheck = new SpamCheck(TRUE, 1, 'http://post-to.url');
 
     $this->assertInstanceOf(SpamCheck::class, $spamCheck);
@@ -24,50 +26,42 @@ class SpamCheckTest extends TestCase {
     $this->assertSame('http://post-to.url', $spamCheck->getPostToUrl());
   }
 
-  public function testSetEnable() {
+  public function testSetEnable(): void {
     $spamCheck = new SpamCheck();
     $spamCheck->setEnable(TRUE);
 
     $this->assertTrue($spamCheck->getEnable());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$enable" must be a boolean.
-   */
-  public function testSetEnableOnInvalidType() {
+  public function testSetEnableOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$enable" must be a boolean.');
     $spamCheck = new SpamCheck();
     $spamCheck->setEnable('invalid_bool_type');
   }
 
-  public function testSetThreshold() {
+  public function testSetThreshold(): void {
     $spamCheck = new SpamCheck();
     $spamCheck->setThreshold(1);
-
     $this->assertSame(1, $spamCheck->getThreshold());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$threshold" must be an integer.
-   */
-  public function testSetThresholdOnInvalidType() {
+  public function testSetThresholdOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$threshold" must be an integer.');
     $spamCheck = new SpamCheck();
     $spamCheck->setThreshold('invalid_int_type');
   }
 
-  public function testSetPostToUrl() {
+  public function testSetPostToUrl(): void {
     $spamCheck = new SpamCheck();
     $spamCheck->setPostToUrl('http://post-to.url');
-
     $this->assertSame('http://post-to.url', $spamCheck->getPostToUrl());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$post_to_url" must be a string.
-   */
-  public function testSetPostToUrlOnInvalidType() {
+  public function testSetPostToUrlOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$post_to_url" must be a string.');
     $spamCheck = new SpamCheck();
     $spamCheck->setPostToUrl(TRUE);
   }
