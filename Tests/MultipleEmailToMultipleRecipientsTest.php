@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests the request object generation for a /mail/send API call.
  */
@@ -18,10 +19,9 @@ use SendGrid\Tests\BaseTestClass;
  *
  * @package SendGrid\Tests\Unit
  */
-class MultipleEmailToMultipleRecipientsTest extends BaseTestClass
-{
+class MultipleEmailToMultipleRecipientsTest extends BaseTestClass {
 
-    private $REQUEST_OBJECT = <<<'JSON'
+  private $REQUEST_OBJECT = <<<'JSON'
 {
   "content": [
     {
@@ -84,7 +84,7 @@ class MultipleEmailToMultipleRecipientsTest extends BaseTestClass
 }
 JSON;
 
-    private $REQUEST_OBJECT_2 = <<<'JSON'
+  private $REQUEST_OBJECT_2 = <<<'JSON'
 {
   "content": [
     {
@@ -146,7 +146,7 @@ JSON;
 }
 JSON;
 
-    private $REQUEST_OBJECT_3 = <<<'JSON'
+  private $REQUEST_OBJECT_3 = <<<'JSON'
 {
   "content": [
     {
@@ -210,7 +210,7 @@ JSON;
 }
 JSON;
 
-    private $REQUEST_OBJECT_4 = <<<'JSON'
+  private $REQUEST_OBJECT_4 = <<<'JSON'
 {
   "content": [
     {
@@ -273,245 +273,241 @@ JSON;
 }
 JSON;
 
-    /**
-     * Test when we have individual subjects for each Personalization object
-     */
-    public function testWithIndividualSubjects()
-    {
-        $from = new From("test@example.com", "Example User");
-        $tos = [
-            new To(
-                "test+test1@example.com",
-                "Example User1",
-                [
-                    '-name-' => 'Example User 1',
-                    '-github-' => 'http://github.com/example_user1'
-                ],
-                "Subject 1 -name-"
-            ),
-            new To(
-                "test+test2@example.com",
-                "Example User2",
-                [
-                    '-name-' => 'Example User 2',
-                    '-github-' => 'http://github.com/example_user2'
-                ],
-                "Subject 2 -name-"
-            ),
-            new To(
-                "test+test3@example.com",
-                "Example User3",
-                [
-                    '-name-' => 'Example User 3',
-                    '-github-' => 'http://github.com/example_user3'
-                ]
-            )
-        ];
-        $subject = new Subject("Hi -name-!"); // default subject
-        $globalSubstitutions = [
-            '-time-' => "2018-05-03 23:10:29"
-        ];
-        $plainTextContent = new PlainTextContent(
-            "Hello -name-, your github is -github- sent at -time-"
-        );
-        $htmlContent = new HtmlContent(
-            "<strong>Hello -name-, your github is <a href=\"-github-\">here</a></strong> sent at -time-"
-        );
-        $email = new Mail(
-            $from,
-            $tos,
-            $subject, // or array of subjects, these take precedence
-            $plainTextContent,
-            $htmlContent,
-            $globalSubstitutions
-        );
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
-        self::assertTrue($isEqual);
-    }
+  /**
+   * Test when we have individual subjects for each Personalization object
+   */
+  public function testWithIndividualSubjects(): void {
+    $from = new From("test@example.com", "Example User");
+    $tos = [
+      new To(
+        "test+test1@example.com",
+        "Example User1",
+        [
+          '-name-' => 'Example User 1',
+          '-github-' => 'http://github.com/example_user1',
+        ],
+        "Subject 1 -name-"
+      ),
+      new To(
+        "test+test2@example.com",
+        "Example User2",
+        [
+          '-name-' => 'Example User 2',
+          '-github-' => 'http://github.com/example_user2',
+        ],
+        "Subject 2 -name-"
+      ),
+      new To(
+        "test+test3@example.com",
+        "Example User3",
+        [
+          '-name-' => 'Example User 3',
+          '-github-' => 'http://github.com/example_user3',
+        ]
+      ),
+    ];
+    $subject = new Subject("Hi -name-!"); // default subject
+    $globalSubstitutions = [
+      '-time-' => "2018-05-03 23:10:29",
+    ];
+    $plainTextContent = new PlainTextContent(
+      "Hello -name-, your github is -github- sent at -time-"
+    );
+    $htmlContent = new HtmlContent(
+      "<strong>Hello -name-, your github is <a href=\"-github-\">here</a></strong> sent at -time-"
+    );
+    $email = new Mail(
+      $from,
+      $tos,
+      $subject, // or array of subjects, these take precedence
+      $plainTextContent,
+      $htmlContent,
+      $globalSubstitutions
+    );
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
+    self::assertTrue($isEqual);
+  }
 
-    /**
-     * Test when we have individual subjects using dynamic templates for each Personalization object
-     */
-    public function testWithIndividualSubjectsDynamicTemplates()
-    {
-        $from = new From("test@example.com", "Example User");
-        $tos = [
-            new To(
-                "test+test1@example.com",
-                "Example User1",
-                [
-                    '-name-' => 'Example User 1',
-                    '-github-' => 'http://github.com/example_user1'
-                ],
-                "Subject 1 -name-"
-            ),
-            new To(
-                "test+test2@example.com",
-                "Example User2",
-                [
-                    '-name-' => 'Example User 2',
-                    '-github-' => 'http://github.com/example_user2'
-                ],
-                "Subject 2 -name-"
-            ),
-            new To(
-                "test+test3@example.com",
-                "Example User3",
-                [
-                    '-name-' => 'Example User 3',
-                    '-github-' => 'http://github.com/example_user3'
-                ]
-            )
-        ];
-        $subject = new Subject("Hi -name-!"); // default subject
-        $globalSubstitutions = [
-            '-time-' => "2018-05-03 23:10:29"
-        ];
-        $plainTextContent = new PlainTextContent(
-            "Hello -name-, your github is -github- sent at -time-"
-        );
-        $htmlContent = new HtmlContent(
-            "<strong>Hello -name-, your github is <a href=\"-github-\">here</a></strong> sent at -time-"
-        );
-        $email = new Mail(
-            $from,
-            $tos,
-            $subject, // or array of subjects, these take precedence
-            $plainTextContent,
-            $htmlContent,
-            $globalSubstitutions
-        );
-        $email->setTemplateId("d-13b8f94f-bcae-4ec6-b752-70d6cb59f932");
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_3);
-        self::assertTrue($isEqual);
-    }
+  /**
+   * Test when we have individual subjects using dynamic templates for each
+   * Personalization object
+   */
+  public function testWithIndividualSubjectsDynamicTemplates(): void {
+    $from = new From("test@example.com", "Example User");
+    $tos = [
+      new To(
+        "test+test1@example.com",
+        "Example User1",
+        [
+          '-name-' => 'Example User 1',
+          '-github-' => 'http://github.com/example_user1',
+        ],
+        "Subject 1 -name-"
+      ),
+      new To(
+        "test+test2@example.com",
+        "Example User2",
+        [
+          '-name-' => 'Example User 2',
+          '-github-' => 'http://github.com/example_user2',
+        ],
+        "Subject 2 -name-"
+      ),
+      new To(
+        "test+test3@example.com",
+        "Example User3",
+        [
+          '-name-' => 'Example User 3',
+          '-github-' => 'http://github.com/example_user3',
+        ]
+      ),
+    ];
+    $subject = new Subject("Hi -name-!"); // default subject
+    $globalSubstitutions = [
+      '-time-' => "2018-05-03 23:10:29",
+    ];
+    $plainTextContent = new PlainTextContent(
+      "Hello -name-, your github is -github- sent at -time-"
+    );
+    $htmlContent = new HtmlContent(
+      "<strong>Hello -name-, your github is <a href=\"-github-\">here</a></strong> sent at -time-"
+    );
+    $email = new Mail(
+      $from,
+      $tos,
+      $subject, // or array of subjects, these take precedence
+      $plainTextContent,
+      $htmlContent,
+      $globalSubstitutions
+    );
+    $email->setTemplateId("d-13b8f94f-bcae-4ec6-b752-70d6cb59f932");
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_3);
+    self::assertTrue($isEqual);
+  }
 
-    /**
-     * Test when we pass in an array of subjects
-     */
-    public function testWithCollectionOfSubjects()
-    {
-        $from = new From("test@example.com", "Example User");
-        $tos = [
-            new To(
-                "test+test1@example.com",
-                "Example User1",
-                [
-                    '-name-' => 'Example User 1',
-                    '-github-' => 'http://github.com/example_user1'
-                ],
-                "Example User1 -name-"
-            ),
-            new To(
-                "test+test2@example.com",
-                "Example User2",
-                [
-                    '-name-' => 'Example User 2',
-                    '-github-' => 'http://github.com/example_user2'
-                ],
-                "Example User2 -name-"
-            ),
-            new To(
-                "test+test3@example.com",
-                "Example User3",
-                [
-                    '-name-' => 'Example User 3',
-                    '-github-' => 'http://github.com/example_user3'
-                ]
-            )
-        ];
-        $subject = [
-            "Subject 1 -name-",
-            "Subject 2 -name-"
-        ];
-        $globalSubstitutions = [
-            '-time-' => "2018-05-03 23:10:29"
-        ];
-        $plainTextContent = new PlainTextContent(
-            "Hello -name-, your github is -github- sent at -time-"
-        );
-        $htmlContent = new HtmlContent(
-            "<strong>Hello -name-, your github is <a href=\"-github-\">here</a></strong> sent at -time-"
-        );
-        $email = new Mail(
-            $from,
-            $tos,
-            $subject, // or array of subjects, these take precedence
-            $plainTextContent,
-            $htmlContent,
-            $globalSubstitutions
-        );
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_2);
-        self::assertTrue($isEqual);
-    }
+  /**
+   * Test when we pass in an array of subjects
+   */
+  public function testWithCollectionOfSubjects(): void {
+    $from = new From("test@example.com", "Example User");
+    $tos = [
+      new To(
+        "test+test1@example.com",
+        "Example User1",
+        [
+          '-name-' => 'Example User 1',
+          '-github-' => 'http://github.com/example_user1',
+        ],
+        "Example User1 -name-"
+      ),
+      new To(
+        "test+test2@example.com",
+        "Example User2",
+        [
+          '-name-' => 'Example User 2',
+          '-github-' => 'http://github.com/example_user2',
+        ],
+        "Example User2 -name-"
+      ),
+      new To(
+        "test+test3@example.com",
+        "Example User3",
+        [
+          '-name-' => 'Example User 3',
+          '-github-' => 'http://github.com/example_user3',
+        ]
+      ),
+    ];
+    $subject = [
+      "Subject 1 -name-",
+      "Subject 2 -name-",
+    ];
+    $globalSubstitutions = [
+      '-time-' => "2018-05-03 23:10:29",
+    ];
+    $plainTextContent = new PlainTextContent(
+      "Hello -name-, your github is -github- sent at -time-"
+    );
+    $htmlContent = new HtmlContent(
+      "<strong>Hello -name-, your github is <a href=\"-github-\">here</a></strong> sent at -time-"
+    );
+    $email = new Mail(
+      $from,
+      $tos,
+      $subject, // or array of subjects, these take precedence
+      $plainTextContent,
+      $htmlContent,
+      $globalSubstitutions
+    );
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_2);
+    self::assertTrue($isEqual);
+  }
 
-    /**
-     * Test when we pass in an array of subjects
-     */
-    public function testWithCollectionOfSubjectsDynamic()
-    {
-        $from = new From("test@example.com", "Example User");
-        $tos = [
-            new To(
-                "test+test1@example.com",
-                "Example User1",
-                [
-                    '-name-' => 'Example User 1',
-                    '-github-' => 'http://github.com/example_user1'
-                ],
-                "Example User1 -name-"
-            ),
-            new To(
-                "test+test2@example.com",
-                "Example User2",
-                [
-                    '-name-' => 'Example User 2',
-                    '-github-' => 'http://github.com/example_user2'
-                ],
-                "Example User2 -name-"
-            ),
-            new To(
-                "test+test3@example.com",
-                "Example User3",
-                [
-                    '-name-' => 'Example User 3',
-                    '-github-' => 'http://github.com/example_user3'
-                ]
-            )
-        ];
-        $subject = [
-            "Subject 1 -name-",
-            "Subject 2 -name-"
-        ];
-        $globalSubstitutions = [
-            '-time-' => "2018-05-03 23:10:29"
-        ];
-        $plainTextContent = new PlainTextContent(
-            "Hello -name-, your github is -github- sent at -time-"
-        );
-        $htmlContent = new HtmlContent(
-            "<strong>Hello -name-, your github is <a href=\"-github-\">here</a></strong> sent at -time-"
-        );
-        $email = new Mail(
-            $from,
-            $tos,
-            $subject, // or array of subjects, these take precedence
-            $plainTextContent,
-            $htmlContent,
-            $globalSubstitutions
-        );
-        $email->setTemplateId("d-13b8f94f-bcae-4ec6-b752-70d6cb59f932");
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_4);
-        self::assertTrue($isEqual);
-    }
+  /**
+   * Test when we pass in an array of subjects
+   */
+  public function testWithCollectionOfSubjectsDynamic(): void {
+    $from = new From("test@example.com", "Example User");
+    $tos = [
+      new To(
+        "test+test1@example.com",
+        "Example User1",
+        [
+          '-name-' => 'Example User 1',
+          '-github-' => 'http://github.com/example_user1',
+        ],
+        "Example User1 -name-"
+      ),
+      new To(
+        "test+test2@example.com",
+        "Example User2",
+        [
+          '-name-' => 'Example User 2',
+          '-github-' => 'http://github.com/example_user2',
+        ],
+        "Example User2 -name-"
+      ),
+      new To(
+        "test+test3@example.com",
+        "Example User3",
+        [
+          '-name-' => 'Example User 3',
+          '-github-' => 'http://github.com/example_user3',
+        ]
+      ),
+    ];
+    $subject = [
+      "Subject 1 -name-",
+      "Subject 2 -name-",
+    ];
+    $globalSubstitutions = [
+      '-time-' => "2018-05-03 23:10:29",
+    ];
+    $plainTextContent = new PlainTextContent(
+      "Hello -name-, your github is -github- sent at -time-"
+    );
+    $htmlContent = new HtmlContent(
+      "<strong>Hello -name-, your github is <a href=\"-github-\">here</a></strong> sent at -time-"
+    );
+    $email = new Mail(
+      $from,
+      $tos,
+      $subject, // or array of subjects, these take precedence
+      $plainTextContent,
+      $htmlContent,
+      $globalSubstitutions
+    );
+    $email->setTemplateId("d-13b8f94f-bcae-4ec6-b752-70d6cb59f932");
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_4);
+    self::assertTrue($isEqual);
+  }
 
-    public function testAddTosWithSubjects()
-    {
-        $expectedPayload = <<<'JSON'
+  public function testAddTosWithSubjects(): void {
+    $expectedPayload = <<<'JSON'
 {
   "personalizations": [
     {
@@ -536,24 +532,24 @@ JSON;
 }
 JSON;
 
-        $tos = [
-            new To(
-                "test+test1@example.com",
-                "Example User1",
-                null,
-                "Example User1 -name-"
-            ),
-            new To(
-                "test+test2@example.com",
-                "Example User2",
-                null,
-                "Example User2 -name-"
-            )
-        ];
-        $email = new Mail();
-        $email->addTos($tos);
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $expectedPayload);
-        self::assertTrue($isEqual);
-    }
+    $tos = [
+      new To(
+        "test+test1@example.com",
+        "Example User1",
+        NULL,
+        "Example User1 -name-"
+      ),
+      new To(
+        "test+test2@example.com",
+        "Example User2",
+        NULL,
+        "Example User2 -name-"
+      ),
+    ];
+    $email = new Mail();
+    $email->addTos($tos);
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $expectedPayload);
+    self::assertTrue($isEqual);
+  }
 }
