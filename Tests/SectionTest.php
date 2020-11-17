@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests Section.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\Section;
 
 /**
@@ -15,7 +17,7 @@ use SendGrid\Mail\Section;
  */
 class SectionTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $section = new Section('key', 'value');
 
     $this->assertInstanceOf(Section::class, $section);
@@ -23,34 +25,30 @@ class SectionTest extends TestCase {
     $this->assertSame('value', $section->getValue());
   }
 
-  public function testSetKey() {
+  public function testSetKey(): void {
     $section = new Section();
     $section->setKey('key');
 
     $this->assertSame('key', $section->getKey());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$key" must be a string.
-   */
-  public function testSetKeyOnInvalidType() {
+  public function testSetKeyOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$key" must be a string.');
     $section = new Section();
     $section->setKey(TRUE);
   }
 
-  public function testSetValue() {
+  public function testSetValue(): void {
     $section = new Section();
     $section->setValue('value');
 
     $this->assertSame('value', $section->getValue());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$value" must be a string.
-   */
-  public function testSetValueOnInvalidType() {
+  public function testSetValueOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$value" must be a string.');
     $section = new Section();
     $section->setValue(TRUE);
   }
