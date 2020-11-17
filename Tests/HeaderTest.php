@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests Header.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\Header;
 
 /**
@@ -17,7 +19,6 @@ class HeaderTest extends TestCase {
 
   public function testConstructor() {
     $header = new Header('Content-Type', 'text/plain');
-
     $this->assertSame('Content-Type', $header->getKey());
     $this->assertSame('text/plain', $header->getValue());
   }
@@ -25,15 +26,12 @@ class HeaderTest extends TestCase {
   public function testSetKey() {
     $header = new Header();
     $header->setKey('Content-Type');
-
     $this->assertSame('Content-Type', $header->getKey());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$key" must be a string.
-   */
   public function testSetKeyOnInvalidType() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$key" must be a string.');
     $header = new Header();
     $header->setKey(['Content-Type']);
   }
@@ -41,15 +39,12 @@ class HeaderTest extends TestCase {
   public function testSetValue() {
     $header = new Header();
     $header->setValue('text/plain');
-
     $this->assertSame('text/plain', $header->getValue());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$value" must be a string.
-   */
   public function testSetValueOnInvalidType() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$value" must be a string.');
     $header = new Header();
     $header->setValue(['text/plain']);
   }
