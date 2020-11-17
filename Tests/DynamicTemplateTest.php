@@ -1,23 +1,23 @@
 <?php
+declare(strict_types=1);
 /**
- * This file tests the dynamic/transactional template functionality for a /mail/send API call.
+ * This file tests the dynamic/transactional template functionality for a
+ * /mail/send API call.
  */
 
-namespace SendGrid\Tests\Unit;
-
-use SendGrid\Tests\BaseTestClass;
+namespace SendGrid\Tests;
 
 // Test each use case that uses substitutions
 
 /**
- * This class tests the dynamic/transactional template functionality for a /mail/send API call.
+ * This class tests the dynamic/transactional template functionality for a
+ * /mail/send API call.
  *
  * @package SendGrid\Tests\Unit
  */
-class DynamicTemplateTest extends BaseTestClass
-{
+class DynamicTemplateTest extends BaseTestClass {
 
-    private $REQUEST_OBJECT_LEGACY = <<<'JSON'
+  private $REQUEST_OBJECT_LEGACY = <<<'JSON'
 {
   "content": [
     {
@@ -102,7 +102,7 @@ class DynamicTemplateTest extends BaseTestClass
 }
 JSON;
 
-    private $REQUEST_OBJECT = <<<'JSON'
+  private $REQUEST_OBJECT = <<<'JSON'
 {
   "content": [
     {
@@ -187,222 +187,219 @@ JSON;
 }
 JSON;
 
-    /**
-     * Test all parameters without using objects
-     */
-    public function testKitchenSinkExampleWithoutObjectsAndLegacyTemplate()
-    {
-        $email = new \SendGrid\Mail\Mail();
+  /**
+   * Test all parameters without using objects
+   */
+  public function testKitchenSinkExampleWithoutObjectsAndLegacyTemplate(): void {
+    $email = new \SendGrid\Mail\Mail();
 
-        // For a detailed description of each of these settings,
-        // please see the
-        // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
-        $email->setSubject("Sending with Twilio SendGrid is Fun 2");
+    // For a detailed description of each of these settings,
+    // please see the
+    // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
+    $email->setSubject("Sending with Twilio SendGrid is Fun 2");
 
-        $email->addTo("test@example.com", "Example User");
-        $email->addTo("test+1@example.com", "Example User1");
-        $toEmails = [
-            "test+2@example.com" => "Example User2",
-            "test+3@example.com" => "Example User3"
-        ];
-        $email->addTos($toEmails);
+    $email->addTo("test@example.com", "Example User");
+    $email->addTo("test+1@example.com", "Example User1");
+    $toEmails = [
+      "test+2@example.com" => "Example User2",
+      "test+3@example.com" => "Example User3",
+    ];
+    $email->addTos($toEmails);
 
-        $email->addCc("test+4@example.com", "Example User4");
-        $ccEmails = [
-            "test+5@example.com" => "Example User5",
-            "test+6@example.com" => "Example User6"
-        ];
-        $email->addCcs($ccEmails);
+    $email->addCc("test+4@example.com", "Example User4");
+    $ccEmails = [
+      "test+5@example.com" => "Example User5",
+      "test+6@example.com" => "Example User6",
+    ];
+    $email->addCcs($ccEmails);
 
-        $email->addBcc("test+7@example.com", "Example User7");
-        $bccEmails = [
-            "test+8@example.com" => "Example User8",
-            "test+9@example.com" => "Example User9"
-        ];
-        $email->addBccs($bccEmails);
+    $email->addBcc("test+7@example.com", "Example User7");
+    $bccEmails = [
+      "test+8@example.com" => "Example User8",
+      "test+9@example.com" => "Example User9",
+    ];
+    $email->addBccs($bccEmails);
 
-        $email->addSubstitution("%name1%", "Example Name 1");
-        $email->addSubstitution("%city1%", "Denver");
-        $substitutions = [
-            "%name2%" => "Example Name 2",
-            "%city2%" => "Orange"
-        ];
-        $email->addSubstitutions($substitutions);
+    $email->addSubstitution("%name1%", "Example Name 1");
+    $email->addSubstitution("%city1%", "Denver");
+    $substitutions = [
+      "%name2%" => "Example Name 2",
+      "%city2%" => "Orange",
+    ];
+    $email->addSubstitutions($substitutions);
 
-        // The values below this comment are global to entire message
+    // The values below this comment are global to entire message
 
-        $email->setFrom("test@example.com", "Twilio SendGrid");
+    $email->setFrom("test@example.com", "Twilio SendGrid");
 
-        $email->setGlobalSubject("Sending with Twilio SendGrid is Fun and Global 2");
+    $email->setGlobalSubject("Sending with Twilio SendGrid is Fun and Global 2");
 
-        $email->addContent(
-            "text/plain",
-            "and easy to do anywhere, even with PHP"
-        );
-        $email->addContent(
-            "text/html",
-            "<strong>and easy to do anywhere, even with PHP</strong>"
-        );
-        $contents = [
-            "text/calendar" => "Party Time!!",
-            "text/calendar2" => "Party Time 2!!"
-        ];
-        $email->addContents($contents);
+    $email->addContent(
+      "text/plain",
+      "and easy to do anywhere, even with PHP"
+    );
+    $email->addContent(
+      "text/html",
+      "<strong>and easy to do anywhere, even with PHP</strong>"
+    );
+    $contents = [
+      "text/calendar" => "Party Time!!",
+      "text/calendar2" => "Party Time 2!!",
+    ];
+    $email->addContents($contents);
 
-        $email->setTemplateId("d-13b8f94f-bcae-4ec6-b752-70d6cb59f932");
+    $email->setTemplateId("d-13b8f94f-bcae-4ec6-b752-70d6cb59f932");
 
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
-        $this->assertTrue($isEqual);
-    }
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
+    $this->assertTrue($isEqual);
+  }
 
-    /**
-     * Test all parameters without using objects with Dynamic Templates
-     */
-    public function testKitchenSinkExampleWithoutObjectsAndDynamicTemplate()
-    {
-        $email = new \SendGrid\Mail\Mail();
+  /**
+   * Test all parameters without using objects with Dynamic Templates
+   */
+  public function testKitchenSinkExampleWithoutObjectsAndDynamicTemplate(): void {
+    $email = new \SendGrid\Mail\Mail();
 
-        // For a detailed description of each of these settings,
-        // please see the
-        // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
-        $email->setSubject("Sending with Twilio SendGrid is Fun 2");
+    // For a detailed description of each of these settings,
+    // please see the
+    // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
+    $email->setSubject("Sending with Twilio SendGrid is Fun 2");
 
-        $email->addTo("test@example.com", "Example User");
-        $email->addTo("test+1@example.com", "Example User1");
-        $toEmails = [
-            "test+2@example.com" => "Example User2",
-            "test+3@example.com" => "Example User3"
-        ];
-        $email->addTos($toEmails);
+    $email->addTo("test@example.com", "Example User");
+    $email->addTo("test+1@example.com", "Example User1");
+    $toEmails = [
+      "test+2@example.com" => "Example User2",
+      "test+3@example.com" => "Example User3",
+    ];
+    $email->addTos($toEmails);
 
-        $email->addCc("test+4@example.com", "Example User4");
-        $ccEmails = [
-            "test+5@example.com" => "Example User5",
-            "test+6@example.com" => "Example User6"
-        ];
-        $email->addCcs($ccEmails);
+    $email->addCc("test+4@example.com", "Example User4");
+    $ccEmails = [
+      "test+5@example.com" => "Example User5",
+      "test+6@example.com" => "Example User6",
+    ];
+    $email->addCcs($ccEmails);
 
-        $email->addBcc("test+7@example.com", "Example User7");
-        $bccEmails = [
-            "test+8@example.com" => "Example User8",
-            "test+9@example.com" => "Example User9"
-        ];
-        $email->addBccs($bccEmails);
+    $email->addBcc("test+7@example.com", "Example User7");
+    $bccEmails = [
+      "test+8@example.com" => "Example User8",
+      "test+9@example.com" => "Example User9",
+    ];
+    $email->addBccs($bccEmails);
 
-        $email->addSubstitution("%name1%", "Example Name 1");
-        $email->addSubstitution("%city1%", "Denver");
-        $substitutions = [
-            "%name2%" => "Example Name 2",
-            "%city2%" => "Orange"
-        ];
-        $email->addSubstitutions($substitutions);
+    $email->addSubstitution("%name1%", "Example Name 1");
+    $email->addSubstitution("%city1%", "Denver");
+    $substitutions = [
+      "%name2%" => "Example Name 2",
+      "%city2%" => "Orange",
+    ];
+    $email->addSubstitutions($substitutions);
 
-        // The values below this comment are global to entire message
+    // The values below this comment are global to entire message
 
-        $email->setFrom("test@example.com", "Twilio SendGrid");
+    $email->setFrom("test@example.com", "Twilio SendGrid");
 
-        $email->setGlobalSubject("Sending with Twilio SendGrid is Fun and Global 2");
+    $email->setGlobalSubject("Sending with Twilio SendGrid is Fun and Global 2");
 
-        $email->addContent(
-            "text/plain",
-            "and easy to do anywhere, even with PHP"
-        );
-        $email->addContent(
-            "text/html",
-            "<strong>and easy to do anywhere, even with PHP</strong>"
-        );
-        $contents = [
-            "text/calendar" => "Party Time!!",
-            "text/calendar2" => "Party Time 2!!"
-        ];
-        $email->addContents($contents);
+    $email->addContent(
+      "text/plain",
+      "and easy to do anywhere, even with PHP"
+    );
+    $email->addContent(
+      "text/html",
+      "<strong>and easy to do anywhere, even with PHP</strong>"
+    );
+    $contents = [
+      "text/calendar" => "Party Time!!",
+      "text/calendar2" => "Party Time 2!!",
+    ];
+    $email->addContents($contents);
 
-        $email->setTemplateId("d-13b8f94f-bcae-4ec6-b752-70d6cb59f932");
+    $email->setTemplateId("d-13b8f94f-bcae-4ec6-b752-70d6cb59f932");
 
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
-        $this->assertTrue($isEqual);
-    }
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
+    $this->assertTrue($isEqual);
+  }
 
-    /**
-     * Test all parameters using objects
-     */
-    public function testKitchenSinkExampleWithObjectsAndLegacyTemplate()
-    {
-        $email = new \SendGrid\Mail\Mail();
+  /**
+   * Test all parameters using objects
+   */
+  public function testKitchenSinkExampleWithObjectsAndLegacyTemplate() {
+    $email = new \SendGrid\Mail\Mail();
 
-        // For a detailed description of each of these settings,
-        // please see the
-        // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
-        $email->setSubject(
-            new \SendGrid\Mail\Subject("Sending with Twilio SendGrid is Fun 2")
-        );
+    // For a detailed description of each of these settings,
+    // please see the
+    // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
+    $email->setSubject(
+      new \SendGrid\Mail\Subject("Sending with Twilio SendGrid is Fun 2")
+    );
 
-        $email->addTo(new \SendGrid\Mail\To("test@example.com", "Example User"));
-        $email->addTo(new \SendGrid\Mail\To("test+1@example.com", "Example User1"));
-        $toEmails = [
-            new \SendGrid\Mail\To("test+2@example.com", "Example User2"),
-            new \SendGrid\Mail\To("test+3@example.com", "Example User3")
-        ];
-        $email->addTos($toEmails);
+    $email->addTo(new \SendGrid\Mail\To("test@example.com", "Example User"));
+    $email->addTo(new \SendGrid\Mail\To("test+1@example.com", "Example User1"));
+    $toEmails = [
+      new \SendGrid\Mail\To("test+2@example.com", "Example User2"),
+      new \SendGrid\Mail\To("test+3@example.com", "Example User3"),
+    ];
+    $email->addTos($toEmails);
 
-        $email->addCc(new \SendGrid\Mail\Cc("test+4@example.com", "Example User4"));
-        $ccEmails = [
-            new \SendGrid\Mail\Cc("test+5@example.com", "Example User5"),
-            new \SendGrid\Mail\Cc("test+6@example.com", "Example User6")
-        ];
-        $email->addCcs($ccEmails);
+    $email->addCc(new \SendGrid\Mail\Cc("test+4@example.com", "Example User4"));
+    $ccEmails = [
+      new \SendGrid\Mail\Cc("test+5@example.com", "Example User5"),
+      new \SendGrid\Mail\Cc("test+6@example.com", "Example User6"),
+    ];
+    $email->addCcs($ccEmails);
 
-        $email->addBcc(
-            new \SendGrid\Mail\Bcc("test+7@example.com", "Example User7")
-        );
-        $bccEmails = [
-            new \SendGrid\Mail\Bcc("test+8@example.com", "Example User8"),
-            new \SendGrid\Mail\Bcc("test+9@example.com", "Example User9")
-        ];
-        $email->addBccs($bccEmails);
+    $email->addBcc(
+      new \SendGrid\Mail\Bcc("test+7@example.com", "Example User7")
+    );
+    $bccEmails = [
+      new \SendGrid\Mail\Bcc("test+8@example.com", "Example User8"),
+      new \SendGrid\Mail\Bcc("test+9@example.com", "Example User9"),
+    ];
+    $email->addBccs($bccEmails);
 
-        $email->addSubstitution(
-            new \SendGrid\Mail\Substitution("%name1%", "Example Name 1")
-        );
-        $email->addSubstitution(
-            new \SendGrid\Mail\Substitution("%city1%", "Denver")
-        );
-        $substitutions = [
-            new \SendGrid\Mail\Substitution("%name2%", "Example Name 2"),
-            new \SendGrid\Mail\Substitution("%city2%", "Orange")
-        ];
-        $email->addSubstitutions($substitutions);
+    $email->addSubstitution(
+      new \SendGrid\Mail\Substitution("%name1%", "Example Name 1")
+    );
+    $email->addSubstitution(
+      new \SendGrid\Mail\Substitution("%city1%", "Denver")
+    );
+    $substitutions = [
+      new \SendGrid\Mail\Substitution("%name2%", "Example Name 2"),
+      new \SendGrid\Mail\Substitution("%city2%", "Orange"),
+    ];
+    $email->addSubstitutions($substitutions);
 
-        // The values below this comment are global to entire message
+    // The values below this comment are global to entire message
 
-        $email->setFrom(new \SendGrid\Mail\From("test@example.com", "Twilio SendGrid"));
+    $email->setFrom(new \SendGrid\Mail\From("test@example.com", "Twilio SendGrid"));
 
-        $email->setGlobalSubject(
-            new \SendGrid\Mail\Subject("Sending with Twilio SendGrid is Fun and Global 2")
-        );
+    $email->setGlobalSubject(
+      new \SendGrid\Mail\Subject("Sending with Twilio SendGrid is Fun and Global 2")
+    );
 
-        $plainTextContent = new \SendGrid\Mail\PlainTextContent(
-            "and easy to do anywhere, even with PHP"
-        );
-        $htmlContent = new \SendGrid\Mail\HtmlContent(
-            "<strong>and easy to do anywhere, even with PHP</strong>"
-        );
-        $email->addContent($plainTextContent);
-        $email->addContent($htmlContent);
-        $contents = [
-            new \SendGrid\Mail\Content("text/calendar", "Party Time!!"),
-            new \SendGrid\Mail\Content("text/calendar2", "Party Time 2!!")
-        ];
-        $email->addContents($contents);
+    $plainTextContent = new \SendGrid\Mail\PlainTextContent(
+      "and easy to do anywhere, even with PHP"
+    );
+    $htmlContent = new \SendGrid\Mail\HtmlContent(
+      "<strong>and easy to do anywhere, even with PHP</strong>"
+    );
+    $email->addContent($plainTextContent);
+    $email->addContent($htmlContent);
+    $contents = [
+      new \SendGrid\Mail\Content("text/calendar", "Party Time!!"),
+      new \SendGrid\Mail\Content("text/calendar2", "Party Time 2!!"),
+    ];
+    $email->addContents($contents);
 
-        $email->setTemplateId(
-            new \SendGrid\Mail\TemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932")
-        );
+    $email->setTemplateId(
+      new \SendGrid\Mail\TemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932")
+    );
 
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_LEGACY);
-        $this->assertTrue($isEqual);
-    }
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_LEGACY);
+    $this->assertTrue($isEqual);
+  }
 }
