@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests Mail.
  */
@@ -15,9 +16,8 @@ use SendGrid\Mail\Mail;
  */
 class MailTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $mail = new Mail();
-
     $this->assertInstanceOf(Mail::class, $mail);
     $this->assertSame(1, $mail->getPersonalizationCount());
   }
