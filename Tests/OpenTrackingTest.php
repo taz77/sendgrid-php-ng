@@ -17,32 +17,32 @@ use SendGrid\Mail\OpenTracking;
  */
 class OpenTrackingTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $openTracking = new OpenTracking(TRUE, 'substitution_tag');
     $this->assertTrue($openTracking->getEnable());
     $this->assertSame('substitution_tag', $openTracking->getSubstitutionTag());
   }
 
-  public function testSetEnable() {
+  public function testSetEnable(): void {
     $openTracking = new OpenTracking();
     $openTracking->setEnable(TRUE);
     $this->assertTrue($openTracking->getEnable());
   }
 
-  public function testSetEnableOnInvalidType() {
+  public function testSetEnableOnInvalidType(): void {
     $this->expectException(TypeException::class);
     $this->expectExceptionMessage('"$enable" must be a boolean.');
     $openTracking = new OpenTracking();
     $openTracking->setEnable('invalid_bool');
   }
 
-  public function testSetSubstitutionTag() {
+  public function testSetSubstitutionTag(): void {
     $openTracking = new OpenTracking();
     $openTracking->setSubstitutionTag('substitution_tag');
     $this->assertSame('substitution_tag', $openTracking->getSubstitutionTag());
   }
 
-  public function testSetSubstitutionTagOnInvalidType() {
+  public function testSetSubstitutionTagOnInvalidType(): void {
     $this->expectException(TypeException::class);
     $this->expectExceptionMessage('"$substitution_tag" must be a string.');
     $openTracking = new OpenTracking();
