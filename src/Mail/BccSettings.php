@@ -7,6 +7,7 @@ namespace SendGrid\Mail;
 
 use JsonSerializable;
 use SendGrid\Exception\SendgridException;
+use SendGrid\Exception\TypeException;
 use SendGrid\Helper\Assert;
 
 /**
@@ -69,7 +70,7 @@ class BccSettings implements JsonSerializable {
    * @param string $email The email address that you would like
    *                      to receive the BCC
    *
-   * @throws SendgridException
+   * @throws TypeException
    */
   public function setEmail($email) {
     Assert::email($email, 'email');
