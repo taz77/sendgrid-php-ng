@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests email address encoding.
  */
@@ -7,6 +8,7 @@ namespace SendGrid\Tests\Unit;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\BccSettings;
 use SendGrid\Mail\Content;
 use SendGrid\Mail\EmailAddress;
@@ -15,7 +17,6 @@ use SendGrid\Mail\Mail;
 use SendGrid\Mail\Personalization;
 use SendGrid\Mail\Subject;
 use SendGrid\Mail\To;
-use SendGrid\Exception\TypeException;
 use SendGrid\Tests\BaseTestClass;
 use Swaggest\JsonDiff\Exception as JsonDiffException;
 
@@ -41,7 +42,7 @@ class EmailAddressTest extends TestCase {
    *
    * @throws TypeException
    */
-  public function testValidEmailNames() {
+  public function testValidEmailNames(): void {
     $this->email->setName("John Doe");
     $json = json_encode($this->email->jsonSerialize());
     self::assertEquals('{"name":"John Doe"}', $json);
@@ -56,7 +57,7 @@ class EmailAddressTest extends TestCase {
    *
    * @throws TypeException
    */
-  public function testValidEmails() {
+  public function testValidEmails(): void {
     $this->email->setEmailAddress('john@doe.com');
     $json = json_encode($this->email->jsonSerialize());
     self::assertEquals(
@@ -84,7 +85,7 @@ class EmailAddressTest extends TestCase {
    *
    * @throws TypeException
    */
-  public function testValidSubstitution() {
+  public function testValidSubstitution(): void {
     $this->email->setSubstitutions([
       '-time-' => "2018-05-03 23:10:29",
     ]);
@@ -101,7 +102,7 @@ class EmailAddressTest extends TestCase {
    *
    * @throws TypeException
    */
-  public function testValidSubject() {
+  public function testValidSubject(): void {
     $this->email->setSubject('Dear Mr. John Doe');
     // subject will not get output when serialized
     $json = json_encode($this->email->jsonSerialize());
@@ -111,7 +112,7 @@ class EmailAddressTest extends TestCase {
   /**
    * We can not use null as our name
    */
-  public function testNullIsNotAValidName() {
+  public function testNullIsNotAValidName(): void {
     $this->expectException(TypeException::class);
     $this->email->setName(NULL);
   }
@@ -119,7 +120,7 @@ class EmailAddressTest extends TestCase {
   /**
    * We can not use null as our email
    */
-  public function testNullIsNotAValidEMail() {
+  public function testNullIsNotAValidEMail(): void {
     $this->expectException(TypeException::class);
     $this->email->setEmailAddress(NULL);
   }
@@ -127,7 +128,7 @@ class EmailAddressTest extends TestCase {
   /**
    * We can not use null as substitution
    */
-  public function testNullIsNotAValidSubstitution() {
+  public function testNullIsNotAValidSubstitution(): void {
     $this->expectException(TypeException::class);
     $this->email->setSubstitutions(NULL);
   }
@@ -135,7 +136,7 @@ class EmailAddressTest extends TestCase {
   /**
    * We can not use null as our subject
    */
-  public function testNullIsNotAValidSubject() {
+  public function testNullIsNotAValidSubject(): void {
     $this->expectException(TypeException::class);
     $this->email->setSubject(NULL);
   }
@@ -143,7 +144,7 @@ class EmailAddressTest extends TestCase {
   /**
    * There should only be a single @ in our address
    */
-  public function testDoubleAtSymbolIsNoValidEmail() {
+  public function testDoubleAtSymbolIsNoValidEmail(): void {
     $this->expectException(TypeException::class);
     $this->email->setEmailAddress('test@example.com@wrong');
   }
@@ -151,7 +152,7 @@ class EmailAddressTest extends TestCase {
   /**
    * @requires PHP 7.1
    */
-  public function testEmailAddressLocalPartUnicode() {
+  public function testEmailAddressLocalPartUnicode(): void {
     $email = new EmailAddress('françois@domain.tld');
     $json = json_encode($email->jsonSerialize());
     self::assertEquals(
@@ -166,12 +167,12 @@ class EmailAddressTest extends TestCase {
    *
    * @requires PHP 7.1
    */
-  public function testInvalidEmailAddressLocalPartUnicode() {
+  public function testInvalidEmailAddressLocalPartUnicode(): void {
     $this->expectException(TypeException::class);
     new EmailAddress('françois.localpart@françois.domain.tld');
   }
 
-  public function testBccEmailAddress() {
+  public function testBccEmailAddress(): void {
     $settings = new BccSettings(NULL, 'test@example.com');
     $json = json_encode($settings->jsonSerialize());
     self::assertEquals(
@@ -183,7 +184,7 @@ class EmailAddressTest extends TestCase {
   /**
    * A TypeException must be thrown when using invalid email address for Bcc
    */
-  public function testInvalidBccEmailAddress() {
+  public function testInvalidBccEmailAddress(): void {
     $this->expectException(TypeException::class);
     new BccSettings(TRUE, 'test@example.com@wrong');
   }
@@ -191,7 +192,7 @@ class EmailAddressTest extends TestCase {
   /**
    * @requires PHP 7.1
    */
-  public function testBccEmailAddressLocalPartUnicode() {
+  public function testBccEmailAddressLocalPartUnicode(): void {
     $settings = new BccSettings(NULL, 'françois@domain.tld');
     $json = json_encode($settings->jsonSerialize());
     self::assertEquals(
@@ -206,7 +207,7 @@ class EmailAddressTest extends TestCase {
    *
    * @requires PHP 7.1
    */
-  public function testInvalidBccEmailAddressLocalPartUnicode() {
+  public function testInvalidBccEmailAddressLocalPartUnicode(): void {
     $this->expectException(TypeException::class);
     new BccSettings(NULL, 'françois.localpart@françois.domain.tld');
   }
@@ -215,7 +216,7 @@ class EmailAddressTest extends TestCase {
    * @throws TypeException
    * @throws JsonDiffException
    */
-  public function testJsonSerializeOverPersonalizationsShouldNotReturnNull() {
+  public function testJsonSerializeOverPersonalizationsShouldNotReturnNull(): void {
     $objEmail = new Mail();
 
     $objFrom = new From('my@self.com', 'my self');
@@ -278,7 +279,7 @@ JSON;
    * @throws TypeException
    * @throws JsonDiffException
    */
-  public function testMailPersonalizations() {
+  public function testMailPersonalizations(): void {
     $objEmail = new Mail('me@example.com');
 
     // Add the first personalization.
@@ -326,7 +327,7 @@ JSON;
     self::assertTrue($isEqual);
   }
 
-  public function testInvalidPersonalizationVariant1() {
+  public function testInvalidPersonalizationVariant1(): void {
     //  Try to add invalid Personalization instance
     //  TypeException must be thrown by Mail->addPersonalization()
     $this->expectException(TypeException::class);
@@ -335,7 +336,7 @@ JSON;
     $objEmail->addPersonalization(NULL);
   }
 
-  public function testInvalidPersonalizationVariant2() {
+  public function testInvalidPersonalizationVariant2(): void {
     //  Try to add invalid Personalization instance
     //  Route: addTo -> addRecipientEmail() -> getPersonalization() -> addPersonalization()
     $this->expectException(TypeException::class);
@@ -350,7 +351,7 @@ JSON;
   /**
    * @throws TypeException
    */
-  public function testInvalidPersonalizationIndex() {
+  public function testInvalidPersonalizationIndex(): void {
     $this->expectException(InvalidArgumentException::class);
 
     $objEmail = new Mail();
@@ -384,7 +385,7 @@ JSON;
    * @throws TypeException
    * @throws JsonDiffException
    */
-  public function testLastRetrievedPersonalization() {
+  public function testLastRetrievedPersonalization(): void {
     //  Scenario: last added (2x)
     $objEmail = new Mail();
     $personalization = $objEmail->getPersonalization();
@@ -428,7 +429,7 @@ JSON;
    * @throws TypeException
    * @throws JsonDiffException
    */
-  public function testLastRetrievedPersonalizationWithSender() {
+  public function testLastRetrievedPersonalizationWithSender(): void {
     //  Scenario: add + last added, last added
     $objEmail = new Mail(new From('testing@bar.com'));
     $objEmail->addTo('foo+1@bar.com', 'foo bar1');
@@ -477,7 +478,7 @@ JSON;
    * @throws TypeException
    * @throws JsonDiffException
    */
-  public function testNextPersonalizationAsArgument() {
+  public function testNextPersonalizationAsArgument(): void {
     //  Scenario: add provided (3x)
     $objEmail = new Mail();
     $objEmail->addTo('foo+1@bar.com', 'foo bar1', NULL, NULL, new Personalization());
@@ -494,7 +495,7 @@ JSON;
    * @throws TypeException
    * @throws JsonDiffException
    */
-  public function testNextPersonalizationIndexArgumentStarting0() {
+  public function testNextPersonalizationIndexArgumentStarting0(): void {
     //  Scenario: existing, add, add
     $objEmail = new Mail();
     $objEmail->addTo('foo+1@bar.com', 'foo bar1', NULL, 0);
@@ -511,7 +512,7 @@ JSON;
    * @throws TypeException
    * @throws JsonDiffException
    */
-  public function testNextPersonalizationIndexArgumentStarting1() {
+  public function testNextPersonalizationIndexArgumentStarting1(): void {
     //  Scenario: add (3x)
     $objEmail = new Mail();
     $objEmail->addTo('foo+1@bar.com', 'foo bar1', NULL, 1);
@@ -527,7 +528,7 @@ JSON;
   /**
    * @throws TypeException
    */
-  public function testInvalidNextPersonalizationIndexArgument() {
+  public function testInvalidNextPersonalizationIndexArgument(): void {
     //  Scenario: add, exception (count=2, expected index 2, 3 provided)
     $this->expectException(InvalidArgumentException::class);
 
@@ -574,7 +575,7 @@ JSON;
    * @throws TypeException
    * @throws JsonDiffException
    */
-  public function testNextPersonalizationAsArgumentWithSender() {
+  public function testNextPersonalizationAsArgumentWithSender(): void {
     //  Scenario: add provided (3x)
     $objEmail = new Mail(new From('testing@bar.com'));
     $objEmail->addTo('foo+1@bar.com', 'foo bar1', NULL, NULL, new Personalization());
@@ -591,7 +592,7 @@ JSON;
    * @throws TypeException
    * @throws JsonDiffException
    */
-  public function testNextPersonalizationIndexArgumentWithSenderStarting0() {
+  public function testNextPersonalizationIndexArgumentWithSenderStarting0(): void {
     //  Scenario: add (3x)
     $objEmail = new Mail(new From('testing@bar.com'));
     $objEmail->addTo('foo+1@bar.com', 'foo bar1', NULL, 0);
@@ -607,7 +608,7 @@ JSON;
   /**
    * @throws TypeException
    */
-  public function testInvalidNextPersonalizationIndexArgumentWithSenderStarting1() {
+  public function testInvalidNextPersonalizationIndexArgumentWithSenderStarting1(): void {
     //  Scenario: exception (no first Personalization is created, index 0 is expected)
     //  In this situation Mail constructor doesn't create first Personalization
     $this->expectException(InvalidArgumentException::class);
@@ -634,57 +635,49 @@ JSON;
     $this->assertSame('dx@sendgrid.com', $emailAddress->getEmail());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$emailAddress" must be a valid email address.
-   */
-  public function testSetEmailAddressOnInvalidFormat() {
+  public function testSetEmailAddressOnInvalidFormat(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$emailAddress" must be a valid email address.');
     $emailAddress = new EmailAddress();
     $emailAddress->setEmailAddress('invalid_email_address_format');
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$emailAddress" must be a string.
-   */
-  public function testSetEmailAddressOnInvalidType() {
+  public function testSetEmailAddressOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$emailAddress" must be a string.');
     $emailAddress = new EmailAddress();
     $emailAddress->setEmailAddress(['dx@sendgrid.com']);
   }
 
-  public function testSetName() {
+  public function testSetName(): void {
     $emailAddress = new EmailAddress();
     $emailAddress->setName('Elmer');
 
     $this->assertSame('Elmer', $emailAddress->getName());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$name" must be a string.
-   */
-  public function testSetNameOnInvalidType() {
+  public function testSetNameOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$name" must be a string.');
     $emailAddress = new EmailAddress();
     $emailAddress->setName(['Elmer']);
   }
 
-  public function testSetSubstitutions() {
+  public function testSetSubstitutions(): void {
     $emailAddress = new EmailAddress();
     $emailAddress->setSubstitutions(['key' => 'value']);
 
     $this->assertSame(['key' => 'value'], $emailAddress->getSubstitutions());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$substitutions" must be an array.
-   */
-  public function testSetSubstitutionsOnInvalidType() {
+  public function testSetSubstitutionsOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$substitutions" must be an array.');
     $emailAddress = new EmailAddress();
     $emailAddress->setSubstitutions('invalid_type');
   }
 
-  public function testSetSubject() {
+  public function testSetSubject(): void {
     $emailAddress = new EmailAddress();
     $emailAddress->setSubject('subject');
     $subject = $emailAddress->getSubject();
@@ -693,11 +686,9 @@ JSON;
     $this->assertSame('subject', $subject->getSubject());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$subject" must be a string.
-   */
-  public function testSetSubjectOnInvalidType() {
+  public function testSetSubjectOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$subject" must be a string.');
     $emailAddress = new EmailAddress();
     $emailAddress->setSubject(['invalid_subject']);
   }
