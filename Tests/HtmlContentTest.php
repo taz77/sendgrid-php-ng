@@ -16,7 +16,7 @@ use SendGrid\Mail\HtmlContent;
  */
 class HtmlContentTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $htmlContent = new HtmlContent('html_content');
     $this->assertInstanceOf(HtmlContent::class, $htmlContent);
     $this->assertSame('html_content', $htmlContent->getValue());

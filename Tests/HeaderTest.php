@@ -17,32 +17,32 @@ use SendGrid\Mail\Header;
  */
 class HeaderTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $header = new Header('Content-Type', 'text/plain');
     $this->assertSame('Content-Type', $header->getKey());
     $this->assertSame('text/plain', $header->getValue());
   }
 
-  public function testSetKey() {
+  public function testSetKey(): void {
     $header = new Header();
     $header->setKey('Content-Type');
     $this->assertSame('Content-Type', $header->getKey());
   }
 
-  public function testSetKeyOnInvalidType() {
+  public function testSetKeyOnInvalidType(): void {
     $this->expectException(TypeException::class);
     $this->expectExceptionMessage('"$key" must be a string.');
     $header = new Header();
     $header->setKey(['Content-Type']);
   }
 
-  public function testSetValue() {
+  public function testSetValue(): void {
     $header = new Header();
     $header->setValue('text/plain');
     $this->assertSame('text/plain', $header->getValue());
   }
 
-  public function testSetValueOnInvalidType() {
+  public function testSetValueOnInvalidType(): void {
     $this->expectException(TypeException::class);
     $this->expectExceptionMessage('"$value" must be a string.');
     $header = new Header();

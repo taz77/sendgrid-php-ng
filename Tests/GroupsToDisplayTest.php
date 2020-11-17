@@ -12,7 +12,7 @@ use SendGrid\Mail\GroupsToDisplay;
 
 class GroupsToDisplayTest extends TestCase {
 
-  public function testSetGroupsToDisplayWithExceededElementsCount() {
+  public function testSetGroupsToDisplayWithExceededElementsCount(): void {
     $this->expectException(TypeException::class);
     $this->expectExceptionMessage('Number of elements in "$groups_to_display" can not be more than 25.');
     $data = range(1, 30);
@@ -20,7 +20,7 @@ class GroupsToDisplayTest extends TestCase {
     $groups->setGroupsToDisplay($data);
   }
 
-  public function testAddGroupToDisplayWithAlready() {
+  public function testAddGroupToDisplayWithAlready(): void {
     $this->expectException(TypeException::class);
     $this->expectExceptionMessage('Number of elements in "$groups_to_display" can not be more than 25.');
 
@@ -29,27 +29,27 @@ class GroupsToDisplayTest extends TestCase {
     $groups->addGroupToDisplay(1);
   }
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $groupsToDisplay = new GroupsToDisplay([123456]);
     $this->assertInstanceOf(GroupsToDisplay::class, $groupsToDisplay);
     $this->assertSame([123456], $groupsToDisplay->getGroupsToDisplay());
   }
 
-  public function testSetGroupsToDisplay() {
+  public function testSetGroupsToDisplay(): void {
     $groupsToDisplay = new GroupsToDisplay();
     $groupsToDisplay->setGroupsToDisplay([123456]);
 
     $this->assertSame([123456], $groupsToDisplay->getGroupsToDisplay());
   }
 
-  public function testSetGroupsToDisplayOnInvalidType() {
+  public function testSetGroupsToDisplayOnInvalidType(): void {
     $this->expectException(TypeException::class);
     $this->expectExceptionMessage('"$groups_to_display" must be an array.');
     $groupsToDisplay = new GroupsToDisplay();
     $groupsToDisplay->setGroupsToDisplay('invalid_groups_to_display');
   }
 
-  public function testJsonSerialize() {
+  public function testJsonSerialize(): void {
     $groupsToDisplay = new GroupsToDisplay();
     $groupsToDisplay->setGroupsToDisplay([123456]);
     $this->assertSame([123456], $groupsToDisplay->jsonSerialize());

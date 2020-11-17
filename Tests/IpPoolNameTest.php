@@ -17,26 +17,26 @@ use SendGrid\Mail\IpPoolName;
  */
 class IpPoolNameTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $ipPoolName = new IpPoolName('127.0.0.1');
     $this->assertInstanceOf(IpPoolName::class, $ipPoolName);
     $this->assertSame('127.0.0.1', $ipPoolName->getIpPoolName());
   }
 
-  public function testSetIpPoolNme() {
+  public function testSetIpPoolNme(): void {
     $ipPoolName = new IpPoolName();
     $ipPoolName->setIpPoolName('127.0.0.1');
     $this->assertSame('127.0.0.1', $ipPoolName->getIpPoolName());
   }
 
-  public function testSetIpPoolNmeOnInvalidType() {
+  public function testSetIpPoolNmeOnInvalidType(): void {
     $this->expectException(TypeException::class);
     $this->expectExceptionMessage('"$ip_pool_name" must be a string.');
     $ipPoolName = new IpPoolName();
     $ipPoolName->setIpPoolName(['127.0.0.1']);
   }
 
-  public function testJsonSerialize() {
+  public function testJsonSerialize(): void {
     $ipPoolName = new IpPoolName();
     $ipPoolName->setIpPoolName('127.0.0.1');
     $this->assertSame('127.0.0.1', $ipPoolName->jsonSerialize());
