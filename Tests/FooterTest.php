@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests Footer.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\Footer;
 
 /**
@@ -15,7 +17,7 @@ use SendGrid\Mail\Footer;
  */
 class FooterTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $footer = new Footer(TRUE, 'footer_text', '<p>footer_html</p>');
 
     $this->assertInstanceOf(Footer::class, $footer);
@@ -24,18 +26,16 @@ class FooterTest extends TestCase {
     $this->assertSame('<p>footer_html</p>', $footer->getHtml());
   }
 
-  public function testSetEnable() {
+  public function testSetEnable(): void {
     $footer = new Footer();
     $footer->setEnable(TRUE);
 
     $this->assertTrue($footer->getEnable());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$enable" must be a boolean.
-   */
-  public function testSetEnableOnInvalidType() {
+  public function testSetEnableOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$enable" must be a boolean.');
     $footer = new Footer();
     $footer->setEnable('invalid_bool');
   }
@@ -47,27 +47,23 @@ class FooterTest extends TestCase {
     $this->assertSame('footer_text', $footer->getText());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$text" must be a string.
-   */
-  public function testSetTextOnInvalidType() {
+  public function testSetTextOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$text" must be a string.');
     $footer = new Footer();
     $footer->setText(['footer_text']);
   }
 
-  public function testSetHtml() {
+  public function testSetHtml(): void {
     $footer = new Footer();
     $footer->setHtml('footer_html');
 
     $this->assertSame('footer_html', $footer->getHtml());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$html" must be a string.
-   */
-  public function testSetHtmlOnInvalidType() {
+  public function testSetHtmlOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$html" must be a string.');
     $footer = new Footer();
     $footer->setHtml(['footer_html']);
   }
