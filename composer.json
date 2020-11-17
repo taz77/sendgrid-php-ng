@@ -24,7 +24,8 @@
     "php": ">=7.1",
     "guzzlehttp/guzzle": "^6.3",
     "ext-json": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "starkbank/ecdsa": "^0.0.4"
   },
   "require-dev": {
     "mockery/mockery": "~0.9",
