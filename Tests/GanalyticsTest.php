@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests Ganalytics.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\Ganalytics;
 
 /**
@@ -15,7 +17,7 @@ use SendGrid\Mail\Ganalytics;
  */
 class GanalyticsTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $ganalytics = new Ganalytics(TRUE, 'utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign');
 
     $this->assertInstanceOf(Ganalytics::class, $ganalytics);
@@ -27,98 +29,86 @@ class GanalyticsTest extends TestCase {
     $this->assertSame('utm_campaign', $ganalytics->getCampaignName());
   }
 
-  public function testSetEnable() {
+  public function testSetEnable(): void {
     $ganalytics = new Ganalytics();
     $ganalytics->setEnable(TRUE);
 
     $this->assertTrue($ganalytics->getEnable());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$enable" must be a boolean.
-   */
-  public function testSetEnableOnInvalidType() {
+  public function testSetEnableOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$enable" must be a boolean.');
     $ganalytics = new Ganalytics();
     $ganalytics->setEnable('invalid_bool');
   }
 
-  public function testSetCampaignContent() {
+  public function testSetCampaignContent(): void {
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignContent('utm_content');
 
     $this->assertSame('utm_content', $ganalytics->getCampaignContent());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$utm_content" must be a string.
-   */
   public function testSetCampaignContentOnInvalidType() {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$utm_content" must be a string.');
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignContent(['invalid_utm_content']);
   }
 
-  public function testSetCampaignTerm() {
+  public function testSetCampaignTerm(): void {
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignTerm('utm_term');
 
     $this->assertSame('utm_term', $ganalytics->getCampaignTerm());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$utm_term" must be a string.
-   */
-  public function testSetCampaignTermOnInvalidType() {
+  public function testSetCampaignTermOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$utm_term" must be a string.');
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignTerm(['invalid_utm_term']);
   }
 
-  public function testSetCampaignMedium() {
+  public function testSetCampaignMedium(): void {
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignMedium('utm_medium');
 
     $this->assertSame('utm_medium', $ganalytics->getCampaignMedium());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$utm_medium" must be a string.
-   */
-  public function testSetCampaignMediumOnInvalidType() {
+  public function testSetCampaignMediumOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$utm_medium" must be a string.');
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignMedium(['invalid_utm_medium']);
   }
 
-  public function testSetCampaignSource() {
+  public function testSetCampaignSource(): void {
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignSource('utm_campaign');
 
     $this->assertSame('utm_campaign', $ganalytics->getCampaignSource());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$utm_source" must be a string.
-   */
-  public function testSetCampaignSourceOnInvalidType() {
+  public function testSetCampaignSourceOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$utm_source" must be a string.');
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignSource(['invalid_utm_campaign']);
   }
 
-  public function testSetCampaignName() {
+  public function testSetCampaignName(): void {
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignName('utm_campaign_name');
 
     $this->assertSame('utm_campaign_name', $ganalytics->getCampaignName());
   }
-
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$utm_campaign" must be a string.
-   */
-  public function testSetCampaignNameOnInvalidType() {
+  
+  public function testSetCampaignNameOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$utm_campaign" must be a string.');
     $ganalytics = new Ganalytics();
     $ganalytics->setCampaignName(['invalid_utm_campaign_name']);
   }
