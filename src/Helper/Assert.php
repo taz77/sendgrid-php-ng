@@ -31,10 +31,11 @@ class Assert {
    */
   public static function string($value, $property, $message = NULL) {
     if (!is_string($value)) {
+      $result = print_r($value, true);
       $message = sprintf(
         $message ?: '"$%s" must be a string. Got: %s',
         $property,
-        $value
+        $result
       );
 
       throw new TypeException($message);
