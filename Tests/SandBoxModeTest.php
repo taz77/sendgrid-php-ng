@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests SandBoxMode.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\SandBoxMode;
 
 /**
@@ -15,25 +17,21 @@ use SendGrid\Mail\SandBoxMode;
  */
 class SandBoxModeTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $sandBoxMode = new SandBoxMode(TRUE);
-
     $this->assertInstanceOf(SandBoxMode::class, $sandBoxMode);
     $this->assertTrue($sandBoxMode->getEnable());
   }
 
-  public function testSetEnable() {
+  public function testSetEnable(): void {
     $sandBoxMode = new SandBoxMode();
     $sandBoxMode->setEnable(TRUE);
-
     $this->assertTrue($sandBoxMode->getEnable());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$enable" must be a boolean.
-   */
-  public function testSetEnableOnInvalidType() {
+  public function testSetEnableOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$enable" must be a boolean.');
     $sandBoxMode = new SandBoxMode();
     $sandBoxMode->setEnable('invalid_bool');
   }
