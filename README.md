@@ -15,7 +15,7 @@ To install this library it is best to use composer. I have published a package t
 
 ``` php
 "require": {
-    "fastglass/sendgrid": ">=1.0.8"
+    "fastglass/sendgrid": ">=1.0.9"
   }
 ```
 
@@ -898,10 +898,9 @@ $result = $sendgrid->send($email);
 
 The existing tests in the `test` directory can be run using [PHPUnit](https://github.com/sebastianbergmann/phpunit/) with the following command:
 
-````bash
+```bash
 composer update --dev
-cd test
-../vendor/bin/phpunit
+./vendor/bin/phpunit ./tests
 ```
 
 or if you already have PHPUnit installed globally.
