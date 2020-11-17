@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests the request object generation for a /mail/send API call.
  */
@@ -453,7 +454,7 @@ JSON;
   /**
    * Test all parameters without using objects
    */
-  public function testKitchenSinkExampleWithoutObjects() {
+  public function testKitchenSinkExampleWithoutObjects(): void {
     $email = new Mail();
 
     // For a detailed description of each of these settings,
@@ -624,7 +625,7 @@ JSON;
   /**
    * Test all parameters without using objects with dynamic templates
    */
-  public function testKitchenSinkExampleWithoutObjectsWithDynamicTemplates() {
+  public function testKitchenSinkExampleWithoutObjectsWithDynamicTemplates(): void {
     $email = new Mail();
 
     // For a detailed description of each of these settings,
@@ -799,7 +800,7 @@ JSON;
   /**
    * Test all parameters using objects
    */
-  public function testKitchenSinkExampleWithObjects() {
+  public function testKitchenSinkExampleWithObjects(): void {
     $email = new Mail();
 
     // For a detailed description of each of these settings,
@@ -1023,7 +1024,7 @@ JSON;
   /**
    * Test all parameters using objects with dynamic templates
    */
-  public function testKitchenSinkExampleWithObjectsWithDynamicTemplate() {
+  public function testKitchenSinkExampleWithObjectsWithDynamicTemplate(): void {
     $email = new Mail();
 
     // For a detailed description of each of these settings,
