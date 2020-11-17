@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests TemplateId.
  */
@@ -6,6 +7,7 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
 use SendGrid\Mail\TemplateId;
 
 /**
@@ -15,29 +17,27 @@ use SendGrid\Mail\TemplateId;
  */
 class TemplateIdTest extends TestCase {
 
-  public function testConstructor() {
+  public function testConstructor(): void {
     $templateId = new TemplateId('template_id');
 
     $this->assertSame('template_id', $templateId->getTemplateId());
   }
 
-  public function testSetTemplateId() {
+  public function testSetTemplateId(): void {
     $templateId = new TemplateId();
     $templateId->setTemplateId('template_id');
 
     $this->assertSame('template_id', $templateId->getTemplateId());
   }
 
-  /**
-   * @expectedException \SendGrid\Exception\TypeException
-   * @expectedExceptionMessage "$template_id" must be a string.
-   */
-  public function testSetTemplateIdOnInvalidType() {
+  public function testSetTemplateIdOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$template_id" must be a string');
     $templateId = new TemplateId();
     $templateId->setTemplateId(TRUE);
   }
 
-  public function testJsonSerialize() {
+  public function testJsonSerialize(): void {
     $templateId = new TemplateId();
     $templateId->setTemplateId('template_id');
 
