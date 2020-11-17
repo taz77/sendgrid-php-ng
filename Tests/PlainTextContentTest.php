@@ -1,24 +1,23 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests PlainTextContent.
  */
 
 namespace SendGrid\Tests;
 
-use SendGrid\Mail\PlainTextContent;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Mail\PlainTextContent;
 
 /**
  * This class tests PlainTextContent.
  *
  * @package SendGrid\Tests
  */
-class PlainTextContentTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $plainTextContent = new PlainTextContent('plain text');
+class PlainTextContentTest extends TestCase {
 
-        $this->assertSame('plain text', $plainTextContent->getValue());
-    }
+  public function testConstructor(): void {
+    $plainTextContent = new PlainTextContent('plain text');
+    $this->assertSame('plain text', $plainTextContent->getValue());
+  }
 }
