@@ -6,7 +6,7 @@
 namespace SendGrid\Mail;
 
 use JsonSerializable;
-use SendGrid\Exception\SendgridException;
+use \SendGrid\Exception\TypeException;
 use SendGrid\Helper\Assert;
 
 /**
@@ -25,7 +25,7 @@ class BatchId implements JsonSerializable {
    * @param string|null $batch_id This ID represents a batch of emails to
    *                              be sent at the same time
    *
-   * @throws SendgridException
+   * @throws TypeException
    */
   public function __construct($batch_id = NULL) {
     if (isset($batch_id)) {
@@ -39,10 +39,10 @@ class BatchId implements JsonSerializable {
    * @param string $batch_id This ID represents a batch of emails to be sent
    *                         at the same time
    *
-   * @throws SendgridException
+   * @throws TypeException
    */
   public function setBatchId($batch_id) {
-    Assert::string($batch_id, 'batch_id');
+    Assert::string($batch_id, 'batch_id', '"$batch_id" must be a string.');
 
     $this->batch_id = $batch_id;
   }
