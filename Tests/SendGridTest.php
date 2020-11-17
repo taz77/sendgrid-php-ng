@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
-namespace SendGrid\Tests\Unit;
+namespace SendGrid\Tests;
 
-use SendGrid;
-use SendGrid\Tests\BaseTestClass;
+use SendGrid\Client;
 
 /**
  * This class tests the Twilio SendGrid Client.
@@ -15,51 +15,31 @@ class SendGridTest extends BaseTestClass {
   /**
    * Test that we can connect to the Twilio SendGrid API.
    */
-  public function testCanConnectToSendGridApi() {
-    $sg = new SendGrid(self::$apiKey);
-    $headers = [
-      'Authorization: Bearer ' . self::$apiKey,
-      'User-Agent: sendgrid/' . $sg->version . ';php',
-      'Accept: application/json',
-    ];
+  public function testCanConnectToSendGridApi(): void {
+    $sg = new Client(self::$apiKey);
+    $headers = [];
+    $headers['Authorization'] = 'Bearer ' . self::$apiKey;
+    $headers['User-Agent'] = 'sendgrid/' . $sg->version . ';php';
+    $this->assertEquals('https://api.sendgrid.com', $sg->client->getConfig('base_uri')
+      ->__toString());
+    $this->assertEquals($headers, $sg->client->getConfig('headers'));
+    $this->assertEquals('/v3/mail/send', $sg->getEndpoint());
 
-    $this->assertEquals('https://api.sendgrid.com', $sg->client->getHost());
-    $this->assertEquals($headers, $sg->client->getHeaders());
-    $this->assertEquals('/v3', $sg->client->getVersion());
+    $sg = new Client(self::$apiKey, ['url' => 'https://api.test.com']);
+    $this->assertEquals('https://api.test.com', $sg->client->getConfig('base_uri')
+      ->__toString());
 
-    $sg = new SendGrid(self::$apiKey, ['host' => 'https://api.test.com']);
-    $this->assertEquals('https://api.test.com', $sg->client->getHost());
-
-    $sg = new SendGrid(self::$apiKey, ['curl' => ['foo' => 'bar']]);
-    $this->assertEquals(['foo' => 'bar'], $sg->client->getCurlOptions());
-
-    $sg = new SendGrid(
-      self::$apiKey,
-      ['curl' => [CURLOPT_PROXY => '127.0.0.1:8000']]
-    );
-    $this->assertEquals(
-      [10004 => '127.0.0.1:8000'],
-      $sg->client->getCurlOptions()
-    );
-
-    $subuser = 'abcxyz@this.is.a.test.subuser';
-    $headers[] = 'On-Behalf-Of: ' . $subuser;
-    $sg = new SendGrid(
-      self::$apiKey,
-      ['impersonateSubuser' => $subuser]
-    );
-    $this->assertSame($headers, $sg->client->getHeaders());
+    $sg = new Client(self::$apiKey, ['proxy' => ['127.0.0.1:8000']]);
+    $this->assertEquals('127.0.0.1:8000', $sg->client->getConfig('request.options')['proxy'][0]);
   }
 
   /**
    * Test that user can override the API version when instantiating a new
    * SendGrid client.
    */
-  public function testCanOverridePath() {
-    $opts['version'] = '/v4';
-
-    $sg = new SendGrid(self::$apiKey, $opts);
-
-    $this->assertEquals('/v4', $sg->client->getVersion());
+  public function testCanOverridePath(): void {
+    $opts['endpoint'] = '/v4';
+    $sg = new Client(self::$apiKey, $opts);
+    $this->assertEquals('/v4', $sg->getEndpoint());
   }
 }

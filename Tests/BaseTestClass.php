@@ -7,13 +7,13 @@
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
-use SendGrid;
+use SendGrid\Client;
 use Swaggest\JsonDiff\JsonDiff;
 use Swaggest\JsonDiff\JsonPatch;
 
 /**
  * This class facilitates testing the request object
- * generation for a /mail/send API call
+ * generation for a /mail/send API call.
  *
  * @package SendGrid\Mail
  */
@@ -26,18 +26,16 @@ class BaseTestClass extends TestCase {
   protected static $sg;
 
   /**
-   * This method is run before the classes are initialised
-   *
-   * @return null
+   * This method is run before the classes are initialised.
    */
   public static function setUpBeforeClass(): void {
     self::$apiKey = 'SENDGRID_API_KEY';
-    self::$sg = new SendGrid(self::$apiKey);
+    self::$sg = new Client(self::$apiKey);
   }
 
   /**
    * Compares to JSON objects and returns True if equal,
-   * else return array of differences
+   * else return array of differences.
    *
    * @param string $json1 A string representation of a JSON object
    * @param string $json2 A string representation of a JSON object
