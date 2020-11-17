@@ -5,39 +5,36 @@
 
 namespace SendGrid\Tests;
 
-use SendGrid\Mail\SandBoxMode;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Mail\SandBoxMode;
 
 /**
  * This class tests SandBoxMode.
  *
  * @package SendGrid\Tests
  */
-class SandBoxModeTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $sandBoxMode = new SandBoxMode(true);
+class SandBoxModeTest extends TestCase {
 
-        $this->assertInstanceOf(SandBoxMode::class, $sandBoxMode);
-        $this->assertTrue($sandBoxMode->getEnable());
-    }
+  public function testConstructor() {
+    $sandBoxMode = new SandBoxMode(TRUE);
 
-    public function testSetEnable()
-    {
-        $sandBoxMode = new SandBoxMode();
-        $sandBoxMode->setEnable(true);
+    $this->assertInstanceOf(SandBoxMode::class, $sandBoxMode);
+    $this->assertTrue($sandBoxMode->getEnable());
+  }
 
-        $this->assertTrue($sandBoxMode->getEnable());
-    }
+  public function testSetEnable() {
+    $sandBoxMode = new SandBoxMode();
+    $sandBoxMode->setEnable(TRUE);
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$enable" must be a boolean.
-     */
-    public function testSetEnableOnInvalidType()
-    {
-        $sandBoxMode = new SandBoxMode();
-        $sandBoxMode->setEnable('invalid_bool');
-    }
+    $this->assertTrue($sandBoxMode->getEnable());
+  }
+
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$enable" must be a boolean.
+   */
+  public function testSetEnableOnInvalidType() {
+    $sandBoxMode = new SandBoxMode();
+    $sandBoxMode->setEnable('invalid_bool');
+  }
 }

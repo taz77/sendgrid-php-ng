@@ -5,6 +5,40 @@
 
 namespace SendGrid\Tests\Unit;
 
+use SendGrid\Mail\Asm;
+use SendGrid\Mail\Attachment;
+use SendGrid\Mail\BatchId;
+use SendGrid\Mail\Bcc;
+use SendGrid\Mail\BccSettings;
+use SendGrid\Mail\BypassListManagement;
+use SendGrid\Mail\Category;
+use SendGrid\Mail\Cc;
+use SendGrid\Mail\ClickTracking;
+use SendGrid\Mail\Content;
+use SendGrid\Mail\CustomArg;
+use SendGrid\Mail\Footer;
+use SendGrid\Mail\From;
+use SendGrid\Mail\Ganalytics;
+use SendGrid\Mail\GroupId;
+use SendGrid\Mail\GroupsToDisplay;
+use SendGrid\Mail\Header;
+use SendGrid\Mail\HtmlContent;
+use SendGrid\Mail\IpPoolName;
+use SendGrid\Mail\Mail;
+use SendGrid\Mail\MailSettings;
+use SendGrid\Mail\OpenTracking;
+use SendGrid\Mail\PlainTextContent;
+use SendGrid\Mail\ReplyTo;
+use SendGrid\Mail\SandBoxMode;
+use SendGrid\Mail\Section;
+use SendGrid\Mail\SendAt;
+use SendGrid\Mail\SpamCheck;
+use SendGrid\Mail\Subject;
+use SendGrid\Mail\SubscriptionTracking;
+use SendGrid\Mail\Substitution;
+use SendGrid\Mail\TemplateId;
+use SendGrid\Mail\To;
+use SendGrid\Mail\TrackingSettings;
 use SendGrid\Tests\BaseTestClass;
 
 /**
@@ -12,10 +46,9 @@ use SendGrid\Tests\BaseTestClass;
  *
  * @package SendGrid\Tests\Unit
  */
-class KitchenSinkTest extends BaseTestClass
-{
+class KitchenSinkTest extends BaseTestClass {
 
-    private $REQUEST_OBJECT_DYNAMIC = <<<'JSON'
+  private $REQUEST_OBJECT_DYNAMIC = <<<'JSON'
 {
   "asm": {
     "group_id": 1,
@@ -219,7 +252,7 @@ class KitchenSinkTest extends BaseTestClass
 }
 JSON;
 
-    private $REQUEST_OBJECT = <<<'JSON'
+  private $REQUEST_OBJECT = <<<'JSON'
 {
   "asm": {
     "group_id": 1,
@@ -417,806 +450,802 @@ JSON;
 }
 JSON;
 
-    /**
-     * Test all parameters without using objects
-     */
-    public function testKitchenSinkExampleWithoutObjects()
-    {
-        $email = new \SendGrid\Mail\Mail();
-
-        // For a detailed description of each of these settings,
-        // please see the
-        // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
-        $email->setSubject("Sending with Twilio SendGrid is Fun 2");
-
-        $email->addTo("test@example.com", "Example User");
-        $email->addTo("test+1@example.com", "Example User1");
-        $toEmails = [
-            "test+2@example.com" => "Example User2",
-            "test+3@example.com" => "Example User3"
-        ];
-        $email->addTos($toEmails);
-
-        $email->addCc("test+4@example.com", "Example User4");
-        $ccEmails = [
-            "test+5@example.com" => "Example User5",
-            "test+6@example.com" => "Example User6"
-        ];
-        $email->addCcs($ccEmails);
-
-        $email->addBcc("test+7@example.com", "Example User7");
-        $bccEmails = [
-            "test+8@example.com" => "Example User8",
-            "test+9@example.com" => "Example User9"
-        ];
-        $email->addBccs($bccEmails);
-
-        $email->addHeader("X-Test1", "Test1");
-        $email->addHeader("X-Test2", "Test2");
-        $headers = [
-            "X-Test3" => "Test3",
-            "X-Test4" => "Test4",
-        ];
-        $email->addHeaders($headers);
-
-        $email->addSubstitution("%name1%", "Example Name 1");
-        $email->addSubstitution("%city1%", "Denver");
-        $substitutions = [
-            "%name2%" => "Example Name 2",
-            "%city2%" => "Orange"
-        ];
-        $email->addSubstitutions($substitutions);
-
-        $email->addCustomArg("marketing1", "false");
-        $email->addCustomArg("transactional1", "true");
-        $email->addCustomArg("category", "name");
-        $customArgs = [
-            "marketing2" => "true",
-            "transactional2" => "false",
-            "category" => "name"
-        ];
-        $email->addCustomArgs($customArgs);
-
-        $email->setSendAt(1461775051);
-
-        // The values below this comment are global to entire message
-
-        $email->setFrom("test@example.com", "Twilio SendGrid");
-
-        $email->setGlobalSubject("Sending with Twilio SendGrid is Fun and Global 2");
-
-        $email->addContent(
-            "text/plain",
-            "and easy to do anywhere, even with PHP"
-        );
-        $email->addContent(
-            "text/html",
-            "<strong>and easy to do anywhere, even with PHP</strong>"
-        );
-        $contents = [
-            "text/calendar" => "Party Time!!",
-            "text/calendar2" => "Party Time 2!!"
-        ];
-        $email->addContents($contents);
-
-        $email->addAttachment(
-            "base64 encoded content1",
-            "image/png",
-            "banner.png",
-            "inline",
-            "Banner"
-        );
-        $attachments = [
-            [
-                "base64 encoded content2",
-                "banner2.jpeg",
-                "image/jpeg",
-                "attachment",
-                "Banner 3"
-            ],
-            [
-                "base64 encoded content3",
-                "banner3.gif",
-                "image/gif",
-                "inline",
-                "Banner 3"
-            ]
-        ];
-        $email->addAttachments($attachments);
-
-        $email->setTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
-
-        $email->addGlobalHeader("X-Day", "Monday");
-        $globalHeaders = [
-            "X-Month" => "January",
-            "X-Year" => "2017"
-        ];
-        $email->addGlobalHeaders($globalHeaders);
-
-        $email->addSection("%section1%", "Substitution for Section 1 Tag");
-        $sections = [
-            "%section3%" => "Substitution for Section 3 Tag",
-            "%section4%" => "Substitution for Section 4 Tag"
-        ];
-        $email->addSections($sections);
-
-        $email->addCategory("Category 1");
-        $categories = [
-            "Category 2",
-            "Category 3"
-        ];
-        $email->addCategories($categories);
-
-        $email->setBatchId(
-            "MWQxZmIyODYtNjE1Ni0xMWU1LWI3ZTUtMDgwMDI3OGJkMmY2LWEzMmViMjYxMw"
-        );
-
-        $email->setReplyTo("dx+replyto2@example.com", "DX Team Reply To 2");
-
-        $email->setAsm(1, [1, 2, 3, 4]);
-
-        $email->setIpPoolName("23");
-
-        // Mail Settings
-        $email->setBccSettings(true, "bcc@example.com");
-        $email->enableBypassListManagement();
-        //$email->disableBypassListManagement();
-        $email->setFooter(true, "Footer", "<strong>Footer</strong>");
-        $email->enableSandBoxMode();
-        //$email->disableSandBoxMode();
-        $email->setSpamCheck(true, 1, "http://mydomain.com");
-
-        // Tracking Settings
-        $email->setClickTracking(true, true);
-        $email->setOpenTracking(true, "--sub--");
-        $email->setSubscriptionTracking(
-            true,
-            "subscribe",
-            "<bold>subscribe</bold>",
-            "%%sub%%"
-        );
-        $email->setGanalytics(
-            true,
-            "utm_source",
-            "utm_medium",
-            "utm_term",
-            "utm_content",
-            "utm_campaign"
-        );
-
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
-        $this->assertTrue($isEqual);
-    }
-
-    /**
-     * Test all parameters without using objects with dynamic templates
-     */
-    public function testKitchenSinkExampleWithoutObjectsWithDynamicTemplates()
-    {
-        $email = new \SendGrid\Mail\Mail();
-
-        // For a detailed description of each of these settings,
-        // please see the
-        // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
-        $email->setSubject("Sending with Twilio SendGrid is Fun 2");
-
-        $email->addTo("test@example.com", "Example User");
-        $email->addTo("test+1@example.com", "Example User1");
-        $toEmails = [
-            "test+2@example.com" => "Example User2",
-            "test+3@example.com" => "Example User3"
-        ];
-        $email->addTos($toEmails);
-
-        $email->addCc("test+4@example.com", "Example User4");
-        $ccEmails = [
-            "test+5@example.com" => "Example User5",
-            "test+6@example.com" => "Example User6"
-        ];
-        $email->addCcs($ccEmails);
-
-        $email->addBcc("test+7@example.com", "Example User7");
-        $bccEmails = [
-            "test+8@example.com" => "Example User8",
-            "test+9@example.com" => "Example User9"
-        ];
-        $email->addBccs($bccEmails);
-
-        $email->addHeader("X-Test1", "Test1");
-        $email->addHeader("X-Test2", "Test2");
-        $headers = [
-            "X-Test3" => "Test3",
-            "X-Test4" => "Test4",
-        ];
-        $email->addHeaders($headers);
-
-        $email->addDynamicTemplateData('object', [
-            'key1' => 'Key 1',
-            'key2' => 'Key 2',
-        ]);
-        $email->addDynamicTemplateData('boolean', false);
-        $email->addDynamicTemplateData('array', [
-            'index0',
-            'index1',
-        ]);
-        $email->addDynamicTemplateData('number', 1);
-
-        $email->addCustomArg("marketing1", "false");
-        $email->addCustomArg("transactional1", "true");
-        $email->addCustomArg("category", "name");
-        $customArgs = [
-            "marketing2" => "true",
-            "transactional2" => "false",
-            "category" => "name"
-        ];
-        $email->addCustomArgs($customArgs);
-
-        $email->setSendAt(1461775051);
-
-        // The values below this comment are global to entire message
-
-        $email->setFrom("test@example.com", "Twilio SendGrid");
-
-        $email->setGlobalSubject("Sending with Twilio SendGrid is Fun and Global 2");
-
-        $email->addContent(
-            "text/plain",
-            "and easy to do anywhere, even with PHP"
-        );
-        $email->addContent(
-            "text/html",
-            "<strong>and easy to do anywhere, even with PHP</strong>"
-        );
-        $contents = [
-            "text/calendar" => "Party Time!!",
-            "text/calendar2" => "Party Time 2!!"
-        ];
-        $email->addContents($contents);
-
-        $email->addAttachment(
-            "base64 encoded content1",
-            "image/png",
-            "banner.png",
-            "inline",
-            "Banner"
-        );
-        $attachments = [
-            [
-                "base64 encoded content2",
-                "banner2.jpeg",
-                "image/jpeg",
-                "attachment",
-                "Banner 3"
-            ],
-            [
-                "base64 encoded content3",
-                "banner3.gif",
-                "image/gif",
-                "inline",
-                "Banner 3"
-            ]
-        ];
-        $email->addAttachments($attachments);
-
-        $email->setTemplateId("d-13b8f94fbcae4ec6b75270d6cb59f932");
-
-        $email->addGlobalHeader("X-Day", "Monday");
-        $globalHeaders = [
-            "X-Month" => "January",
-            "X-Year" => "2017"
-        ];
-        $email->addGlobalHeaders($globalHeaders);
-
-        $email->addSection("%section1%", "Substitution for Section 1 Tag");
-        $sections = [
-            "%section3%" => "Substitution for Section 3 Tag",
-            "%section4%" => "Substitution for Section 4 Tag"
-        ];
-        $email->addSections($sections);
-
-        $email->addCategory("Category 1");
-        $categories = [
-            "Category 2",
-            "Category 3"
-        ];
-        $email->addCategories($categories);
-
-        $email->setBatchId(
-            "MWQxZmIyODYtNjE1Ni0xMWU1LWI3ZTUtMDgwMDI3OGJkMmY2LWEzMmViMjYxMw"
-        );
-
-        $email->setReplyTo("dx+replyto2@example.com", "DX Team Reply To 2");
-
-        $email->setAsm(1, [1, 2, 3, 4]);
-
-        $email->setIpPoolName("23");
-
-        // Mail Settings
-        $email->setBccSettings(true, "bcc@example.com");
-        $email->enableBypassListManagement();
-        //$email->disableBypassListManagement();
-        $email->setFooter(true, "Footer", "<strong>Footer</strong>");
-        $email->enableSandBoxMode();
-        //$email->disableSandBoxMode();
-        $email->setSpamCheck(true, 1, "http://mydomain.com");
-
-        // Tracking Settings
-        $email->setClickTracking(true, true);
-        $email->setOpenTracking(true, "--sub--");
-        $email->setSubscriptionTracking(
-            true,
-            "subscribe",
-            "<bold>subscribe</bold>",
-            "%%sub%%"
-        );
-        $email->setGanalytics(
-            true,
-            "utm_source",
-            "utm_medium",
-            "utm_term",
-            "utm_content",
-            "utm_campaign"
-        );
-
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_DYNAMIC);
-        $this->assertTrue($isEqual);
-    }
-
-
-    /**
-     * Test all parameters using objects
-     */
-    public function testKitchenSinkExampleWithObjects()
-    {
-        $email = new \SendGrid\Mail\Mail();
-
-        // For a detailed description of each of these settings,
-        // please see the
-        // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
-        $email->setSubject(
-            new \SendGrid\Mail\Subject("Sending with Twilio SendGrid is Fun 2")
-        );
-
-        $email->addTo(new \SendGrid\Mail\To("test@example.com", "Example User"));
-        $email->addTo(new \SendGrid\Mail\To("test+1@example.com", "Example User1"));
-        $toEmails = [
-            new \SendGrid\Mail\To("test+2@example.com", "Example User2"),
-            new \SendGrid\Mail\To("test+3@example.com", "Example User3")
-        ];
-        $email->addTos($toEmails);
-
-        $email->addCc(new \SendGrid\Mail\Cc("test+4@example.com", "Example User4"));
-        $ccEmails = [
-            new \SendGrid\Mail\Cc("test+5@example.com", "Example User5"),
-            new \SendGrid\Mail\Cc("test+6@example.com", "Example User6")
-        ];
-        $email->addCcs($ccEmails);
-
-        $email->addBcc(
-            new \SendGrid\Mail\Bcc("test+7@example.com", "Example User7")
-        );
-        $bccEmails = [
-            new \SendGrid\Mail\Bcc("test+8@example.com", "Example User8"),
-            new \SendGrid\Mail\Bcc("test+9@example.com", "Example User9")
-        ];
-        $email->addBccs($bccEmails);
-
-        $email->addHeader(new \SendGrid\Mail\Header("X-Test1", "Test1"));
-        $email->addHeader(new \SendGrid\Mail\Header("X-Test2", "Test2"));
-        $headers = [
-            new \SendGrid\Mail\Header("X-Test3", "Test3"),
-            new \SendGrid\Mail\Header("X-Test4", "Test4")
-        ];
-        $email->addHeaders($headers);
-
-        $email->addSubstitution(
-            new \SendGrid\Mail\Substitution("%name1%", "Example Name 1")
-        );
-        $email->addSubstitution(
-            new \SendGrid\Mail\Substitution("%city1%", "Denver")
-        );
-        $substitutions = [
-            new \SendGrid\Mail\Substitution("%name2%", "Example Name 2"),
-            new \SendGrid\Mail\Substitution("%city2%", "Orange")
-        ];
-        $email->addSubstitutions($substitutions);
-
-        $email->addCustomArg(new \SendGrid\Mail\CustomArg("marketing1", "false"));
-        $email->addCustomArg(new \SendGrid\Mail\CustomArg("transactional1", "true"));
-        $email->addCustomArg(new \SendGrid\Mail\CustomArg("category", "name"));
-        $customArgs = [
-            new \SendGrid\Mail\CustomArg("marketing2", "true"),
-            new \SendGrid\Mail\CustomArg("transactional2", "false"),
-            new \SendGrid\Mail\CustomArg("category", "name")
-        ];
-        $email->addCustomArgs($customArgs);
-
-        $email->setSendAt(new \SendGrid\Mail\SendAt(1461775051));
-
-        // The values below this comment are global to entire message
-
-        $email->setFrom(new \SendGrid\Mail\From("test@example.com", "Twilio SendGrid"));
-
-        $email->setGlobalSubject(
-            new \SendGrid\Mail\Subject("Sending with Twilio SendGrid is Fun and Global 2")
-        );
-
-        $plainTextContent = new \SendGrid\Mail\PlainTextContent(
-            "and easy to do anywhere, even with PHP"
-        );
-        $htmlContent = new \SendGrid\Mail\HtmlContent(
-            "<strong>and easy to do anywhere, even with PHP</strong>"
-        );
-        $email->addContent($plainTextContent);
-        $email->addContent($htmlContent);
-        $contents = [
-            new \SendGrid\Mail\Content("text/calendar", "Party Time!!"),
-            new \SendGrid\Mail\Content("text/calendar2", "Party Time 2!!")
-        ];
-        $email->addContents($contents);
-
-        $email->addAttachment(
-            new \SendGrid\Mail\Attachment(
-                "base64 encoded content1",
-                "image/png",
-                "banner.png",
-                "inline",
-                "Banner"
-            )
-        );
-        $attachments = [
-            new \SendGrid\Mail\Attachment(
-                "base64 encoded content2",
-                "banner2.jpeg",
-                "image/jpeg",
-                "attachment",
-                "Banner 3"
-            ),
-            new \SendGrid\Mail\Attachment(
-                "base64 encoded content3",
-                "banner3.gif",
-                "image/gif",
-                "inline",
-                "Banner 3"
-            )
-        ];
-        $email->addAttachments($attachments);
-
-        $email->setTemplateId(
-            new \SendGrid\Mail\TemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932")
-        );
-
-        $email->addGlobalHeader(new \SendGrid\Mail\Header("X-Day", "Monday"));
-        $globalHeaders = [
-            new \SendGrid\Mail\Header("X-Month", "January"),
-            new \SendGrid\Mail\Header("X-Year", "2017")
-        ];
-        $email->addGlobalHeaders($globalHeaders);
-
-        $email->addSection(
-            new \SendGrid\Mail\Section(
-                "%section1%",
-                "Substitution for Section 1 Tag"
-            )
-        );
-
-        $sections = [
-            new \SendGrid\Mail\Section(
-                "%section3%",
-                "Substitution for Section 3 Tag"
-            ),
-            new \SendGrid\Mail\Section(
-                "%section4%",
-                "Substitution for Section 4 Tag"
-            )
-        ];
-        $email->addSections($sections);
-
-        $email->addCategory(new \SendGrid\Mail\Category("Category 1"));
-        $categories = [
-            new \SendGrid\Mail\Category("Category 2"),
-            new \SendGrid\Mail\Category("Category 3")
-        ];
-        $email->addCategories($categories);
-
-        $email->setBatchId(
-            new \SendGrid\Mail\BatchId(
-                "MWQxZmIyODYtNjE1Ni0xMWU1LWI3ZTUtMDgwMDI3OGJkMmY2LWEzMmViMjYxMw"
-            )
-        );
-
-        $email->setReplyTo(
-            new \SendGrid\Mail\ReplyTo(
-                "dx+replyto2@example.com",
-                "DX Team Reply To 2"
-            )
-        );
-
-        $asm = new \SendGrid\Mail\Asm(
-            new \SendGrid\Mail\GroupId(1),
-            new \SendGrid\Mail\GroupsToDisplay([1, 2, 3, 4])
-        );
-        $email->setAsm($asm);
-
-        $email->setIpPoolName(new \SendGrid\Mail\IpPoolName("23"));
-
-        $mail_settings = new \SendGrid\Mail\MailSettings();
-        $mail_settings->setBccSettings(
-            new \SendGrid\Mail\BccSettings(true, "bcc@example.com")
-        );
-        $mail_settings->setBypassListManagement(
-            new \SendGrid\Mail\BypassListManagement(true)
-        );
-        $mail_settings->setFooter(
-            new \SendGrid\Mail\Footer(true, "Footer", "<strong>Footer</strong>")
-        );
-        $mail_settings->setSandBoxMode(new \SendGrid\Mail\SandBoxMode(true));
-        $mail_settings->setSpamCheck(
-            new \SendGrid\Mail\SpamCheck(true, 1, "http://mydomain.com")
-        );
-        $email->setMailSettings($mail_settings);
-
-        $tracking_settings = new \SendGrid\Mail\TrackingSettings();
-        $tracking_settings->setClickTracking(
-            new \SendGrid\Mail\ClickTracking(true, true)
-        );
-        $tracking_settings->setOpenTracking(
-            new \SendGrid\Mail\OpenTracking(true, "--sub--")
-        );
-        $tracking_settings->setSubscriptionTracking(
-            new \SendGrid\Mail\SubscriptionTracking(
-                true,
-                "subscribe",
-                "<bold>subscribe</bold>",
-                "%%sub%%"
-            )
-        );
-        $tracking_settings->setGanalytics(
-            new \SendGrid\Mail\Ganalytics(
-                true,
-                "utm_source",
-                "utm_medium",
-                "utm_term",
-                "utm_content",
-                "utm_campaign"
-            )
-        );
-        $email->setTrackingSettings($tracking_settings);
-
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
-        $this->assertTrue($isEqual);
-    }
-
-    /**
-     * Test all parameters using objects with dynamic templates
-     */
-    public function testKitchenSinkExampleWithObjectsWithDynamicTemplate()
-    {
-        $email = new \SendGrid\Mail\Mail();
-
-        // For a detailed description of each of these settings,
-        // please see the
-        // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
-        $email->setSubject(
-            new \SendGrid\Mail\Subject("Sending with Twilio SendGrid is Fun 2")
-        );
-
-        $email->addTo(new \SendGrid\Mail\To("test@example.com", "Example User"));
-        $email->addTo(new \SendGrid\Mail\To("test+1@example.com", "Example User1"));
-        $toEmails = [
-            new \SendGrid\Mail\To("test+2@example.com", "Example User2"),
-            new \SendGrid\Mail\To("test+3@example.com", "Example User3")
-        ];
-        $email->addTos($toEmails);
-
-        $email->addCc(new \SendGrid\Mail\Cc("test+4@example.com", "Example User4"));
-        $ccEmails = [
-            new \SendGrid\Mail\Cc("test+5@example.com", "Example User5"),
-            new \SendGrid\Mail\Cc("test+6@example.com", "Example User6")
-        ];
-        $email->addCcs($ccEmails);
-
-        $email->addBcc(
-            new \SendGrid\Mail\Bcc("test+7@example.com", "Example User7")
-        );
-        $bccEmails = [
-            new \SendGrid\Mail\Bcc("test+8@example.com", "Example User8"),
-            new \SendGrid\Mail\Bcc("test+9@example.com", "Example User9")
-        ];
-        $email->addBccs($bccEmails);
-
-        $email->addHeader(new \SendGrid\Mail\Header("X-Test1", "Test1"));
-        $email->addHeader(new \SendGrid\Mail\Header("X-Test2", "Test2"));
-        $headers = [
-            new \SendGrid\Mail\Header("X-Test3", "Test3"),
-            new \SendGrid\Mail\Header("X-Test4", "Test4")
-        ];
-        $email->addHeaders($headers);
-
-        $email->addDynamicTemplateData(
-            new \SendGrid\Mail\Substitution('object', [
-                'key1' => 'Key 1',
-                'key2' => 'Key 2',
-            ])
-        );
-        $email->addDynamicTemplateData(
-            new \SendGrid\Mail\Substitution('boolean', false)
-        );
-        $email->addDynamicTemplateDatas([
-            new \SendGrid\Mail\Substitution('array', [
-                'index0',
-                'index1',
-            ]),
-            new \SendGrid\Mail\Substitution('number', 1),
-        ]);
-
-        $email->addCustomArg(new \SendGrid\Mail\CustomArg("marketing1", "false"));
-        $email->addCustomArg(new \SendGrid\Mail\CustomArg("transactional1", "true"));
-        $email->addCustomArg(new \SendGrid\Mail\CustomArg("category", "name"));
-        $customArgs = [
-            new \SendGrid\Mail\CustomArg("marketing2", "true"),
-            new \SendGrid\Mail\CustomArg("transactional2", "false"),
-            new \SendGrid\Mail\CustomArg("category", "name")
-        ];
-        $email->addCustomArgs($customArgs);
-
-        $email->setSendAt(new \SendGrid\Mail\SendAt(1461775051));
-
-        // The values below this comment are global to entire message
-
-        $email->setFrom(new \SendGrid\Mail\From("test@example.com", "Twilio SendGrid"));
-
-        $email->setGlobalSubject(
-            new \SendGrid\Mail\Subject("Sending with Twilio SendGrid is Fun and Global 2")
-        );
-
-        $plainTextContent = new \SendGrid\Mail\PlainTextContent(
-            "and easy to do anywhere, even with PHP"
-        );
-        $htmlContent = new \SendGrid\Mail\HtmlContent(
-            "<strong>and easy to do anywhere, even with PHP</strong>"
-        );
-        $email->addContent($plainTextContent);
-        $email->addContent($htmlContent);
-        $contents = [
-            new \SendGrid\Mail\Content("text/calendar", "Party Time!!"),
-            new \SendGrid\Mail\Content("text/calendar2", "Party Time 2!!")
-        ];
-        $email->addContents($contents);
-
-        $email->addAttachment(
-            new \SendGrid\Mail\Attachment(
-                "base64 encoded content1",
-                "image/png",
-                "banner.png",
-                "inline",
-                "Banner"
-            )
-        );
-        $attachments = [
-            new \SendGrid\Mail\Attachment(
-                "base64 encoded content2",
-                "banner2.jpeg",
-                "image/jpeg",
-                "attachment",
-                "Banner 3"
-            ),
-            new \SendGrid\Mail\Attachment(
-                "base64 encoded content3",
-                "banner3.gif",
-                "image/gif",
-                "inline",
-                "Banner 3"
-            )
-        ];
-        $email->addAttachments($attachments);
-
-        $email->setTemplateId(
-            new \SendGrid\Mail\TemplateId("d-13b8f94fbcae4ec6b75270d6cb59f932")
-        );
-
-        $email->addGlobalHeader(new \SendGrid\Mail\Header("X-Day", "Monday"));
-        $globalHeaders = [
-            new \SendGrid\Mail\Header("X-Month", "January"),
-            new \SendGrid\Mail\Header("X-Year", "2017")
-        ];
-        $email->addGlobalHeaders($globalHeaders);
-
-        $email->addSection(
-            new \SendGrid\Mail\Section(
-                "%section1%",
-                "Substitution for Section 1 Tag"
-            )
-        );
-
-        $sections = [
-            new \SendGrid\Mail\Section(
-                "%section3%",
-                "Substitution for Section 3 Tag"
-            ),
-            new \SendGrid\Mail\Section(
-                "%section4%",
-                "Substitution for Section 4 Tag"
-            )
-        ];
-        $email->addSections($sections);
-
-        $email->addCategory(new \SendGrid\Mail\Category("Category 1"));
-        $categories = [
-            new \SendGrid\Mail\Category("Category 2"),
-            new \SendGrid\Mail\Category("Category 3")
-        ];
-        $email->addCategories($categories);
-
-        $email->setBatchId(
-            new \SendGrid\Mail\BatchId(
-                "MWQxZmIyODYtNjE1Ni0xMWU1LWI3ZTUtMDgwMDI3OGJkMmY2LWEzMmViMjYxMw"
-            )
-        );
-
-        $email->setReplyTo(
-            new \SendGrid\Mail\ReplyTo(
-                "dx+replyto2@example.com",
-                "DX Team Reply To 2"
-            )
-        );
-
-        $asm = new \SendGrid\Mail\Asm(
-            new \SendGrid\Mail\GroupId(1),
-            new \SendGrid\Mail\GroupsToDisplay([1, 2, 3, 4])
-        );
-        $email->setAsm($asm);
-
-        $email->setIpPoolName(new \SendGrid\Mail\IpPoolName("23"));
-
-        $mail_settings = new \SendGrid\Mail\MailSettings();
-        $mail_settings->setBccSettings(
-            new \SendGrid\Mail\BccSettings(true, "bcc@example.com")
-        );
-        $mail_settings->setBypassListManagement(
-            new \SendGrid\Mail\BypassListManagement(true)
-        );
-        $mail_settings->setFooter(
-            new \SendGrid\Mail\Footer(true, "Footer", "<strong>Footer</strong>")
-        );
-        $mail_settings->setSandBoxMode(new \SendGrid\Mail\SandBoxMode(true));
-        $mail_settings->setSpamCheck(
-            new \SendGrid\Mail\SpamCheck(true, 1, "http://mydomain.com")
-        );
-        $email->setMailSettings($mail_settings);
-
-        $tracking_settings = new \SendGrid\Mail\TrackingSettings();
-        $tracking_settings->setClickTracking(
-            new \SendGrid\Mail\ClickTracking(true, true)
-        );
-        $tracking_settings->setOpenTracking(
-            new \SendGrid\Mail\OpenTracking(true, "--sub--")
-        );
-        $tracking_settings->setSubscriptionTracking(
-            new \SendGrid\Mail\SubscriptionTracking(
-                true,
-                "subscribe",
-                "<bold>subscribe</bold>",
-                "%%sub%%"
-            )
-        );
-        $tracking_settings->setGanalytics(
-            new \SendGrid\Mail\Ganalytics(
-                true,
-                "utm_source",
-                "utm_medium",
-                "utm_term",
-                "utm_content",
-                "utm_campaign"
-            )
-        );
-        $email->setTrackingSettings($tracking_settings);
-
-        $json = json_encode($email->jsonSerialize());
-        $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_DYNAMIC);
-        $this->assertTrue($isEqual);
-    }
+  /**
+   * Test all parameters without using objects
+   */
+  public function testKitchenSinkExampleWithoutObjects() {
+    $email = new Mail();
+
+    // For a detailed description of each of these settings,
+    // please see the
+    // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
+    $email->setSubject("Sending with Twilio SendGrid is Fun 2");
+
+    $email->addTo("test@example.com", "Example User");
+    $email->addTo("test+1@example.com", "Example User1");
+    $toEmails = [
+      "test+2@example.com" => "Example User2",
+      "test+3@example.com" => "Example User3",
+    ];
+    $email->addTos($toEmails);
+
+    $email->addCc("test+4@example.com", "Example User4");
+    $ccEmails = [
+      "test+5@example.com" => "Example User5",
+      "test+6@example.com" => "Example User6",
+    ];
+    $email->addCcs($ccEmails);
+
+    $email->addBcc("test+7@example.com", "Example User7");
+    $bccEmails = [
+      "test+8@example.com" => "Example User8",
+      "test+9@example.com" => "Example User9",
+    ];
+    $email->addBccs($bccEmails);
+
+    $email->addHeader("X-Test1", "Test1");
+    $email->addHeader("X-Test2", "Test2");
+    $headers = [
+      "X-Test3" => "Test3",
+      "X-Test4" => "Test4",
+    ];
+    $email->addHeaders($headers);
+
+    $email->addSubstitution("%name1%", "Example Name 1");
+    $email->addSubstitution("%city1%", "Denver");
+    $substitutions = [
+      "%name2%" => "Example Name 2",
+      "%city2%" => "Orange",
+    ];
+    $email->addSubstitutions($substitutions);
+
+    $email->addCustomArg("marketing1", "false");
+    $email->addCustomArg("transactional1", "true");
+    $email->addCustomArg("category", "name");
+    $customArgs = [
+      "marketing2" => "true",
+      "transactional2" => "false",
+      "category" => "name",
+    ];
+    $email->addCustomArgs($customArgs);
+
+    $email->setSendAt(1461775051);
+
+    // The values below this comment are global to entire message
+
+    $email->setFrom("test@example.com", "Twilio SendGrid");
+
+    $email->setGlobalSubject("Sending with Twilio SendGrid is Fun and Global 2");
+
+    $email->addContent(
+      "text/plain",
+      "and easy to do anywhere, even with PHP"
+    );
+    $email->addContent(
+      "text/html",
+      "<strong>and easy to do anywhere, even with PHP</strong>"
+    );
+    $contents = [
+      "text/calendar" => "Party Time!!",
+      "text/calendar2" => "Party Time 2!!",
+    ];
+    $email->addContents($contents);
+
+    $email->addAttachment(
+      "base64 encoded content1",
+      "image/png",
+      "banner.png",
+      "inline",
+      "Banner"
+    );
+    $attachments = [
+      [
+        "base64 encoded content2",
+        "banner2.jpeg",
+        "image/jpeg",
+        "attachment",
+        "Banner 3",
+      ],
+      [
+        "base64 encoded content3",
+        "banner3.gif",
+        "image/gif",
+        "inline",
+        "Banner 3",
+      ],
+    ];
+    $email->addAttachments($attachments);
+
+    $email->setTemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932");
+
+    $email->addGlobalHeader("X-Day", "Monday");
+    $globalHeaders = [
+      "X-Month" => "January",
+      "X-Year" => "2017",
+    ];
+    $email->addGlobalHeaders($globalHeaders);
+
+    $email->addSection("%section1%", "Substitution for Section 1 Tag");
+    $sections = [
+      "%section3%" => "Substitution for Section 3 Tag",
+      "%section4%" => "Substitution for Section 4 Tag",
+    ];
+    $email->addSections($sections);
+
+    $email->addCategory("Category 1");
+    $categories = [
+      "Category 2",
+      "Category 3",
+    ];
+    $email->addCategories($categories);
+
+    $email->setBatchId(
+      "MWQxZmIyODYtNjE1Ni0xMWU1LWI3ZTUtMDgwMDI3OGJkMmY2LWEzMmViMjYxMw"
+    );
+
+    $email->setReplyTo("dx+replyto2@example.com", "DX Team Reply To 2");
+
+    $email->setAsm(1, [1, 2, 3, 4]);
+
+    $email->setIpPoolName("23");
+
+    // Mail Settings
+    $email->setBccSettings(TRUE, "bcc@example.com");
+    $email->enableBypassListManagement();
+    //$email->disableBypassListManagement();
+    $email->setFooter(TRUE, "Footer", "<strong>Footer</strong>");
+    $email->enableSandBoxMode();
+    //$email->disableSandBoxMode();
+    $email->setSpamCheck(TRUE, 1, "http://mydomain.com");
+
+    // Tracking Settings
+    $email->setClickTracking(TRUE, TRUE);
+    $email->setOpenTracking(TRUE, "--sub--");
+    $email->setSubscriptionTracking(
+      TRUE,
+      "subscribe",
+      "<bold>subscribe</bold>",
+      "%%sub%%"
+    );
+    $email->setGanalytics(
+      TRUE,
+      "utm_source",
+      "utm_medium",
+      "utm_term",
+      "utm_content",
+      "utm_campaign"
+    );
+
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
+    $this->assertTrue($isEqual);
+  }
+
+  /**
+   * Test all parameters without using objects with dynamic templates
+   */
+  public function testKitchenSinkExampleWithoutObjectsWithDynamicTemplates() {
+    $email = new Mail();
+
+    // For a detailed description of each of these settings,
+    // please see the
+    // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
+    $email->setSubject("Sending with Twilio SendGrid is Fun 2");
+
+    $email->addTo("test@example.com", "Example User");
+    $email->addTo("test+1@example.com", "Example User1");
+    $toEmails = [
+      "test+2@example.com" => "Example User2",
+      "test+3@example.com" => "Example User3",
+    ];
+    $email->addTos($toEmails);
+
+    $email->addCc("test+4@example.com", "Example User4");
+    $ccEmails = [
+      "test+5@example.com" => "Example User5",
+      "test+6@example.com" => "Example User6",
+    ];
+    $email->addCcs($ccEmails);
+
+    $email->addBcc("test+7@example.com", "Example User7");
+    $bccEmails = [
+      "test+8@example.com" => "Example User8",
+      "test+9@example.com" => "Example User9",
+    ];
+    $email->addBccs($bccEmails);
+
+    $email->addHeader("X-Test1", "Test1");
+    $email->addHeader("X-Test2", "Test2");
+    $headers = [
+      "X-Test3" => "Test3",
+      "X-Test4" => "Test4",
+    ];
+    $email->addHeaders($headers);
+
+    $email->addDynamicTemplateData('object', [
+      'key1' => 'Key 1',
+      'key2' => 'Key 2',
+    ]);
+    $email->addDynamicTemplateData('boolean', FALSE);
+    $email->addDynamicTemplateData('array', [
+      'index0',
+      'index1',
+    ]);
+    $email->addDynamicTemplateData('number', 1);
+
+    $email->addCustomArg("marketing1", "false");
+    $email->addCustomArg("transactional1", "true");
+    $email->addCustomArg("category", "name");
+    $customArgs = [
+      "marketing2" => "true",
+      "transactional2" => "false",
+      "category" => "name",
+    ];
+    $email->addCustomArgs($customArgs);
+
+    $email->setSendAt(1461775051);
+
+    // The values below this comment are global to entire message
+
+    $email->setFrom("test@example.com", "Twilio SendGrid");
+
+    $email->setGlobalSubject("Sending with Twilio SendGrid is Fun and Global 2");
+
+    $email->addContent(
+      "text/plain",
+      "and easy to do anywhere, even with PHP"
+    );
+    $email->addContent(
+      "text/html",
+      "<strong>and easy to do anywhere, even with PHP</strong>"
+    );
+    $contents = [
+      "text/calendar" => "Party Time!!",
+      "text/calendar2" => "Party Time 2!!",
+    ];
+    $email->addContents($contents);
+
+    $email->addAttachment(
+      "base64 encoded content1",
+      "image/png",
+      "banner.png",
+      "inline",
+      "Banner"
+    );
+    $attachments = [
+      [
+        "base64 encoded content2",
+        "banner2.jpeg",
+        "image/jpeg",
+        "attachment",
+        "Banner 3",
+      ],
+      [
+        "base64 encoded content3",
+        "banner3.gif",
+        "image/gif",
+        "inline",
+        "Banner 3",
+      ],
+    ];
+    $email->addAttachments($attachments);
+
+    $email->setTemplateId("d-13b8f94fbcae4ec6b75270d6cb59f932");
+
+    $email->addGlobalHeader("X-Day", "Monday");
+    $globalHeaders = [
+      "X-Month" => "January",
+      "X-Year" => "2017",
+    ];
+    $email->addGlobalHeaders($globalHeaders);
+
+    $email->addSection("%section1%", "Substitution for Section 1 Tag");
+    $sections = [
+      "%section3%" => "Substitution for Section 3 Tag",
+      "%section4%" => "Substitution for Section 4 Tag",
+    ];
+    $email->addSections($sections);
+
+    $email->addCategory("Category 1");
+    $categories = [
+      "Category 2",
+      "Category 3",
+    ];
+    $email->addCategories($categories);
+
+    $email->setBatchId(
+      "MWQxZmIyODYtNjE1Ni0xMWU1LWI3ZTUtMDgwMDI3OGJkMmY2LWEzMmViMjYxMw"
+    );
+
+    $email->setReplyTo("dx+replyto2@example.com", "DX Team Reply To 2");
+
+    $email->setAsm(1, [1, 2, 3, 4]);
+
+    $email->setIpPoolName("23");
+
+    // Mail Settings
+    $email->setBccSettings(TRUE, "bcc@example.com");
+    $email->enableBypassListManagement();
+    //$email->disableBypassListManagement();
+    $email->setFooter(TRUE, "Footer", "<strong>Footer</strong>");
+    $email->enableSandBoxMode();
+    //$email->disableSandBoxMode();
+    $email->setSpamCheck(TRUE, 1, "http://mydomain.com");
+
+    // Tracking Settings
+    $email->setClickTracking(TRUE, TRUE);
+    $email->setOpenTracking(TRUE, "--sub--");
+    $email->setSubscriptionTracking(
+      TRUE,
+      "subscribe",
+      "<bold>subscribe</bold>",
+      "%%sub%%"
+    );
+    $email->setGanalytics(
+      TRUE,
+      "utm_source",
+      "utm_medium",
+      "utm_term",
+      "utm_content",
+      "utm_campaign"
+    );
+
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_DYNAMIC);
+    $this->assertTrue($isEqual);
+  }
+
+
+  /**
+   * Test all parameters using objects
+   */
+  public function testKitchenSinkExampleWithObjects() {
+    $email = new Mail();
+
+    // For a detailed description of each of these settings,
+    // please see the
+    // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
+    $email->setSubject(
+      new Subject("Sending with Twilio SendGrid is Fun 2")
+    );
+
+    $email->addTo(new To("test@example.com", "Example User"));
+    $email->addTo(new To("test+1@example.com", "Example User1"));
+    $toEmails = [
+      new To("test+2@example.com", "Example User2"),
+      new To("test+3@example.com", "Example User3"),
+    ];
+    $email->addTos($toEmails);
+
+    $email->addCc(new Cc("test+4@example.com", "Example User4"));
+    $ccEmails = [
+      new Cc("test+5@example.com", "Example User5"),
+      new Cc("test+6@example.com", "Example User6"),
+    ];
+    $email->addCcs($ccEmails);
+
+    $email->addBcc(
+      new Bcc("test+7@example.com", "Example User7")
+    );
+    $bccEmails = [
+      new Bcc("test+8@example.com", "Example User8"),
+      new Bcc("test+9@example.com", "Example User9"),
+    ];
+    $email->addBccs($bccEmails);
+
+    $email->addHeader(new Header("X-Test1", "Test1"));
+    $email->addHeader(new Header("X-Test2", "Test2"));
+    $headers = [
+      new Header("X-Test3", "Test3"),
+      new Header("X-Test4", "Test4"),
+    ];
+    $email->addHeaders($headers);
+
+    $email->addSubstitution(
+      new Substitution("%name1%", "Example Name 1")
+    );
+    $email->addSubstitution(
+      new Substitution("%city1%", "Denver")
+    );
+    $substitutions = [
+      new Substitution("%name2%", "Example Name 2"),
+      new Substitution("%city2%", "Orange"),
+    ];
+    $email->addSubstitutions($substitutions);
+
+    $email->addCustomArg(new CustomArg("marketing1", "false"));
+    $email->addCustomArg(new CustomArg("transactional1", "true"));
+    $email->addCustomArg(new CustomArg("category", "name"));
+    $customArgs = [
+      new CustomArg("marketing2", "true"),
+      new CustomArg("transactional2", "false"),
+      new CustomArg("category", "name"),
+    ];
+    $email->addCustomArgs($customArgs);
+
+    $email->setSendAt(new SendAt(1461775051));
+
+    // The values below this comment are global to entire message
+
+    $email->setFrom(new From("test@example.com", "Twilio SendGrid"));
+
+    $email->setGlobalSubject(
+      new Subject("Sending with Twilio SendGrid is Fun and Global 2")
+    );
+
+    $plainTextContent = new PlainTextContent(
+      "and easy to do anywhere, even with PHP"
+    );
+    $htmlContent = new HtmlContent(
+      "<strong>and easy to do anywhere, even with PHP</strong>"
+    );
+    $email->addContent($plainTextContent);
+    $email->addContent($htmlContent);
+    $contents = [
+      new Content("text/calendar", "Party Time!!"),
+      new Content("text/calendar2", "Party Time 2!!"),
+    ];
+    $email->addContents($contents);
+
+    $email->addAttachment(
+      new Attachment(
+        "base64 encoded content1",
+        "image/png",
+        "banner.png",
+        "inline",
+        "Banner"
+      )
+    );
+    $attachments = [
+      new Attachment(
+        "base64 encoded content2",
+        "banner2.jpeg",
+        "image/jpeg",
+        "attachment",
+        "Banner 3"
+      ),
+      new Attachment(
+        "base64 encoded content3",
+        "banner3.gif",
+        "image/gif",
+        "inline",
+        "Banner 3"
+      ),
+    ];
+    $email->addAttachments($attachments);
+
+    $email->setTemplateId(
+      new TemplateId("13b8f94f-bcae-4ec6-b752-70d6cb59f932")
+    );
+
+    $email->addGlobalHeader(new Header("X-Day", "Monday"));
+    $globalHeaders = [
+      new Header("X-Month", "January"),
+      new Header("X-Year", "2017"),
+    ];
+    $email->addGlobalHeaders($globalHeaders);
+
+    $email->addSection(
+      new Section(
+        "%section1%",
+        "Substitution for Section 1 Tag"
+      )
+    );
+
+    $sections = [
+      new Section(
+        "%section3%",
+        "Substitution for Section 3 Tag"
+      ),
+      new Section(
+        "%section4%",
+        "Substitution for Section 4 Tag"
+      ),
+    ];
+    $email->addSections($sections);
+
+    $email->addCategory(new Category("Category 1"));
+    $categories = [
+      new Category("Category 2"),
+      new Category("Category 3"),
+    ];
+    $email->addCategories($categories);
+
+    $email->setBatchId(
+      new BatchId(
+        "MWQxZmIyODYtNjE1Ni0xMWU1LWI3ZTUtMDgwMDI3OGJkMmY2LWEzMmViMjYxMw"
+      )
+    );
+
+    $email->setReplyTo(
+      new ReplyTo(
+        "dx+replyto2@example.com",
+        "DX Team Reply To 2"
+      )
+    );
+
+    $asm = new Asm(
+      new GroupId(1),
+      new GroupsToDisplay([1, 2, 3, 4])
+    );
+    $email->setAsm($asm);
+
+    $email->setIpPoolName(new IpPoolName("23"));
+
+    $mail_settings = new MailSettings();
+    $mail_settings->setBccSettings(
+      new BccSettings(TRUE, "bcc@example.com")
+    );
+    $mail_settings->setBypassListManagement(
+      new BypassListManagement(TRUE)
+    );
+    $mail_settings->setFooter(
+      new Footer(TRUE, "Footer", "<strong>Footer</strong>")
+    );
+    $mail_settings->setSandBoxMode(new SandBoxMode(TRUE));
+    $mail_settings->setSpamCheck(
+      new SpamCheck(TRUE, 1, "http://mydomain.com")
+    );
+    $email->setMailSettings($mail_settings);
+
+    $tracking_settings = new TrackingSettings();
+    $tracking_settings->setClickTracking(
+      new ClickTracking(TRUE, TRUE)
+    );
+    $tracking_settings->setOpenTracking(
+      new OpenTracking(TRUE, "--sub--")
+    );
+    $tracking_settings->setSubscriptionTracking(
+      new SubscriptionTracking(
+        TRUE,
+        "subscribe",
+        "<bold>subscribe</bold>",
+        "%%sub%%"
+      )
+    );
+    $tracking_settings->setGanalytics(
+      new Ganalytics(
+        TRUE,
+        "utm_source",
+        "utm_medium",
+        "utm_term",
+        "utm_content",
+        "utm_campaign"
+      )
+    );
+    $email->setTrackingSettings($tracking_settings);
+
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT);
+    $this->assertTrue($isEqual);
+  }
+
+  /**
+   * Test all parameters using objects with dynamic templates
+   */
+  public function testKitchenSinkExampleWithObjectsWithDynamicTemplate() {
+    $email = new Mail();
+
+    // For a detailed description of each of these settings,
+    // please see the
+    // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
+    $email->setSubject(
+      new Subject("Sending with Twilio SendGrid is Fun 2")
+    );
+
+    $email->addTo(new To("test@example.com", "Example User"));
+    $email->addTo(new To("test+1@example.com", "Example User1"));
+    $toEmails = [
+      new To("test+2@example.com", "Example User2"),
+      new To("test+3@example.com", "Example User3"),
+    ];
+    $email->addTos($toEmails);
+
+    $email->addCc(new Cc("test+4@example.com", "Example User4"));
+    $ccEmails = [
+      new Cc("test+5@example.com", "Example User5"),
+      new Cc("test+6@example.com", "Example User6"),
+    ];
+    $email->addCcs($ccEmails);
+
+    $email->addBcc(
+      new Bcc("test+7@example.com", "Example User7")
+    );
+    $bccEmails = [
+      new Bcc("test+8@example.com", "Example User8"),
+      new Bcc("test+9@example.com", "Example User9"),
+    ];
+    $email->addBccs($bccEmails);
+
+    $email->addHeader(new Header("X-Test1", "Test1"));
+    $email->addHeader(new Header("X-Test2", "Test2"));
+    $headers = [
+      new Header("X-Test3", "Test3"),
+      new Header("X-Test4", "Test4"),
+    ];
+    $email->addHeaders($headers);
+
+    $email->addDynamicTemplateData(
+      new Substitution('object', [
+        'key1' => 'Key 1',
+        'key2' => 'Key 2',
+      ])
+    );
+    $email->addDynamicTemplateData(
+      new Substitution('boolean', FALSE)
+    );
+    $email->addDynamicTemplateDatas([
+      new Substitution('array', [
+        'index0',
+        'index1',
+      ]),
+      new Substitution('number', 1),
+    ]);
+
+    $email->addCustomArg(new CustomArg("marketing1", "false"));
+    $email->addCustomArg(new CustomArg("transactional1", "true"));
+    $email->addCustomArg(new CustomArg("category", "name"));
+    $customArgs = [
+      new CustomArg("marketing2", "true"),
+      new CustomArg("transactional2", "false"),
+      new CustomArg("category", "name"),
+    ];
+    $email->addCustomArgs($customArgs);
+
+    $email->setSendAt(new SendAt(1461775051));
+
+    // The values below this comment are global to entire message
+
+    $email->setFrom(new From("test@example.com", "Twilio SendGrid"));
+
+    $email->setGlobalSubject(
+      new Subject("Sending with Twilio SendGrid is Fun and Global 2")
+    );
+
+    $plainTextContent = new PlainTextContent(
+      "and easy to do anywhere, even with PHP"
+    );
+    $htmlContent = new HtmlContent(
+      "<strong>and easy to do anywhere, even with PHP</strong>"
+    );
+    $email->addContent($plainTextContent);
+    $email->addContent($htmlContent);
+    $contents = [
+      new Content("text/calendar", "Party Time!!"),
+      new Content("text/calendar2", "Party Time 2!!"),
+    ];
+    $email->addContents($contents);
+
+    $email->addAttachment(
+      new Attachment(
+        "base64 encoded content1",
+        "image/png",
+        "banner.png",
+        "inline",
+        "Banner"
+      )
+    );
+    $attachments = [
+      new Attachment(
+        "base64 encoded content2",
+        "banner2.jpeg",
+        "image/jpeg",
+        "attachment",
+        "Banner 3"
+      ),
+      new Attachment(
+        "base64 encoded content3",
+        "banner3.gif",
+        "image/gif",
+        "inline",
+        "Banner 3"
+      ),
+    ];
+    $email->addAttachments($attachments);
+
+    $email->setTemplateId(
+      new TemplateId("d-13b8f94fbcae4ec6b75270d6cb59f932")
+    );
+
+    $email->addGlobalHeader(new Header("X-Day", "Monday"));
+    $globalHeaders = [
+      new Header("X-Month", "January"),
+      new Header("X-Year", "2017"),
+    ];
+    $email->addGlobalHeaders($globalHeaders);
+
+    $email->addSection(
+      new Section(
+        "%section1%",
+        "Substitution for Section 1 Tag"
+      )
+    );
+
+    $sections = [
+      new Section(
+        "%section3%",
+        "Substitution for Section 3 Tag"
+      ),
+      new Section(
+        "%section4%",
+        "Substitution for Section 4 Tag"
+      ),
+    ];
+    $email->addSections($sections);
+
+    $email->addCategory(new Category("Category 1"));
+    $categories = [
+      new Category("Category 2"),
+      new Category("Category 3"),
+    ];
+    $email->addCategories($categories);
+
+    $email->setBatchId(
+      new BatchId(
+        "MWQxZmIyODYtNjE1Ni0xMWU1LWI3ZTUtMDgwMDI3OGJkMmY2LWEzMmViMjYxMw"
+      )
+    );
+
+    $email->setReplyTo(
+      new ReplyTo(
+        "dx+replyto2@example.com",
+        "DX Team Reply To 2"
+      )
+    );
+
+    $asm = new Asm(
+      new GroupId(1),
+      new GroupsToDisplay([1, 2, 3, 4])
+    );
+    $email->setAsm($asm);
+
+    $email->setIpPoolName(new IpPoolName("23"));
+
+    $mail_settings = new MailSettings();
+    $mail_settings->setBccSettings(
+      new BccSettings(TRUE, "bcc@example.com")
+    );
+    $mail_settings->setBypassListManagement(
+      new BypassListManagement(TRUE)
+    );
+    $mail_settings->setFooter(
+      new Footer(TRUE, "Footer", "<strong>Footer</strong>")
+    );
+    $mail_settings->setSandBoxMode(new SandBoxMode(TRUE));
+    $mail_settings->setSpamCheck(
+      new SpamCheck(TRUE, 1, "http://mydomain.com")
+    );
+    $email->setMailSettings($mail_settings);
+
+    $tracking_settings = new TrackingSettings();
+    $tracking_settings->setClickTracking(
+      new ClickTracking(TRUE, TRUE)
+    );
+    $tracking_settings->setOpenTracking(
+      new OpenTracking(TRUE, "--sub--")
+    );
+    $tracking_settings->setSubscriptionTracking(
+      new SubscriptionTracking(
+        TRUE,
+        "subscribe",
+        "<bold>subscribe</bold>",
+        "%%sub%%"
+      )
+    );
+    $tracking_settings->setGanalytics(
+      new Ganalytics(
+        TRUE,
+        "utm_source",
+        "utm_medium",
+        "utm_term",
+        "utm_content",
+        "utm_campaign"
+      )
+    );
+    $email->setTrackingSettings($tracking_settings);
+
+    $json = json_encode($email->jsonSerialize());
+    $isEqual = BaseTestClass::compareJSONObjects($json, $this->REQUEST_OBJECT_DYNAMIC);
+    $this->assertTrue($isEqual);
+  }
 }

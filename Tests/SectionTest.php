@@ -5,58 +5,53 @@
 
 namespace SendGrid\Tests;
 
-use SendGrid\Mail\Section;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Mail\Section;
 
 /**
  * This class tests Section.
  *
  * @package SendGrid\Tests
  */
-class SectionTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $section = new Section('key', 'value');
+class SectionTest extends TestCase {
 
-        $this->assertInstanceOf(Section::class, $section);
-        $this->assertSame('key', $section->getKey());
-        $this->assertSame('value', $section->getValue());
-    }
+  public function testConstructor() {
+    $section = new Section('key', 'value');
 
-    public function testSetKey()
-    {
-        $section = new Section();
-        $section->setKey('key');
+    $this->assertInstanceOf(Section::class, $section);
+    $this->assertSame('key', $section->getKey());
+    $this->assertSame('value', $section->getValue());
+  }
 
-        $this->assertSame('key', $section->getKey());
-    }
+  public function testSetKey() {
+    $section = new Section();
+    $section->setKey('key');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$key" must be a string.
-     */
-    public function testSetKeyOnInvalidType()
-    {
-        $section = new Section();
-        $section->setKey(true);
-    }
+    $this->assertSame('key', $section->getKey());
+  }
 
-    public function testSetValue()
-    {
-        $section = new Section();
-        $section->setValue('value');
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$key" must be a string.
+   */
+  public function testSetKeyOnInvalidType() {
+    $section = new Section();
+    $section->setKey(TRUE);
+  }
 
-        $this->assertSame('value', $section->getValue());
-    }
+  public function testSetValue() {
+    $section = new Section();
+    $section->setValue('value');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$value" must be a string.
-     */
-    public function testSetValueOnInvalidType()
-    {
-        $section = new Section();
-        $section->setValue(true);
-    }
+    $this->assertSame('value', $section->getValue());
+  }
+
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$value" must be a string.
+   */
+  public function testSetValueOnInvalidType() {
+    $section = new Section();
+    $section->setValue(TRUE);
+  }
 }

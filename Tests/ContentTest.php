@@ -2,6 +2,7 @@
 /**
  * This file tests Content.
  */
+
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -12,50 +13,45 @@ use SendGrid\Mail\Content;
  *
  * @package SendGrid\Tests
  */
-class ContentTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $content = new Content('type', 'value');
+class ContentTest extends TestCase {
 
-        $this->assertInstanceOf(Content::class, $content);
-        $this->assertSame('type', $content->getType());
-        $this->assertSame('value', $content->getValue());
-    }
+  public function testConstructor() {
+    $content = new Content('type', 'value');
 
-    public function testSetType()
-    {
-        $content = new Content();
-        $content->setType('type');
+    $this->assertInstanceOf(Content::class, $content);
+    $this->assertSame('type', $content->getType());
+    $this->assertSame('value', $content->getValue());
+  }
 
-        $this->assertSame('type', $content->getType());
-    }
+  public function testSetType() {
+    $content = new Content();
+    $content->setType('type');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$type" must be a string.
-     */
-    public function testSetTypeOnInvalidType()
-    {
-        $content = new Content();
-        $content->setType(['type']);
-    }
+    $this->assertSame('type', $content->getType());
+  }
 
-    public function testSetValue()
-    {
-        $content = new Content();
-        $content->setValue('value');
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$type" must be a string.
+   */
+  public function testSetTypeOnInvalidType() {
+    $content = new Content();
+    $content->setType(['type']);
+  }
 
-        $this->assertSame('value', $content->getValue());
-    }
+  public function testSetValue() {
+    $content = new Content();
+    $content->setValue('value');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$value" must be a string.
-     */
-    public function testSetValueOnInvalidType()
-    {
-        $content = new Content();
-        $content->setValue(['value']);
-    }
+    $this->assertSame('value', $content->getValue());
+  }
+
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$value" must be a string.
+   */
+  public function testSetValueOnInvalidType() {
+    $content = new Content();
+    $content->setValue(['value']);
+  }
 }

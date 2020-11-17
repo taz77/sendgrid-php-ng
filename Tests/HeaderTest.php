@@ -2,6 +2,7 @@
 /**
  * This file tests Header.
  */
+
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -12,49 +13,44 @@ use SendGrid\Mail\Header;
  *
  * @package SendGrid\Tests
  */
-class HeaderTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $header = new Header('Content-Type', 'text/plain');
+class HeaderTest extends TestCase {
 
-        $this->assertSame('Content-Type', $header->getKey());
-        $this->assertSame('text/plain', $header->getValue());
-    }
+  public function testConstructor() {
+    $header = new Header('Content-Type', 'text/plain');
 
-    public function testSetKey()
-    {
-        $header = new Header();
-        $header->setKey('Content-Type');
+    $this->assertSame('Content-Type', $header->getKey());
+    $this->assertSame('text/plain', $header->getValue());
+  }
 
-        $this->assertSame('Content-Type', $header->getKey());
-    }
+  public function testSetKey() {
+    $header = new Header();
+    $header->setKey('Content-Type');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$key" must be a string.
-     */
-    public function testSetKeyOnInvalidType()
-    {
-        $header = new Header();
-        $header->setKey(['Content-Type']);
-    }
+    $this->assertSame('Content-Type', $header->getKey());
+  }
 
-    public function testSetValue()
-    {
-        $header = new Header();
-        $header->setValue('text/plain');
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$key" must be a string.
+   */
+  public function testSetKeyOnInvalidType() {
+    $header = new Header();
+    $header->setKey(['Content-Type']);
+  }
 
-        $this->assertSame('text/plain', $header->getValue());
-    }
+  public function testSetValue() {
+    $header = new Header();
+    $header->setValue('text/plain');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$value" must be a string.
-     */
-    public function testSetValueOnInvalidType()
-    {
-        $header = new Header();
-        $header->setValue(['text/plain']);
-    }
+    $this->assertSame('text/plain', $header->getValue());
+  }
+
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$value" must be a string.
+   */
+  public function testSetValueOnInvalidType() {
+    $header = new Header();
+    $header->setValue(['text/plain']);
+  }
 }

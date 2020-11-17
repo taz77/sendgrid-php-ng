@@ -2,6 +2,7 @@
 /**
  * This file tests BccSettings.
  */
+
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -12,60 +13,54 @@ use SendGrid\Mail\BccSettings;
  *
  * @package SendGrid\Tests
  */
-class BccSettingsTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $bccSettings = new BccSettings(true, 'dx@sendgrid.com');
+class BccSettingsTest extends TestCase {
 
-        $this->assertInstanceOf(BccSettings::class, $bccSettings);
-        $this->assertTrue($bccSettings->getEnable());
-        $this->assertSame('dx@sendgrid.com', $bccSettings->getEmail());
-    }
+  public function testConstructor() {
+    $bccSettings = new BccSettings(TRUE, 'dx@sendgrid.com');
 
-    public function testSetEmail()
-    {
-        $bccSettings = new BccSettings();
-        $bccSettings->setEmail('dx@sendgrid.com');
+    $this->assertInstanceOf(BccSettings::class, $bccSettings);
+    $this->assertTrue($bccSettings->getEnable());
+    $this->assertSame('dx@sendgrid.com', $bccSettings->getEmail());
+  }
 
-        $this->assertSame('dx@sendgrid.com', $bccSettings->getEmail());
-    }
+  public function testSetEmail() {
+    $bccSettings = new BccSettings();
+    $bccSettings->setEmail('dx@sendgrid.com');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$email" must be a valid email address.
-     */
-    public function testSetEmailOnInvalidEmailFormat()
-    {
-        $bccSettings = new BccSettings();
-        $bccSettings->setEmail('invalid_email_address');
-    }
+    $this->assertSame('dx@sendgrid.com', $bccSettings->getEmail());
+  }
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$email" must be a string.
-     */
-    public function testSetEmailOnInvalidType()
-    {
-        $bccSettings = new BccSettings();
-        $bccSettings->setEmail(['invalid_type']);
-    }
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$email" must be a valid email address.
+   */
+  public function testSetEmailOnInvalidEmailFormat() {
+    $bccSettings = new BccSettings();
+    $bccSettings->setEmail('invalid_email_address');
+  }
 
-    public function testSetEnable()
-    {
-        $bccSettings = new BccSettings();
-        $bccSettings->setEnable(true);
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$email" must be a string.
+   */
+  public function testSetEmailOnInvalidType() {
+    $bccSettings = new BccSettings();
+    $bccSettings->setEmail(['invalid_type']);
+  }
 
-        $this->assertTrue($bccSettings->getEnable());
-    }
+  public function testSetEnable() {
+    $bccSettings = new BccSettings();
+    $bccSettings->setEnable(TRUE);
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$enable" must be a boolean.
-     */
-    public function testSetEnableOnInvalidType()
-    {
-        $bccSettings = new BccSettings();
-        $bccSettings->setEnable('invalid_bool_type');
-    }
+    $this->assertTrue($bccSettings->getEnable());
+  }
+
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$enable" must be a boolean.
+   */
+  public function testSetEnableOnInvalidType() {
+    $bccSettings = new BccSettings();
+    $bccSettings->setEnable('invalid_bool_type');
+  }
 }

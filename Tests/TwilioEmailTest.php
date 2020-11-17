@@ -3,28 +3,28 @@
 namespace SendGrid\Tests\Unit;
 
 use SendGrid\Tests\BaseTestClass;
+use TwilioEmail;
 
 /**
  * This class tests the Twilio Email Client.
  *
  * @package SendGrid\Tests\Unit
  */
-class TwilioEmailTest extends BaseTestClass
-{
-    /**
-     * Test that we can connect to the Twilio Email API.
-     */
-    public function testCanConnectToTwilioEmailApi()
-    {
-        $mail = new \TwilioEmail('username', 'password');
-        $headers = [
-            'Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
-        ];
+class TwilioEmailTest extends BaseTestClass {
 
-        $this->assertEquals('https://email.twilio.com', $mail->client->getHost());
-        $this->assertArraySubset($headers, $mail->client->getHeaders());
+  /**
+   * Test that we can connect to the Twilio Email API.
+   */
+  public function testCanConnectToTwilioEmailApi() {
+    $mail = new TwilioEmail('username', 'password');
+    $headers = [
+      'Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+    ];
 
-        $mail = new \TwilioEmail('username', 'password', ['host' => 'https://api.test.com']);
-        $this->assertEquals('https://api.test.com', $mail->client->getHost());
-    }
+    $this->assertEquals('https://email.twilio.com', $mail->client->getHost());
+    $this->assertArraySubset($headers, $mail->client->getHeaders());
+
+    $mail = new TwilioEmail('username', 'password', ['host' => 'https://api.test.com']);
+    $this->assertEquals('https://api.test.com', $mail->client->getHost());
+  }
 }

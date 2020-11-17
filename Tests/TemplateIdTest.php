@@ -5,46 +5,42 @@
 
 namespace SendGrid\Tests;
 
-use SendGrid\Mail\TemplateId;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Mail\TemplateId;
 
 /**
  * This class tests TemplateId.
  *
  * @package SendGrid\Tests
  */
-class TemplateIdTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $templateId = new TemplateId('template_id');
+class TemplateIdTest extends TestCase {
 
-        $this->assertSame('template_id', $templateId->getTemplateId());
-    }
+  public function testConstructor() {
+    $templateId = new TemplateId('template_id');
 
-    public function testSetTemplateId()
-    {
-        $templateId = new TemplateId();
-        $templateId->setTemplateId('template_id');
+    $this->assertSame('template_id', $templateId->getTemplateId());
+  }
 
-        $this->assertSame('template_id', $templateId->getTemplateId());
-    }
+  public function testSetTemplateId() {
+    $templateId = new TemplateId();
+    $templateId->setTemplateId('template_id');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$template_id" must be a string.
-     */
-    public function testSetTemplateIdOnInvalidType()
-    {
-        $templateId = new TemplateId();
-        $templateId->setTemplateId(true);
-    }
+    $this->assertSame('template_id', $templateId->getTemplateId());
+  }
 
-    public function testJsonSerialize()
-    {
-        $templateId = new TemplateId();
-        $templateId->setTemplateId('template_id');
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$template_id" must be a string.
+   */
+  public function testSetTemplateIdOnInvalidType() {
+    $templateId = new TemplateId();
+    $templateId->setTemplateId(TRUE);
+  }
 
-        $this->assertSame('template_id', $templateId->jsonSerialize());
-    }
+  public function testJsonSerialize() {
+    $templateId = new TemplateId();
+    $templateId->setTemplateId('template_id');
+
+    $this->assertSame('template_id', $templateId->jsonSerialize());
+  }
 }

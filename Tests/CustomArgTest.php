@@ -2,6 +2,7 @@
 /**
  * This file tests CustomArg.
  */
+
 namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -12,50 +13,45 @@ use SendGrid\Mail\CustomArg;
  *
  * @package SendGrid\Tests
  */
-class CustomArgTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $customArg = new CustomArg('key', 'value');
+class CustomArgTest extends TestCase {
 
-        $this->assertInstanceOf(CustomArg::class, $customArg);
-        $this->assertSame('key', $customArg->getKey());
-        $this->assertSame('value', $customArg->getValue());
-    }
+  public function testConstructor() {
+    $customArg = new CustomArg('key', 'value');
 
-    public function testSetKey()
-    {
-        $customArg = new CustomArg();
-        $customArg->setKey('key');
+    $this->assertInstanceOf(CustomArg::class, $customArg);
+    $this->assertSame('key', $customArg->getKey());
+    $this->assertSame('value', $customArg->getValue());
+  }
 
-        $this->assertSame('key', $customArg->getKey());
-    }
+  public function testSetKey() {
+    $customArg = new CustomArg();
+    $customArg->setKey('key');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$key" must be a string.
-     */
-    public function testSetKeyOnInvalidType()
-    {
-        $customArg = new CustomArg();
-        $customArg->setKey(['key']);
-    }
+    $this->assertSame('key', $customArg->getKey());
+  }
 
-    public function testSetValue()
-    {
-        $customArg = new CustomArg();
-        $customArg->setValue('value');
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$key" must be a string.
+   */
+  public function testSetKeyOnInvalidType() {
+    $customArg = new CustomArg();
+    $customArg->setKey(['key']);
+  }
 
-        $this->assertSame('value', $customArg->getValue());
-    }
+  public function testSetValue() {
+    $customArg = new CustomArg();
+    $customArg->setValue('value');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$value" must be a string.
-     */
-    public function testSetValueOnInvalidType()
-    {
-        $customArg = new CustomArg();
-        $customArg->setValue(['value']);
-    }
+    $this->assertSame('value', $customArg->getValue());
+  }
+
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$value" must be a string.
+   */
+  public function testSetValueOnInvalidType() {
+    $customArg = new CustomArg();
+    $customArg->setValue(['value']);
+  }
 }

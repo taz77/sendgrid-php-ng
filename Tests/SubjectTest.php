@@ -5,47 +5,43 @@
 
 namespace SendGrid\Tests;
 
-use SendGrid\Mail\Subject;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Mail\Subject;
 
 /**
  * This class tests Subject.
  *
  * @package SendGrid\Tests
  */
-class SubjectTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $subject = new Subject('subject');
+class SubjectTest extends TestCase {
 
-        $this->assertInstanceOf(Subject::class, $subject);
-        $this->assertSame('subject', $subject->getSubject());
-    }
+  public function testConstructor() {
+    $subject = new Subject('subject');
 
-    public function testSetSubject()
-    {
-        $subject = new Subject();
-        $subject->setSubject('subject');
+    $this->assertInstanceOf(Subject::class, $subject);
+    $this->assertSame('subject', $subject->getSubject());
+  }
 
-        $this->assertSame('subject', $subject->getSubject());
-    }
+  public function testSetSubject() {
+    $subject = new Subject();
+    $subject->setSubject('subject');
 
-    public function testJsonSerialize()
-    {
-        $subject = new Subject();
-        $subject->setSubject('subject');
+    $this->assertSame('subject', $subject->getSubject());
+  }
 
-        $this->assertSame('subject', $subject->jsonSerialize());
-    }
+  public function testJsonSerialize() {
+    $subject = new Subject();
+    $subject->setSubject('subject');
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$subject" must be a string.
-     */
-    public function testSetSubjectOnInvalidType()
-    {
-        $subject = new Subject();
-        $subject->setSubject(true);
-    }
+    $this->assertSame('subject', $subject->jsonSerialize());
+  }
+
+  /**
+   * @expectedException \SendGrid\Exception\TypeException
+   * @expectedExceptionMessage "$subject" must be a string.
+   */
+  public function testSetSubjectOnInvalidType() {
+    $subject = new Subject();
+    $subject->setSubject(TRUE);
+  }
 }
