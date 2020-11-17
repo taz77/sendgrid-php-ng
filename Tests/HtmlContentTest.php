@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests HtmlContent.
  */
@@ -17,7 +18,6 @@ class HtmlContentTest extends TestCase {
 
   public function testConstructor() {
     $htmlContent = new HtmlContent('html_content');
-
     $this->assertInstanceOf(HtmlContent::class, $htmlContent);
     $this->assertSame('html_content', $htmlContent->getValue());
     $this->assertSame('text/html', $htmlContent->getType());
