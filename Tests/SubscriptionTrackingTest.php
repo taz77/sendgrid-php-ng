@@ -1,100 +1,80 @@
 <?php
+declare(strict_types=1);
 /**
  * This file tests SubscriptionTracking.
  */
 
 namespace SendGrid\Tests;
 
-use SendGrid\Mail\SubscriptionTracking;
 use PHPUnit\Framework\TestCase;
+use SendGrid\Exception\TypeException;
+use SendGrid\Mail\SubscriptionTracking;
 
 /**
  * This class tests SubscriptionTracking.
  *
  * @package SendGrid\Tests
  */
-class SubscriptionTrackingTest extends TestCase
-{
-    public function testConstructor()
-    {
-        $subscriptionTracking = new SubscriptionTracking(true, 'text', '<h1>html</h1>', 'sub_tag');
+class SubscriptionTrackingTest extends TestCase {
 
-        $this->assertInstanceOf(SubscriptionTracking::class, $subscriptionTracking);
-        $this->assertTrue($subscriptionTracking->getEnable());
-        $this->assertSame('text', $subscriptionTracking->getText());
-        $this->assertSame('<h1>html</h1>', $subscriptionTracking->getHtml());
-        $this->assertSame('sub_tag', $subscriptionTracking->getSubstitutionTag());
-    }
+  public function testConstructor(): void {
+    $subscriptionTracking = new SubscriptionTracking(TRUE, 'text', '<h1>html</h1>', 'sub_tag');
+    $this->assertInstanceOf(SubscriptionTracking::class, $subscriptionTracking);
+    $this->assertTrue($subscriptionTracking->getEnable());
+    $this->assertSame('text', $subscriptionTracking->getText());
+    $this->assertSame('<h1>html</h1>', $subscriptionTracking->getHtml());
+    $this->assertSame('sub_tag', $subscriptionTracking->getSubstitutionTag());
+  }
 
-    public function testSetEnable()
-    {
-        $subscriptionTracking = new SubscriptionTracking();
-        $subscriptionTracking->setEnable(true);
+  public function testSetEnable(): void {
+    $subscriptionTracking = new SubscriptionTracking();
+    $subscriptionTracking->setEnable(TRUE);
+    $this->assertTrue($subscriptionTracking->getEnable());
+  }
 
-        $this->assertTrue($subscriptionTracking->getEnable());
-    }
+  public function testSetEnableOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$enable" must be a boolean.');
+    $subscriptionTracking = new SubscriptionTracking();
+    $subscriptionTracking->setEnable('invalid_bool_type');
+  }
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$enable" must be a boolean.
-     */
-    public function testSetEnableOnInvalidType()
-    {
-        $subscriptionTracking = new SubscriptionTracking();
-        $subscriptionTracking->setEnable('invalid_bool_type');
-    }
+  public function testSetText(): void {
+    $subscriptionTracking = new SubscriptionTracking();
+    $subscriptionTracking->setText('text');
+    $this->assertSame('text', $subscriptionTracking->getText());
+  }
 
-    public function testSetText()
-    {
-        $subscriptionTracking = new SubscriptionTracking();
-        $subscriptionTracking->setText('text');
+  public function testSetTextOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$text" must be a string.');
+    $subscriptionTracking = new SubscriptionTracking();
+    $subscriptionTracking->setText(TRUE);
+  }
 
-        $this->assertSame('text', $subscriptionTracking->getText());
-    }
+  public function testSetHtml(): void {
+    $subscriptionTracking = new SubscriptionTracking();
+    $subscriptionTracking->setHtml('<h1>I am html text</h1>');
+    $this->assertSame('<h1>I am html text</h1>', $subscriptionTracking->getHtml());
+  }
 
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$text" must be a string.
-     */
-    public function testSetTextOnInvalidType()
-    {
-        $subscriptionTracking = new SubscriptionTracking();
-        $subscriptionTracking->setText(true);
-    }
+  public function testSetHtmlOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$html" must be a string.');
+    $subscriptionTracking = new SubscriptionTracking();
+    $subscriptionTracking->setHtml(TRUE);
+  }
 
-    public function testSetHtml()
-    {
-        $subscriptionTracking = new SubscriptionTracking();
-        $subscriptionTracking->setHtml('<h1>I am html text</h1>');
+  public function testSetSubstitutionTag(): void {
+    $subscriptionTracking = new SubscriptionTracking();
+    $subscriptionTracking->setSubstitutionTag('sub_tag');
+    $this->assertSame('sub_tag', $subscriptionTracking->getSubstitutionTag());
+  }
 
-        $this->assertSame('<h1>I am html text</h1>', $subscriptionTracking->getHtml());
-    }
-
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$html" must be a string.
-     */
-    public function testSetHtmlOnInvalidType()
-    {
-        $subscriptionTracking = new SubscriptionTracking();
-        $subscriptionTracking->setHtml(true);
-    }
-
-    public function testSetSubstitutionTag()
-    {
-        $subscriptionTracking = new SubscriptionTracking();
-        $subscriptionTracking->setSubstitutionTag('sub_tag');
-
-        $this->assertSame('sub_tag', $subscriptionTracking->getSubstitutionTag());
-    }
-
-    /**
-     * @expectedException \SendGrid\Exception\TypeException
-     * @expectedExceptionMessage "$substitution_tag" must be a string.
-     */
-    public function testSetSubstitutionTagOnInvalidType()
-    {
-        $subscriptionTracking = new SubscriptionTracking();
-        $subscriptionTracking->setSubstitutionTag(true);
-    }
+  public function testSetSubstitutionTagOnInvalidType(): void {
+    $this->expectException(TypeException::class);
+    $this->expectExceptionMessage('"$substitution_tag" must be a string.');
+    $subscriptionTracking = new SubscriptionTracking();
+    $subscriptionTracking->setSubstitutionTag(TRUE);
+  }
 }
