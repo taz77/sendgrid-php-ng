@@ -78,10 +78,6 @@ class Client {
     // Set the options in the object for the class.
     $this->options = $options;
 
-    if (!empty($options['proxy'])) {
-      $this->proxy = $options['proxy'];
-    }
-
     // Construct the URL for the Sendgrid Service.
     $this->url = isset($this->options['url']) ? $this->options['url'] : $protocol . '://' . $host . ($port ? ':' . $port : '');
     // Construct the endpoint URL.
@@ -96,13 +92,16 @@ class Client {
    * @return \GuzzleHttp\Client
    */
   private function prepareHttpClient() {
+    $clientsetup = [];
     $headers = [];
     // Set the API key header for the request.
     $headers['Authorization'] = 'Bearer' . ' ' . $this->apiKey;
 
     // Using http proxy
     if (isset($this->options['proxy'])) {
-      $headers['proxy'] = $this->options['proxy'];
+      $clientsetup['request.options'] = [
+        'proxy' => $this->options['proxy'],
+      ];
     }
     $headers['User-Agent'] = 'sendgrid/' . $this->version . ';php';
     // Create an empty stack for error processing.
@@ -113,12 +112,11 @@ class Client {
     else {
       $stack = $this->options['handler'];
     }
-    $client = new \GuzzleHttp\Client([
-      'base_uri' => $this->url,
-      'handler' => $stack,
-      'headers' => $headers,
-    ]);
-    return $client;
+    $clientsetup['base_uri'] = $this->url;
+    $clientsetup['handler'] = $stack;
+    $clientsetup['headers'] = $headers;
+
+    return new \GuzzleHttp\Client($clientsetup);
   }
 
   /**
