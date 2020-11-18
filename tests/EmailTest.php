@@ -72,7 +72,7 @@ class SendGridTest_Email extends \PHPUnit\Framework\TestCase {
     $email = new \SendGrid\Email();
 
     $email->addSmtpapiTo('p1@mailinator.com', 'Person One');
-    $this->assertEquals(['Person One <p1@mailinator.com>'], $email->getSmtpapi()->to);
+    $this->assertEquals(['"Person One" <p1@mailinator.com>'], $email->getSmtpapi()->to);
 
     $email->addSmtpapiTo('p2@mailinator.com');
     $this->assertEquals([
