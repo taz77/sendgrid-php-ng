@@ -2,13 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.0.0](https://github.com/taz77/sendgrid-php-ng/tree/v2.0.0) (2020-11-17)
-[Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.8...v2.0.0)
+## [2.0.0](https://github.com/taz77/sendgrid-php-ng/tree/v2.0.0) (2020-11-18)
+[Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.11...v2.0.0)
 
 **Major Update**
 
 Version 2.0.0 is an upgrade to the [V3 API](https://sendgrid.com/docs/API_Reference/api_v3.html). 
 This is a breaking upgrade. It is not backwardly compatible to v1 of this library. 
+
+## [1.0.12](https://github.com/taz77/sendgrid-php-ng/tree/v1.0.12) (2020-11-18)
+[Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.11...v1.0.12)
 
 ## [1.0.11](https://github.com/taz77/sendgrid-php-ng/tree/v1.0.11) (2019-01-15)
 [Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.10...v1.0.11)
@@ -25,7 +28,7 @@ This is a breaking upgrade. It is not backwardly compatible to v1 of this librar
 **Fixed issues:**
 - PHP 7.2 compatibility [issue](https://github.com/taz77/sendgrid-php-ng/issues/15) with count()
 
-## [1.0.8](https://github.com/taz77/sendgrid-php-ng/tree/v1.0.7) (2017-08-16)
+## [1.0.8](https://github.com/taz77/sendgrid-php-ng/tree/v1.0.8) (2017-08-16)
 [Full Changelog](https://github.com/taz77/sendgrid-php-ng/compare/v1.0.7...v1.0.8)
 
 **Fixed issues:**
