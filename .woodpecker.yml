@@ -1,6 +1,6 @@
 pipeline:
-  build:
-    image: composer
+  php72:
+    image: php:7.2
     commands:
       - sleep 1
       - composer self-update
