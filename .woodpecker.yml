@@ -1,9 +1,8 @@
 pipeline:
   php72:
-    image: php:7.2
+    image: phpdockerio/php72-cli
     commands:
       - sleep 1
-      - /bin/sh ./scripts/composer-install.sh
       - composer config -g repositories.packagist.org false
       - composer config -g repositories.root composer https://cache.dev.ruinix.com/repository/packagist/
       - make install
