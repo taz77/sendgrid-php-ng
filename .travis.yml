@@ -1,3 +1,5 @@
+os: linux
+dist: focal
 language: php
 before_script:
 - composer self-update
@@ -9,6 +11,9 @@ php:
 - 7.2
 - 7.3
 - 7.4
+cache:
+  directories:
+    - .composer
 notifications:
   email: false
   slack:
