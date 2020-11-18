@@ -3,7 +3,7 @@ dist: bionic
 language: php
 before_script:
 - composer self-update
-- make ci-install
+- make install
 script:
 - make test
 php:
