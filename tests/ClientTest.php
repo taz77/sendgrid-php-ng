@@ -15,7 +15,7 @@ class ClientTest extends TestCase {
   /**
    * Test the version number.
    */
-  public function testVersion() {
+  public function testVersion(): void {
     $this->assertEquals(Client::VERSION, '2.0.0');
     $this->assertEquals(json_decode(file_get_contents('composer.json'))->version, \SendGrid\Client::VERSION);
   }
@@ -23,7 +23,7 @@ class ClientTest extends TestCase {
   /**
    * Test creating a client with SSL verification turned off.
    */
-  public function testSwitchOffSSLVerification() {
+  public function testSwitchOffSSLVerification(): void {
     $sendgrid = new Client('token123456789', ['turn_off_ssl_verification' => TRUE]);
     $options = $sendgrid->getOptions();
     $this->assertTrue(isset($options['turn_off_ssl_verification']));
