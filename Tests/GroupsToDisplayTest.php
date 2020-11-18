@@ -4,7 +4,7 @@ declare(strict_types=1);
  * GroupsToDisplay class unit tests.
  */
 
-namespace SendGrid\Tests\Unit;
+namespace SendGrid\Tests;
 
 use PHPUnit\Framework\TestCase;
 use SendGrid\Exception\TypeException;

@@ -8,7 +8,7 @@ use SendGrid\Client;
 /**
  * This class tests the Twilio SendGrid Client.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class SendGridTest extends BaseTestClass {
 

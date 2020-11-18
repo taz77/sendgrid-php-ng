@@ -9,7 +9,7 @@ use SendGrid\EventWebhook\EventWebhook;
 /**
  * This class tests the EventWebhook functionality.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class EventWebhookTest extends TestCase {
 

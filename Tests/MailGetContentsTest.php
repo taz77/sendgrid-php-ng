@@ -9,7 +9,7 @@ use SendGrid\Mail\Mail;
 /**
  * This class tests the getContents() function in SendGrid\Mail\Mail.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class MailGetContentsTest extends TestCase {
 

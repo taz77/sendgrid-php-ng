@@ -12,7 +12,7 @@ use SendGrid\Mail\Attachment;
 /**
  * This file tests Attachments.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class AttachmentsTest extends TestCase {
 

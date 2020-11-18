@@ -4,7 +4,7 @@ declare(strict_types=1);
  * This file tests email address encoding.
  */
 
-namespace SendGrid\Tests\Unit;
+namespace SendGrid\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +23,7 @@ use Swaggest\JsonDiff\Exception as JsonDiffException;
 /**
  * This class tests email address encoding.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class EmailAddressTest extends TestCase {
 

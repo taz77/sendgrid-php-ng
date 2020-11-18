@@ -13,7 +13,7 @@ namespace SendGrid\Tests;
  * This class tests the dynamic/transactional template functionality for a
  * /mail/send API call.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class DynamicTemplateTest extends BaseTestClass {
 

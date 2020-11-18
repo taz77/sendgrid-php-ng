@@ -10,7 +10,7 @@ use SendGrid\Mail\Substitution;
 /**
  * This file tests Substitutions.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class SubstitutionTest extends TestCase {
 

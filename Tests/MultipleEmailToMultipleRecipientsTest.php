@@ -4,7 +4,7 @@ declare(strict_types=1);
  * This file tests the request object generation for a /mail/send API call.
  */
 
-namespace SendGrid\Tests\Unit;
+namespace SendGrid\Tests;
 
 use SendGrid\Mail\From;
 use SendGrid\Mail\HtmlContent;
@@ -17,7 +17,7 @@ use SendGrid\Tests\BaseTestClass;
 /**
  * This class tests the request object generation for a /mail/send API call.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class MultipleEmailToMultipleRecipientsTest extends BaseTestClass {
 

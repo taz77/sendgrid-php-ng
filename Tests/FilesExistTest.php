@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * This class tests the existence of necessary files in this repo.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class FilesExistTest extends TestCase {
 

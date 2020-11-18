@@ -10,7 +10,7 @@ namespace SendGrid\Tests;
 /**
  * This class tests the request object generation for a /mail/send API call.
  *
- * @package SendGrid\Tests\Unit
+ * @package SendGrid\Tests
  */
 class SingleEmailToASingleRecipientTest extends BaseTestClass {
 
