@@ -2,8 +2,7 @@
 
 **This is a version of SendGrid-PHP which uses Guzzle 6.x**
 
-Badge Bling: [![BuildStatus](https://travis-ci.org/taz77/sendgrid-php-ng.svg?branch=master)](https://travis-ci.org/taz77/sendgrid-php-ng) 
-[![ScanStatus](https://img.shields.io/coverity/scan/11112.svg)](https://scan.coverity.com/projects/taz77-sendgrid-php-ng)
+Badge Bling: [![ScanStatus](https://img.shields.io/coverity/scan/11112.svg)](https://scan.coverity.com/projects/taz77-sendgrid-php-ng)
 
 This library allows you to quickly and easily send emails through SendGrid using PHP with the help of Guzzle 6.x. Guzzle is a very popular HTTP client for PHP used in many other PHP packages.
 
