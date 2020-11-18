@@ -1,5 +1,7 @@
 # SendGrid-PHP
 
+**Documentation is not up-to-date. This library now uses SendGrid V3 API. Most all the instructions below will have to be rewritten.**
+
 **This is a version of SendGrid-PHP which uses Guzzle 6.x**
 
 Badge Bling: [![ScanStatus](https://img.shields.io/coverity/scan/11112.svg)](https://scan.coverity.com/projects/taz77-sendgrid-php-ng)
