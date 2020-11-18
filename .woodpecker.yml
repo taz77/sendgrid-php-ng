@@ -6,8 +6,7 @@ pipeline:
       - composer self-update
       - composer config -g repositories.packagist.org false
       - composer config -g repositories.root composer https://cache.dev.ruinix.com/repository/packagist/
-      - composer install --no-interaction
-#      - make test-docker
+      - make ci-install
       - make test
       - ls -alh
   notify:
