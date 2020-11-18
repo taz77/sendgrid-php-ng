@@ -1,12 +1,14 @@
 {
   "name": "fastglass/sendgrid",
   "description": "This library allows you to send emails through SendGrid using PHP and Guzzle 6.x.",
-  "version": "1.0.12",
+  "version": "2.0.0",
   "homepage": "https://github.com/taz77/sendgrid-php-ng",
   "license": "MIT",
   "keywords": [
     "SendGrid",
     "sendgrid",
+    "Twilio SendGrid",
+    "twilio sendgrid",
     "email",
     "send",
     "grid"
@@ -19,14 +21,18 @@
     }
   ],
   "require": {
-    "php": ">=5.5.0",
-    "sendgrid/smtpapi": "~0.5",
-    "guzzlehttp/guzzle": ">=6.2.1"
+    "php": ">=7.1",
+    "guzzlehttp/guzzle": "^6.3",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "starkbank/ecdsa": "^0.0.4"
   },
   "require-dev": {
     "mockery/mockery": "~0.9",
-    "phpunit/phpunit": "~7.3",
-    "vlucas/phpdotenv": "~1.0"
+    "phpunit/phpunit": "^8",
+    "vlucas/phpdotenv": "~1.0",
+    "squizlabs/php_codesniffer": "3.*",
+    "swaggest/json-diff": "^3.4"
   },
   "replace": {
     "sendgrid/sendgrid-php": "*"
@@ -39,7 +45,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SendGrid\\Tests\\": "tests/"
+      "SendGrid\\Tests\\": "Tests/"
     }
   },
   "scripts": {

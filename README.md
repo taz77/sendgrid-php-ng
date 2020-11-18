@@ -2,8 +2,7 @@
 
 **This is a version of SendGrid-PHP which uses Guzzle 6.x**
 
-Badge Bling: [![BuildStatus](https://travis-ci.org/taz77/sendgrid-php-ng.svg?branch=master)](https://travis-ci.org/taz77/sendgrid-php-ng) 
-[![ScanStatus](https://img.shields.io/coverity/scan/11112.svg)](https://scan.coverity.com/projects/taz77-sendgrid-php-ng)
+Badge Bling: [![ScanStatus](https://img.shields.io/coverity/scan/11112.svg)](https://scan.coverity.com/projects/taz77-sendgrid-php-ng)
 
 This library allows you to quickly and easily send emails through SendGrid using PHP with the help of Guzzle 6.x. Guzzle is a very popular HTTP client for PHP used in many other PHP packages.
 
@@ -99,7 +98,7 @@ require("path/to/sendgrid-php-ng/sendgrid-php.php");
 
 ## Example App
 
-There is a [sendgrid-php-example app](https://github.com/sendgrid/sendgrid-php-example) to help jumpstart your development.
+There is a [sendgrid-php-example app](https://github.com/taz77/sendgrid-php-ng-example) to help jumpstart your development.
 
 ## Usage
 
@@ -372,7 +371,7 @@ $email
     ->setReplyTo('someone.else@example.com')
     ->setFromName('John Doe')
    ...
-;
+
 ```
 
 ### Cc
@@ -419,7 +418,7 @@ $email
     ->addSmtpapiTo('someotheraddress@bar.com')
     ->addSmtpapiTo('another@another.com')
    ...
-;
+
 ```
 
 But if you do still have a need for Bcc you can do the following:
@@ -663,7 +662,7 @@ $email
         array('Subject to John', 'Subject to Harry', 'Subject to Bob')
     )
     ...
-;
+
 ```
 
 #### setSubstitutions
@@ -678,7 +677,7 @@ $email
         '%subject%' => array('Subject to John', 'Subject to Harry', 'Subject to Bob')
     ))
     ...
-;
+
 ```
 
 ### Sections ###

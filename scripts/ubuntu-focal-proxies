@@ -1,0 +1,22 @@
+deb https://cache.dev.ruinix.com/repository/focal-backports-main-restricted-universe-multiverse/ focal-backports main restricted universe multiverse
+deb https://cache.dev.ruinix.com/repository/focal-main-restricted/ focal main restricted
+deb https://cache.dev.ruinix.com/repository/focal-multiverse/ focal multiverse
+deb https://cache.dev.ruinix.com/repository/focal-security-main-restricted/ focal-security main restricted
+deb https://cache.dev.ruinix.com/repository/focal-security-multiverse/ focal-security multiverse
+deb https://cache.dev.ruinix.com/repository/focal-security-universe/ focal-security universe
+deb https://cache.dev.ruinix.com/repository/focal-universe/ focal universe
+deb https://cache.dev.ruinix.com/repository/focal-updates-main-restricted/ focal-updates main restricted
+deb https://cache.dev.ruinix.com/repository/focal-updates-multiverse/ focal-updates multiverse
+deb https://cache.dev.ruinix.com/repository/focal-updates-universe/ focal-updates universe
+
+
+# http://archive.ubuntu.com/ubuntu/ focal main restricted
+# http://archive.ubuntu.com/ubuntu/ focal-updates main restricted
+# http://archive.ubuntu.com/ubuntu/ focal universe
+# http://archive.ubuntu.com/ubuntu/ focal-updates universe
+# http://archive.ubuntu.com/ubuntu/ focal multiverse
+# http://archive.ubuntu.com/ubuntu/ focal-updates multiverse
+# http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
+# http://security.ubuntu.com/ubuntu/ focal-security main restricted
+# http://security.ubuntu.com/ubuntu/ focal-security universe
+# http://security.ubuntu.com/ubuntu/ focal-security multiverse

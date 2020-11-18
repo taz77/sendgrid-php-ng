@@ -1,59 +1,87 @@
 <?php
+
+/**
+ * Create the client for V3 API of SendGrid.
+ *
+ * @author Brady Owens
+ * @copyright 2020 Fastglass LLC
+ * @package SendGrid
+ * @license https://opensource.org/licenses/MIT
+ * @link https://packagist.org/packages/fastglass/sendgrid
+ *
+ */
+
+
 namespace SendGrid;
 
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
+use SendGrid\Exception\SendgridException;
+use SendGrid\Mail\Mail;
 
 /**
  * Class SendGrid
  */
 class Client {
-  const VERSION = '1.0.12';
+
+  const VERSION = '2.0.0';
 
   protected
-    $headers = ['Content-Type' => 'application/json'],
-    $client,
     $options;
 
   public
     $apiKey,
+    $client,
     $url,
     $endpoint,
     $version = self::VERSION;
 
   /**
+   * Get base URL.
+   *
+   * @return string|null
+   */
+  public function getUrl(): ?string {
+    return $this->url;
+  }
+
+  /**
+   * Get Endpoint.
+   *
+   * @return string|null
+   */
+  public function getEndpoint(): ?string {
+    return $this->endpoint;
+  }
+
+  /**
    * SendGrid constructor.
    *
-   * @param $apiUserOrKey
-   * @param null $apiKeyOrOptions
+   * @param string $apiKey
    * @param array $options
+   *
    * @throws string
    */
-  public function __construct($apiUserOrKey, $apiKeyOrOptions = NULL, $options = []) {
-    // Check if given a username + password or api key.
-    if (is_array($apiKeyOrOptions) || $apiKeyOrOptions === NULL) {
-      // API key.
-      $this->apiKey = $apiUserOrKey;
-
-      // With options.
-      if (is_array($apiKeyOrOptions)) {
-        $this->options = $apiKeyOrOptions;
-      }
-    }
-    else {
-      // Won't be thrown?
-      throw new \InvalidArgumentException('Need an api key!');
-    }
+  public function __construct($apiKey, $options = []) {
+    // API key.
+    $this->apiKey = $apiKey;
 
     $this->options['turn_off_ssl_verification'] = (isset($this->options['turn_off_ssl_verification']) && $this->options['turn_off_ssl_verification'] == TRUE);
-    if (!isset($this->options['raise_exceptions'])) {
-      $this->options['raise_exceptions'] = TRUE;
-    }
+
+    // Default to https protocol.
     $protocol = isset($this->options['protocol']) ? $this->options['protocol'] : 'https';
+    // Default to api.sendgrid.com as the host.
     $host = isset($this->options['host']) ? $this->options['host'] : 'api.sendgrid.com';
+    // Default to no port number.
     $port = isset($this->options['port']) ? $this->options['port'] : '';
 
+    // Set the options in the object for the class.
+    $this->options = $options;
+
+    // Construct the URL for the Sendgrid Service.
     $this->url = isset($this->options['url']) ? $this->options['url'] : $protocol . '://' . $host . ($port ? ':' . $port : '');
-    $this->endpoint = isset($this->options['endpoint']) ? $this->options['endpoint'] : '/api/mail.send.json';
+    // Construct the endpoint URL.
+    $this->endpoint = isset($this->options['endpoint']) ? $this->options['endpoint'] : '/v3/mail/send';
 
     $this->client = $this->prepareHttpClient();
   }
@@ -64,25 +92,31 @@ class Client {
    * @return \GuzzleHttp\Client
    */
   private function prepareHttpClient() {
+    $clientsetup = [];
     $headers = [];
-    // Using api key.
+    // Set the API key header for the request.
     $headers['Authorization'] = 'Bearer' . ' ' . $this->apiKey;
-
 
     // Using http proxy
     if (isset($this->options['proxy'])) {
-      $headers['proxy'] = $this->options['proxy'];
+      $clientsetup['request.options'] = [
+        'proxy' => $this->options['proxy'],
+      ];
     }
     $headers['User-Agent'] = 'sendgrid/' . $this->version . ';php';
     // Create an empty stack for error processing.
     // Guzzlehttp will choose the most appropriate handler based on the system.
-    $stack = \GuzzleHttp\HandlerStack::create();
-    $client = new \GuzzleHttp\Client([
-      'base_uri' => $this->url,
-      'headers' => $headers,
-      'handler' => $stack,
-    ]);
-    return $client;
+    if (empty($this->options['handler'])) {
+      $stack = HandlerStack::create();
+    }
+    else {
+      $stack = $this->options['handler'];
+    }
+    $clientsetup['base_uri'] = $this->url;
+    $clientsetup['handler'] = $stack;
+    $clientsetup['headers'] = $headers;
+
+    return new \GuzzleHttp\Client($clientsetup);
   }
 
   /**
@@ -99,17 +133,19 @@ class Client {
    * Makes a post request to SendGrid to send an email from an email object.
    * Returns response codes after sending and will throw exceptions on faults.
    *
-   * @param \SendGrid\Email $email
-   * @return bool|\SendGrid\Response
-   * @throws \SendGrid\Exception
+   * @param Mail $email
+   *
+   * @return \SendGrid\Response
+   * @throws SendgridException
    */
-  public function send(\SendGrid\Email $email) {
-    $form = $email->toWebFormat();
+  public function send(Mail $email) {
 
-    $response = $this->postRequest($this->endpoint, $form);
+    // Adding API keys to header.
+    // $form['api_key'] = $this->apiKey;
+    $response = $this->postRequest($this->endpoint, $email);
 
-    if ($response && (!in_array($response->code, [200, 250])) && $this->options['raise_exceptions']) {
-      throw new \SendGrid\Exception($response->raw_body, $response->code);
+    if ($response->getCode() != 200) {
+      throw new SendgridException($response->getRawBody(), $response->getCode());
     }
 
     return $response;
@@ -120,18 +156,15 @@ class Client {
    * array of ready options for SendGrid email.
    *
    * @param string $endpoint
-   * @param array $form
-   * @return bool|\SendGrid\Response
+   * @param Mail $email
+   *
+   * @return \SendGrid\Response
    */
-  public function postRequest($endpoint, $form) {
+  private function postRequest($endpoint, $email) {
     $requestoptions = [];
-    if (array_key_exists('files', $form)) {
-      // If the email contains files we must process as multipart.
-      $requestoptions['multipart'] = $this->prepareMultipart($form);
-    }
-    else {
-      $requestoptions['form_params'] = $form;
-    }
+
+    // Add email project to request as json.
+    $requestoptions['json'] = $email;
 
     // Allow for contection timeout.
     if (isset($this->options['connect_timeout'])) {
@@ -143,60 +176,18 @@ class Client {
       $requestoptions['timeout'] = $this->options['timeout'];
     }
 
+    // Proxy settings
+    if (isset($this->options['proxy'])) {
+      $requestoptions['proxy'] = $this->options['proxy'];
+    }
+
     try {
       $res = $this->client->request('POST', $endpoint, $requestoptions);
     }
-    catch (ClientException $e) {
-      if (empty($e->getResponse())) {
-        return FALSE;
-      }
-
+    catch (RequestException $e) {
+      // Guzzle returns PRS-7 messages for all responses.
       $res = $e->getResponse();
     }
-    $response = new \SendGrid\Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(TRUE), json_decode($res->getBody(TRUE)));
-
-    return $response;
-  }
-
-  /**
-   * Prepare a request to be submitted as multipart.
-   *
-   * @param array $data
-   * @return array $message
-   */
-  public function prepareMultipart($data) {
-    // The contents of the multipart request.
-    $message = [];
-    foreach ($data as $key => $value) {
-      // If the value is an array we have to perform a hack to handle array values.
-      if (is_array($value) && $key != 'files') {
-        foreach ($value as $item) {
-          $message[] = [
-            'name' => $key . '[]',
-            'contents' => $item,
-          ];
-        }
-      }
-      // If the item is the files, we build a special array to include
-      // the filenames as the indicies.
-      elseif (is_array($value) && $key == 'files') {
-        foreach ($value as $filekey => $filevalue) {
-          // Guzzle 6.x requires passing a file with an fopen resource
-          $message[] = [
-            'name' => 'files[' . $filekey . ']',
-            'contents' => fopen($filevalue, 'r'),
-            'filename' => $filekey,
-          ];
-
-        }
-      }
-      else {
-        $message[] = [
-          'name' => $key,
-          'contents' => $value,
-        ];
-      }
-    }
-    return $message;
+    return new Response($res->getStatusCode(), $res->getHeaders(), $res->getBody(), json_decode($res->getBody()));
   }
 }

@@ -1,0 +1,10 @@
+deb https://cache.dev.ruinix.com/repository/bionic-backports-main-restricted-universe-multiverse/ bionic-backports main restricted universe multiverse
+deb https://cache.dev.ruinix.com/repository/bionic-main-restricted/ bionic main restricted
+deb https://cache.dev.ruinix.com/repository/bionic-multiverse/ bionic multiverse
+deb https://cache.dev.ruinix.com/repository/bionic-security-main-restricted/ bionic-security main restricted
+deb https://cache.dev.ruinix.com/repository/bionic-security-multiverse/ bionic-security multiverse
+deb https://cache.dev.ruinix.com/repository/bionic-security-universe/ bionic-security universe
+deb https://cache.dev.ruinix.com/repository/bionic-universe/ bionic universe
+deb https://cache.dev.ruinix.com/repository/bionic-updates-main-restricted/ bionic-updates main restricted
+deb https://cache.dev.ruinix.com/repository/bionic-updates-multiverse/ bionic-updates multiverse
+deb https://cache.dev.ruinix.com/repository/bionic-updates-universe/ bionic-updates universe
