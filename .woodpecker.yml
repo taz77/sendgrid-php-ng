@@ -1,8 +1,9 @@
 pipeline:
-  php72:
-    image: phpdockerio/php72-cli
+  php73:
+    image: phpdockerio/php73-cli
     commands:
       - sleep 1
+      - apt-get -y --no-install-recommends install make
       - composer config -g repositories.packagist.org false
       - composer config -g repositories.root composer https://cache.dev.ruinix.com/repository/packagist/
       - make install
