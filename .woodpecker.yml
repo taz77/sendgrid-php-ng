@@ -17,7 +17,7 @@ pipeline:
     commands:
       - sleep 1
       - mv /etc/apt/sources.list /etc/apt/sources.list.bkup
-      - cp ./scripts/ubuntu-bionic-proxies /etc/apt/sources.list
+      - cp ./scripts/ubuntu-focal-proxies /etc/apt/sources.list
       - apt-get update
       - apt-get -y --no-install-recommends install build-essential
       - composer config -g repositories.packagist.org false
