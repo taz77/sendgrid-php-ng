@@ -3,7 +3,7 @@ pipeline:
     image: php:7.2
     commands:
       - sleep 1
-      - composer self-update
+      - /bin/sh ./scripts/composer-install.sh
       - composer config -g repositories.packagist.org false
       - composer config -g repositories.root composer https://cache.dev.ruinix.com/repository/packagist/
       - make install
