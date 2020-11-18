@@ -3,6 +3,7 @@ pipeline:
     image: phpdockerio/php73-cli
     commands:
       - sleep 1
+      - apt-get update
       - apt-get -y --no-install-recommends install build-essential
       - composer config -g repositories.packagist.org false
       - composer config -g repositories.root composer https://cache.dev.ruinix.com/repository/packagist/
