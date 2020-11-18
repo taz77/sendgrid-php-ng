@@ -108,7 +108,7 @@ class Client {
 
     $response = $this->postRequest($this->endpoint, $form);
 
-    if ($response && $response->code != 200 && $response->code != 250 && $this->options['raise_exceptions']) {
+    if ($response && (!in_array($response->code, [200, 250])) && $this->options['raise_exceptions']) {
       throw new \SendGrid\Exception($response->raw_body, $response->code);
     }
 
