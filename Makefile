@@ -1,7 +1,7 @@
 .PHONY: clean install ci-install test test-integ test-docker bundle
 
 clean:
-	@rm -rf vendor composer.lock sendgrid-php.zip
+	@rm -rf vendor composer.lock
 
 install: clean
 ifdef GIT_HUB_TOKEN
@@ -28,6 +28,3 @@ test-docker:
 	curl -s https://raw.githubusercontent.com/sendgrid/sendgrid-oai/HEAD/prism/prism.sh -o prism.sh
 	dependencies=lowest version=$(version) bash ./prism.sh
 	dependencies=highest version=$(version) bash ./prism.sh
-
-bundle: ci-install
-	zip -r sendgrid-php.zip . -x \*.git\* \*composer.json\* \*scripts\* \*Test\* \*.travis.yml\* \*prism\*
