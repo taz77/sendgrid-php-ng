@@ -4,7 +4,7 @@
 
 **This is a version of SendGrid-PHP which uses Guzzle 6.x**
 
-Badge Bling: [![ScanStatus](https://img.shields.io/coverity/scan/11112.svg)](https://scan.coverity.com/projects/taz77-sendgrid-php-ng)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=taz77_sendgrid-php-ng&metric=alert_status)](https://sonarcloud.io/dashboard?id=taz77_sendgrid-php-ng)
 
 This library allows you to quickly and easily send emails through SendGrid using PHP with the help of Guzzle 6.x. Guzzle is a very popular HTTP client for PHP used in many other PHP packages.
 
@@ -16,17 +16,13 @@ To install this library it is best to use composer. I have published a package t
 
 ``` php
 "require": {
-    "fastglass/sendgrid": ">=1.0.9"
+    "fastglass/sendgrid": ">=2.0.0"
   }
 ```
 
-## Example Code
-
-If you would like to look at some example code for using this library, clone [this](https://github.com/Fastglass-LLC/sendgrid-php-example) repository.
-
 ## Upgade to V3 API
 
-Work is underway (in a development branch) to upgrade this module to the V3 API. Please help if you can!
+Work is underway to upgrade this module to the V3 API. Please help if you can!
 
 ## PLEASE READ THIS
 
@@ -40,7 +36,7 @@ The `send()` method now raises a `\SendGrid\Exception` by default if the respons
 
 ---
 
-Important: This library requires PHP 5.5 or higher.
+Important: This library requires PHP 7.2 or higher.
 
 
 ```php
@@ -887,13 +883,7 @@ $email
 $result = $sendgrid->send($email);
 ```
 
-## Contributing
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
 
 ## Running Tests
 
