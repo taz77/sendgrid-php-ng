@@ -30,7 +30,7 @@ steps:
       - mv /etc/apt/sources.list /etc/apt/sources.list.bkup
       - cp ./scripts/ubuntu-bionic-proxies /etc/apt/sources.list
       - apt-get update
-      - apt-get -y --no-install-recommends install build-essential libc6-dev g++ dpkg-dev
+      - apt-get -y install build-essential
       - composer config -g repositories.packagist.org false
       - composer config -g repositories.root composer https://cache.dev.ruinix.com/repository/packagist/
       - make install
