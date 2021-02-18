@@ -23,7 +23,7 @@ steps:
       - make test
       - ls -alh
 
-  - name: PHP73
+  - name: PHP74
     image: phpdockerio/php74-cli
     commands:
       - sleep 1
