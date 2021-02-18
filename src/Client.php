@@ -24,7 +24,7 @@ use SendGrid\Mail\Mail;
  */
 class Client {
 
-  const VERSION = '2.0.1';
+  const VERSION = '2.0.2';
 
   protected
     $options;
