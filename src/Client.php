@@ -139,12 +139,17 @@ class Client {
    * @throws SendgridException
    */
   public function send(Mail $email) {
-
+    $response_codes = [
+      200,
+      201,
+      202,
+      204
+    ];
     // Adding API keys to header.
     // $form['api_key'] = $this->apiKey;
     $response = $this->postRequest($this->endpoint, $email);
 
-    if ($response->getCode() != 200) {
+    if (!in_array($response->getCode(), $response_codes)) {
       throw new SendgridException($response->getRawBody(), $response->getCode());
     }
 
