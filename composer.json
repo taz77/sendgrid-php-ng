@@ -22,7 +22,7 @@
   ],
   "require": {
     "php": ">=7.2",
-    "guzzlehttp/guzzle": "^6.3",
+    "guzzlehttp/guzzle": "^6.3|^7.0",
     "ext-json": "*",
     "ext-mbstring": "*",
     "starkbank/ecdsa": "^0.0.4"
