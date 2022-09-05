@@ -94,7 +94,7 @@ class GroupsToDisplay implements JsonSerializable {
    *
    * @return null|array
    */
-  public function jsonSerialize() {
+  public function jsonSerialize() :mixed {
     return $this->getGroupsToDisplay();
   }
 }

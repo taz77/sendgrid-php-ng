@@ -61,7 +61,7 @@ class BatchId implements JsonSerializable {
    *
    * @return null|string
    */
-  public function jsonSerialize() {
+  public function jsonSerialize() :mixed {
     return $this->getBatchId();
   }
 }
