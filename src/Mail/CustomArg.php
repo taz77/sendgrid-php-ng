@@ -96,7 +96,7 @@ class CustomArg implements JsonSerializable {
    *
    * @return null|array
    */
-  public function jsonSerialize() {
+  public function jsonSerialize() :mixed {
     return array_filter(
       [
         'key' => $this->getKey(),

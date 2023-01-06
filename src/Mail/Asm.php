@@ -129,7 +129,7 @@ class Asm implements JsonSerializable {
    *
    * @return null|array
    */
-  public function jsonSerialize() {
+  public function jsonSerialize() :mixed {
     return array_filter(
       [
         'group_id' => $this->getGroupId(),
