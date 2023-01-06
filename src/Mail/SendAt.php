@@ -88,6 +88,7 @@ class SendAt implements JsonSerializable {
    *
    * @return int
    */
+  #[\ReturnTypeWillChange]
   public function jsonSerialize() {
     return $this->getSendAt();
   }

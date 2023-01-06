@@ -59,6 +59,7 @@ class Subject implements JsonSerializable {
    *
    * @return string
    */
+  #[\ReturnTypeWillChange]
   public function jsonSerialize() {
     return $this->getSubject();
   }

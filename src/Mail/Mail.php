@@ -1824,6 +1824,7 @@ class Mail implements JsonSerializable {
    * @return null|array
    * @throws SendgridException
    */
+  #[\ReturnTypeWillChange]
   public function jsonSerialize() {
     // Detect if we are using the new dynamic templates
     if ($this->getTemplateId() !== NULL && strpos($this->getTemplateId()
