@@ -16,7 +16,7 @@ class ClientTest extends TestCase {
    * Test the version number.
    */
   public function testVersion(): void {
-    $this->assertEquals(Client::VERSION, '2.0.5');
+    $this->assertEquals(Client::VERSION, '2.0.6');
     $this->assertEquals(json_decode(file_get_contents('composer.json'))->version, \SendGrid\Client::VERSION);
   }
 
