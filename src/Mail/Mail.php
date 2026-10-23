@@ -97,7 +97,7 @@ class Mail implements JsonSerializable {
     $subject = NULL,
     $plainTextContent = NULL,
     $htmlContent = NULL,
-    array $globalSubstitutions = NULL
+    ?array $globalSubstitutions = NULL
   ) {
     if (!isset($from)
       && !isset($to)
